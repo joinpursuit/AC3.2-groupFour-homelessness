@@ -17,12 +17,11 @@ class SearchResultsTableViewController: UITableViewController {
         
         self.view.backgroundColor = UIColor.green
         getData()
-        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "nycCell")
-        self.view.backgroundColor = UIColor.orange
+        self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
-
     }
+    
 
     func getData() {
         APIRequestManager.manager.getPOD(endPoint: "https://data.cityofnewyork.us/resource/swhp-yxa4.json") { (data) in
@@ -59,9 +58,9 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SearchTableViewCell
-
         
-
+        let selectedCell = jobs[indexPath.row]
+        cell.textLabel?.text = selectedCell.buisnessTitle
         return cell
     }
     

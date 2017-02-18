@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         window?.rootViewController = rootTabController
-        //window?.rootViewController = loginVC
+        //window?.rootViewController = searchResultsTVC
         window?.makeKeyAndVisible()
         return true
     }
