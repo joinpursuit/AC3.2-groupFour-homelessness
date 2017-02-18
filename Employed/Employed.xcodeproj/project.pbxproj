@@ -13,12 +13,9 @@
 		944703884694D63F46F3615C /* Pods_Employed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */; };
 		A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243C91E589BD6002B40D7 /* NYCJobs.swift */; };
 		A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CB1E589C09002B40D7 /* APIRequestManager.swift */; };
-<<<<<<< HEAD
-=======
 		A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */; };
 		A20243D11E58B7AE002B40D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A20243D01E58B7AE002B40D7 /* GoogleService-Info.plist */; };
 		A20243D31E58B911002B40D7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */; };
->>>>>>> 68fdac72cbe64e44158ad2eb35dfdfb6deeb8536
 		E35F6EAE1E580A9900E8F011 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EA81E580A9900E8F011 /* LoginViewController.swift */; };
 		E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */; };
 		E35F6EB01E580A9900E8F011 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */; };
@@ -38,12 +35,9 @@
 		830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employed.release.xcconfig"; path = "Pods/Target Support Files/Pods-Employed/Pods-Employed.release.xcconfig"; sourceTree = "<group>"; };
 		A20243C91E589BD6002B40D7 /* NYCJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYCJobs.swift; sourceTree = "<group>"; };
 		A20243CB1E589C09002B40D7 /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestManager.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
 		A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavesTableViewCell.swift; sourceTree = "<group>"; };
 		A20243D01E58B7AE002B40D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
->>>>>>> 68fdac72cbe64e44158ad2eb35dfdfb6deeb8536
 		E35F6EA81E580A9900E8F011 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobSearchViewController.swift; sourceTree = "<group>"; };
 		E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };

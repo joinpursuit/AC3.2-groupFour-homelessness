@@ -40,6 +40,7 @@ class NYCJobs {
         }
         return jobs
 
+    
     }
 
 
