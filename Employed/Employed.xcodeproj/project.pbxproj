@@ -11,6 +11,8 @@
 		1AA994581E57F9C00050CB6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA994571E57F9C00050CB6E /* Assets.xcassets */; };
 		1AA9945B1E57F9C00050CB6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA994591E57F9C00050CB6E /* LaunchScreen.storyboard */; };
 		944703884694D63F46F3615C /* Pods_Employed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */; };
+		A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243C91E589BD6002B40D7 /* NYCJobs.swift */; };
+		A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CB1E589C09002B40D7 /* APIRequestManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		1AA9945C1E57F9C00050CB6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Employed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employed.release.xcconfig"; path = "Pods/Target Support Files/Pods-Employed/Pods-Employed.release.xcconfig"; sourceTree = "<group>"; };
+		A20243C91E589BD6002B40D7 /* NYCJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYCJobs.swift; sourceTree = "<group>"; };
+		A20243CB1E589C09002B40D7 /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestManager.swift; sourceTree = "<group>"; };
 		F2086CACE1707D821481FCB9 /* Pods-Employed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Employed/Pods-Employed.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +61,7 @@
 		1AA9944F1E57F9C00050CB6E /* Employed */ = {
 			isa = PBXGroup;
 			children = (
+				A20243CD1E589C1F002B40D7 /* Request Manager */,
 				1AA994671E57FA7B0050CB6E /* Controller Cells */,
 				1AA994631E57FA030050CB6E /* Models */,
 				1AA994661E57FA330050CB6E /* Managers */,
@@ -81,6 +86,7 @@
 		1AA994631E57FA030050CB6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A20243C91E589BD6002B40D7 /* NYCJobs.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -128,6 +134,14 @@
 				30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A20243CD1E589C1F002B40D7 /* Request Manager */ = {
+			isa = PBXGroup;
+			children = (
+				A20243CB1E589C09002B40D7 /* APIRequestManager.swift */,
+			);
+			name = "Request Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,6 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */,
+				A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */,
 				1AA994511E57F9C00050CB6E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
