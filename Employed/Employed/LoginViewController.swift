@@ -78,23 +78,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     
     func login() {
-        if let email = emailTextField.text,
-            let password = passwordTextField.text {
-            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
-                
-                if user != nil {
-                    let newViewController = ProfileViewController()
-                    if let tabVC =  self.navigationController {
-                        tabVC.show(newViewController, sender: nil)
-                        
-                    }
-                } else {
-                    
-                    self.showAlertFailure(title: "Login Failed!", error: error!)
-                }
-                
-            })
-        }
+//        if let email = emailTextField.text,
+//            let password = passwordTextField.text {
+//            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+//                
+//                if user != nil {
+//                    let newViewController = ProfileViewController()
+//                    if let tabVC =  self.navigationController {
+//                        tabVC.show(newViewController, sender: nil)
+//                        
+//                    }
+//                } else {
+//                    
+//                    self.showAlertFailure(title: "Login Failed!", error: error!)
+//                }
+//                
+//            })
+//        }
+        
+        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         
     }
     
