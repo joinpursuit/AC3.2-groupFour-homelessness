@@ -18,7 +18,6 @@ class LoginViewController: UIViewController {
         
         
     }
-
   
     
     //MARK:- SetupViews
@@ -74,7 +73,7 @@ class LoginViewController: UIViewController {
     //MARK: - Utilities
     func login() {
         print("Clicked login")
-        self.dismiss(animated: true, completion: nil)
+        
     }
 
     //MARK: - Views
