@@ -10,16 +10,17 @@ import UIKit
 
 class SavesTableViewController: UITableViewController {
 
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+//        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "nycCell")
+     
         
-        self.view.backgroundColor = UIColor.orange
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+      
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -38,15 +39,16 @@ class SavesTableViewController: UITableViewController {
         return 0
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
+    
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SavesTableViewCell
+//        
+//       
+//        
+//
+//        return cell
+//    }
+//    
 
     /*
     // Override to support conditional editing of the table view.
