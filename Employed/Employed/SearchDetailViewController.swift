@@ -8,28 +8,39 @@
 
 import UIKit
 
-class SearchDetailViewController: UIViewController {
-
+class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate {
+    var jobPost: NYCJobs!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        setUpViews()
+        self.title = jobPost.buisnessTitle
+        self.view.backgroundColor = Colors.primaryColorUIColor
+        
+        let barButton = UIBarButtonItem(customView: saveButton)
+        self.navigationItem.rightBarButtonItem = barButton
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: - SetupViews
+    private func setUpViews(){
+        
+        self.edgesForExtendedLayout = []
     }
-    */
+    //MARK: - Utilities
+    func savePost() {
+        print("save post")
+    }
+ 
+    //MARK: - Views
+       private lazy var saveButton: UIButton = {
+            let button = UIButton(type: UIButtonType.custom)
+            button.addTarget(self, action: #selector(savePost), for: .touchUpInside)
+            button.setTitle("save", for: .normal)
+            button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
+            
+            return button
+        }()
+
 
 }
