@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        //FIRApp.configure()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let loginVC = LoginViewController()
+        
+        let rootTabController = UITabBarController()
+        let jobSearchVC = JobSearchViewController()
+        let searchResultsTVC = SearchResultsTableViewController()
+        let searchDetailVC = SearchDetailViewController()
+        let savesTVC = SavesTableViewController()
+        let profileTVC = ProfileTableViewController()
+        
+        let jobSearchTabItem = UITabBarItem(title: "search", image: #imageLiteral(resourceName: "search"), tag: 0)
+        let savesTabItem = UITabBarItem(title: "saves", image: #imageLiteral(resourceName: "save"), tag: 1)
+        let profileTabItem = UITabBarItem(title: "profile", image: #imageLiteral(resourceName: "user"), tag: 2)
+        
+        jobSearchVC.tabBarItem = jobSearchTabItem
+        savesTVC.tabBarItem = savesTabItem
+        profileTVC.tabBarItem = profileTabItem
+        
+        let jobSearchNavController = UINavigationController(rootViewController: jobSearchVC)
+        let savesNavController = UINavigationController(rootViewController: savesTVC)
+        let profileNavController = UINavigationController(rootViewController: profileTVC)
+        rootTabController.viewControllers = [jobSearchNavController, savesNavController, profileNavController]
+        
+        
+        window?.rootViewController = rootTabController
+        //window?.rootViewController = loginVC
+        window?.makeKeyAndVisible()
         return true
     }
 
