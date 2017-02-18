@@ -10,8 +10,8 @@ import UIKit
 
 class SearchResultsTableViewController: UITableViewController {
 
-     var jobs = [NYCJobs]()
-    
+//     var jobs = [NYCJobs]()
+    var jobs = [DiceJob]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = []
@@ -27,24 +27,41 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
 
-    func getData() {
-        APIRequestManager.manager.getPOD(endPoint: "https://data.cityofnewyork.us/resource/swhp-yxa4.json") { (data) in
-            
-            if let validData = data {
-                if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
-                    let validJob = jsonData as? [[String:Any]] {
-                    
-                    self.jobs = NYCJobs.getJobs(from: validJob)
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+//    func getData() {
+//        APIRequestManager.manager.getPOD(endPoint: "https://data.cityofnewyork.us/resource/swhp-yxa4.json") { (data) in
+//            
+//            if let validData = data {
+//                if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
+//                    let validJob = jsonData as? [[String:Any]] {
+//                    
+//                    self.jobs = NYCJobs.getJobs(from: validJob)
+//                    
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
+//                }
+//                
+//            }
+//        }
+//    }
+    
+        func getData() {
+            APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
+    
+                if let validData = data {
+                    if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
+                        let validJob = jsonData as? [String:Any] {
+    
+                        self.jobs = DiceJob.getJobs(from: validJob)
+    
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
+    
                 }
-                
             }
         }
-    }
-    
     
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
@@ -73,7 +90,7 @@ class SearchResultsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SearchTableViewCell
         
         let selectedCell = jobs[indexPath.row]
-        cell.textLabel?.text = selectedCell.buisnessTitle
+        cell.textLabel?.text = selectedCell.jobTitle
         return cell
     }
     
