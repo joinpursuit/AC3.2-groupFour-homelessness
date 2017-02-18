@@ -14,6 +14,10 @@ class SearchResultsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.edgesForExtendedLayout = []
+        let barButton = UIBarButtonItem(customView: filterButton)
+        self.navigationItem.rightBarButtonItem = barButton
+        
         
         self.view.backgroundColor = UIColor.green
         getData()
@@ -42,7 +46,16 @@ class SearchResultsTableViewController: UITableViewController {
         }
     }
     
-
+    
+    func setupViewHierarchy() {
+        self.edgesForExtendedLayout = []
+        
+        self.view.addSubview(filterButton)
+    }
+    
+    func configureConstraints() {
+    
+    }
 
     // MARK: - Table view data source
 
@@ -110,5 +123,19 @@ class SearchResultsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func filterButtonPressed(sender: UIButton) {
+    
+    }
+    
+    
+    internal lazy var filterButton: UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.addTarget(self, action: #selector(filterButtonPressed(sender:)), for: .touchUpInside)
+        button.setTitle("Filter", for: .normal)
+        
+        return button
+    }()
 
+    
 }
