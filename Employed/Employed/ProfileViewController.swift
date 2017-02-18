@@ -36,7 +36,12 @@ class ProfileViewController: UIViewController {
         let image = UIImageView()
         
         image.layer.cornerRadius = 0.3
-        
+        image.isUserInteractionEnabled = true
+        image.layer.shadowColor = UIColor.black.cgColor
+        image.layer.shadowOpacity = 0.4
+        image.layer.shadowOffset = CGSize(width: 1, height: 5)
+        image.layer.shadowRadius = 2
+        image.contentMode = .scaleAspectFit
         
         return image
     

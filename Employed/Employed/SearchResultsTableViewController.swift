@@ -132,7 +132,7 @@ class SearchResultsTableViewController: UITableViewController {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(filterButtonPressed(sender:)), for: .touchUpInside)
         button.setTitle("Filter", for: .normal)
-        
+        button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         return button
     }()
 
