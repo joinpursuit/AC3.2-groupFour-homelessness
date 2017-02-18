@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let searchResultsTVC = SearchResultsTableViewController()
         let searchDetailVC = SearchDetailViewController()
         let savesTVC = SavesTableViewController()
-        let profileTVC = ProfileTableViewController()
+        let profileTVC = LoginViewController()
         
         let jobSearchTabItem = UITabBarItem(title: "search", image: #imageLiteral(resourceName: "search"), tag: 0)
         let savesTabItem = UITabBarItem(title: "saves", image: #imageLiteral(resourceName: "save"), tag: 1)

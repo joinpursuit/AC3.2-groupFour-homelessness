@@ -8,11 +8,14 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.title = "LOGIN/REGISTER"
        self.view.backgroundColor = .white
         setUpViews()
         
@@ -68,18 +71,65 @@ class LoginViewController: UIViewController {
         }
         
         loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
-        //registerButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
     }
     
-    //MARK: - Utilities
+   
+
+    
     func login() {
-        print("Clicked login")
-        self.dismiss(animated: true, completion: nil)
+        if let email = emailTextField.text,
+            let password = passwordTextField.text {
+            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+                
+                if user != nil {
+                    let newViewController = ProfileViewController()
+                    if let tabVC =  self.navigationController {
+                        tabVC.show(newViewController, sender: nil)
+                        
+                    }
+                } else {
+                    
+                    self.showAlertFailure(title: "Login Failed!", error: error!)
+                }
+                
+            })
+        }
+        
     }
+    
+    func register() {
+        
+        if let email = emailTextField.text,
+            let password = passwordTextField.text {
+            
+            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user:FIRUser?, error: Error?) in
+                
+                if error != nil {
+                   self.showAlertFailure(title: "Register Failed!", error: error!)
+                }
+                
+                let newViewController = ProfileViewController()
+                if let tabVC =  self.navigationController {
+                    tabVC.show(newViewController, sender: nil)
+                }
+            })
+        }
+    }
+    
+    func showAlertFailure(title: String, error: Error) {
+        let alertController = UIAlertController(title: title, message: "\(error)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+
 
     //MARK: - Views
     private let loginLogo: UIImageView = {
-        let imageView: UIImageView = UIImageView()
+        var imageView: UIImageView = UIImageView()
         imageView.image = UIImage(named: "logo")
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -111,7 +161,7 @@ class LoginViewController: UIViewController {
     
     private let registerButton: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("click here", for: .normal)
+        button.setTitle("Register", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         return button
         
@@ -120,6 +170,7 @@ class LoginViewController: UIViewController {
     private let registerLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = "Don't have an account?"
+        label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
 

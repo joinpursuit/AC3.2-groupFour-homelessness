@@ -13,11 +13,16 @@ class NYCJobs {
     let buisnessTitle: String
     let civilTitle: String
     let jobDescription: String
+    let postingDate: String
+    let agency: String
     
-    init(buisnessTitle: String, civilTitle: String, jobDescription: String) {
+    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String) {
         self.buisnessTitle = buisnessTitle
         self.civilTitle = civilTitle
         self.jobDescription = jobDescription
+        self.postingDate = postingDate
+        self.agency = agency
+        
     }
 
 
@@ -26,8 +31,10 @@ class NYCJobs {
         let buisnessTitle = dict["business_title"] as? String ?? ""
         let civilTitle = dict["civil_service_title"] as? String ?? ""
         let jobDescription = dict["job_description"] as? String ?? ""
+        let postingDate = dict["posting_date"] as? String ?? ""
+        let agency = dict["agency"] as? String ?? ""
         
-        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription)
+        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription, postingDate: postingDate, agency: agency)
     }
     
     
