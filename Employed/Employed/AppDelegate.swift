@@ -19,6 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        navigationBarAppearace.barTintColor = Colors.darkPrimaryColor
+        
+        let tabBarAppearnce = UITabBar.appearance()
+        tabBarAppearnce.barTintColor = UIColor.white
+        tabBarAppearnce.tintColor = UIColor.red
+        //
         let loginVC = LoginViewController()
         
         let rootTabController = UITabBarController()
@@ -36,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         savesTVC.tabBarItem = savesTabItem
         profileTVC.tabBarItem = profileTabItem
         
+        
+        
         let jobSearchNavController = UINavigationController(rootViewController: jobSearchVC)
         let savesNavController = UINavigationController(rootViewController: savesTVC)
         let profileNavController = UINavigationController(rootViewController: profileTVC)
@@ -43,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         window?.rootViewController = rootTabController
-        //window?.rootViewController = searchResultsTVC
+        //window?.rootViewController = jobSearchVC
         window?.makeKeyAndVisible()
         return true
     }

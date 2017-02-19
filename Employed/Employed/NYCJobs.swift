@@ -15,13 +15,15 @@ class NYCJobs {
     let jobDescription: String
     let postingDate: String
     let agency: String
+    let workLocation: String
     
-    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String) {
+    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String, workLocation: String) {
         self.buisnessTitle = buisnessTitle
         self.civilTitle = civilTitle
         self.jobDescription = jobDescription
         self.postingDate = postingDate
         self.agency = agency
+        self.workLocation = workLocation
         
     }
 
@@ -33,8 +35,13 @@ class NYCJobs {
         let jobDescription = dict["job_description"] as? String ?? ""
         let postingDate = dict["posting_date"] as? String ?? ""
         let agency = dict["agency"] as? String ?? ""
+        let workLocation = dict["work_location"] as? String ?? ""
         
-        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription, postingDate: postingDate, agency: agency)
+        //10/13/2016 00:00:00
+        let date = Array(postingDate.components(separatedBy: " "))
+        
+        
+        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription, postingDate: date[0], agency: agency, workLocation: workLocation)
     }
     
     

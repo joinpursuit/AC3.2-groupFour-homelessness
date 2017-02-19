@@ -10,7 +10,7 @@ import UIKit
 
 class SearchResultsTableViewController: UITableViewController, UISearchBarDelegate {
 
-     var jobs = [NYCJobs]()
+    var jobs = [NYCJobs]()
     var leftBarButton = UIBarButtonItem()
     var rightBarButton = UIBarButtonItem()
     var sectionTitles: [String] {
@@ -35,11 +35,11 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.title = "Jobs"
         
         
-        self.view.backgroundColor = UIColor.green
+        self.view.backgroundColor = Colors.backgroundColor
         getData()
         
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
-        tableView.rowHeight = 200
+        tableView.rowHeight = 150
     }
 
     
@@ -62,7 +62,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     }
 
     /*
-        func getData() {
+    func getData(_ searchText: String) {
             APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
     
                 if let validData = data {
@@ -80,6 +80,8 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
             }
         }
  */
+ 
+    
     //MARK: - SetupViews
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
@@ -96,7 +98,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     func searchButtonPressed(sender: UIButton) {
         print("search pressed")
         self.navigationItem.titleView = searchField
-        
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
         
@@ -125,9 +126,10 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         let selectedCell = jobs[indexPath.row]
 
         cell.jobLabel.text = selectedCell.buisnessTitle
-        cell.subLabel.text = "\(selectedCell.agency) • Posted \(selectedCell.postingDate)"
-        
-
+        cell.agencyLabel.text = selectedCell.agency
+        cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
+        cell.subLabel.addImage(imageName: "marker")
+ 
         //cell.textLabel?.text = selectedCell.jobTitle
 
         return cell
@@ -142,7 +144,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         navigationController?.pushViewController(searchDetailVc, animated: true)
     }
     
-    
     internal lazy var filterButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(filterButtonPressed(sender:)), for: .touchUpInside)
@@ -154,7 +155,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     internal lazy var searchButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(searchButtonPressed(sender:)), for: .touchUpInside)
-        button.setTitle("Search", for: .normal)
+        button.setImage(UIImage(named: "search"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         return button
     }()
@@ -170,7 +171,5 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         searchBar.delegate = self
         return searchBar
     }()
-
-
-    
 }
+
