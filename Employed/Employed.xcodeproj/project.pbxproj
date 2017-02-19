@@ -123,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				A20243C91E589BD6002B40D7 /* NYCJobs.swift */,
-				1AA994921E5900400050CB6E /* EmployedFileManager.swift */,
 				A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */,
 			);
 			name = Models;
@@ -155,6 +154,7 @@
 		1AA994661E57FA330050CB6E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				1AA994921E5900400050CB6E /* EmployedFileManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
