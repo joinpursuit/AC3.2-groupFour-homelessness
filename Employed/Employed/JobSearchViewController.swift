@@ -27,13 +27,10 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(backgroundImage)
         self.backgroundImage.addSubview(backgroundImageTopLayer)
         self.view.addSubview(findJobButton)
-        self.view.addSubview(searchJobTextField)
-
         self.view.addSubview(greetingLabel)
         self.view.addSubview(searchJobTextField)
     
         
-
         
         backgroundImage.snp.makeConstraints { (view) in
             view.top.equalToSuperview()
@@ -63,11 +60,6 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         findJobButton.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
             view.top.equalTo(searchJobTextField.snp.bottom).offset(8.0)
-        }
-        
-        searchJobTextField.snp.makeConstraints { (view) in
-            view.centerX.equalToSuperview()
-            view.bottom.equalTo(greetingLabel.snp.top).offset(-20)
         }
         
         findJobButton.addTarget(self, action: #selector(searchJobs), for: .touchUpInside)
