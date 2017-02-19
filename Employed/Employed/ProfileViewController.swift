@@ -117,7 +117,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
      }
     
     func handleTap() {
-        print("TAPPPPED???")
+    
         let imagePickerController = UIImagePickerController()
         
         imagePickerController.allowsEditing = true
@@ -201,6 +201,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.isUserInteractionEnabled = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tap.delaysTouchesBegan = true
+        tap.numberOfTouchesRequired = 1
         imageView.addGestureRecognizer(tap)
         
         return imageView
