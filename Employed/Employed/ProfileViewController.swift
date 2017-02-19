@@ -15,6 +15,9 @@ import MobileCoreServices
 class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
 
+    //Can be used to populate profile tableview
+    private let infoImageArray: [UIImage] = []
+    private let infoDetails: [String:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +83,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     func setUpTableView(){
         self.infoTableView.delegate = self
         self.infoTableView.dataSource = self
+        self.infoTableView.rowHeight = UITableViewAutomaticDimension
+        self.infoTableView.estimatedRowHeight = 200
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
     
@@ -135,6 +140,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         if let selectedImage = selectedImageFromPicker {
             profilePic.image = selectedImage
+            profileBackGround.image = selectedImage
         }
         
         dismiss(animated: true, completion: nil)
