@@ -17,7 +17,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     let newViewController = ProfileViewController()
     var databaseReference = FIRDatabase.database().reference()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
