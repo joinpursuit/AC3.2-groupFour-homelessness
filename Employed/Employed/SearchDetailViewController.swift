@@ -23,6 +23,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        
         self.title = jobPost.buisnessTitle
         self.view.backgroundColor = Colors.lightPrimaryColor
         
