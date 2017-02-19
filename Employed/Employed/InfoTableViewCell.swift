@@ -11,7 +11,7 @@ import UIKit
 class InfoTableViewCell: UITableViewCell {
     
     static let cellIdentifier: String =  "infoCell"
-
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -23,14 +23,48 @@ class InfoTableViewCell: UITableViewCell {
     }
     
     func setUpCell(){
-        let label: UILabel = UILabel()
-        label.text = "Blah Blah blah blah"
-        self.addSubview(label)
+        self.addSubview(cellIcon)
+        self.addSubview(cellDetail)
+        self.addSubview(cellTitle)
         
-        label.snp.makeConstraints { (view) in
-            view.trailing.leading.top.bottom.equalToSuperview()
+        cellIcon.snp.makeConstraints { (view) in
+            view.centerY.equalToSuperview()
+            view.leading.equalToSuperview().offset(10)
+        }
+        
+        cellTitle.snp.makeConstraints { (view) in
+            view.top.equalToSuperview().offset(10)
+            view.leading.equalTo(cellIcon.snp.trailing).offset(10)
+        }
+        
+        cellDetail.snp.makeConstraints { (view) in
+            view.top.equalTo(cellTitle.snp.bottom)
+            view.leading.equalTo(cellIcon.snp.trailing).offset(10)
+            view.bottom.equalToSuperview().inset(10)
         }
         
     }
-
+    
+    let cellIcon: UIImageView = {
+        let imageview: UIImageView = UIImageView()
+        imageview.image = UIImage(named: "user")
+        return imageview
+    }()
+    
+    let cellDetail: UILabel = {
+        let label: UILabel = UILabel()
+        label.text = "Some description goes here..."
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+        
+    }()
+    
+    let cellTitle: UILabel = {
+        let label: UILabel = UILabel()
+        label.text = "Title"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+        
+    }()
+    
 }
