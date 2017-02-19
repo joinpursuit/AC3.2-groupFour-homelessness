@@ -117,7 +117,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
      }
     
     func handleTap() {
-        print("TAPPPPED???")
+    
         let imagePickerController = UIImagePickerController()
         
         imagePickerController.allowsEditing = true
