@@ -8,10 +8,11 @@
 
 import UIKit
 
-class SearchResultsTableViewController: UITableViewController {
+class SearchResultsTableViewController: UITableViewController, UISearchBarDelegate {
 
      var jobs = [NYCJobs]()
-    
+    var leftBarButton = UIBarButtonItem()
+    var rightBarButton = UIBarButtonItem()
     var sectionTitles: [String] {
         get {
             var sectionSet = Set<String>()
@@ -25,9 +26,9 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = []
-        let rightBarButton = UIBarButtonItem(customView: filterButton)
-        let leftBarButton = UIBarButtonItem(customView: searchButton)
+        setupViewHierarchy()
+        self.rightBarButton = UIBarButtonItem(customView: filterButton)
+        self.leftBarButton = UIBarButtonItem(customView: searchButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.setHidesBackButton(true, animated: true)
@@ -79,14 +80,13 @@ class SearchResultsTableViewController: UITableViewController {
             }
         }
  */
-
     //MARK: - SetupViews
-
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
         
         self.view.addSubview(filterButton)
         self.view.addSubview(searchButton)
+    
     }
     
     func filterButtonPressed(sender: UIButton) {
@@ -95,6 +95,17 @@ class SearchResultsTableViewController: UITableViewController {
     
     func searchButtonPressed(sender: UIButton) {
         print("search pressed")
+        self.navigationItem.titleView = searchField
+        
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.navigationItem.titleView = nil
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.leftBarButtonItem = leftBarButton
     }
     
 
@@ -111,7 +122,6 @@ class SearchResultsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SearchTableViewCell
         
-        
         let selectedCell = jobs[indexPath.row]
 
         cell.jobLabel.text = selectedCell.buisnessTitle
@@ -124,8 +134,6 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
 
-    
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedRow = indexPath.row
         let searchDetailVc = SearchDetailViewController()
@@ -151,11 +159,17 @@ class SearchResultsTableViewController: UITableViewController {
         return button
     }()
     
-//    internal lazy var searchField: UISearchBar = {
-//        let search = UISearchBar()
-//        
-//        
-//    }()
+    internal lazy var searchField: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.showsCancelButton = true
+        searchBar.searchBarStyle = UISearchBarStyle.prominent
+        searchBar.placeholder = " Search..."
+        searchBar.frame = CGRect(x: 0, y: 0, width: 200, height: 20)
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.delegate = self
+        return searchBar
+    }()
 
 
     

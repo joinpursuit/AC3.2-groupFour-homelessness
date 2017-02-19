@@ -24,9 +24,23 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         
         self.view.addSubview(greetingLabel)
         self.view.addSubview(findJobButton)
+        self.view.addSubview(searchJobTextField)
+        //
+        //self.view.addSubview(backgroundImage)
+        //self.backgroundImage.addSubview(findJobButton)
+        //self.backgroundImage.addSubview(greetingLabel)
         
         
+        
+//        backgroundImage.snp.makeConstraints { (view) in
+//            view.top.bottom.trailing.leading.equalToSuperview()
+//        }
         greetingLabel.snp.makeConstraints { (view) in
+            view.bottom.equalTo(searchJobTextField.snp.bottom)
+            view.centerX.equalToSuperview()
+        }
+        
+        searchJobTextField.snp.makeConstraints { (view) in
             view.center.equalToSuperview()
         }
         
@@ -50,9 +64,16 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     
     //MARK: - Views
+    private let backgroundImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "backgroundPic")
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
     private let searchJobTextField: UITextField = {
         let textfield: UITextField = UITextField()
-        textfield.placeholder = "What job do you want?.."
+        textfield.placeholder = "..."
         textfield.backgroundColor = Colors.lightPrimaryColor
         return textfield
     }()
@@ -65,7 +86,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     private let findJobButton: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("a job", for: .normal)
+        button.setTitle("search", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         return button
     }()
