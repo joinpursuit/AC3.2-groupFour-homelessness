@@ -8,21 +8,39 @@
 
 import UIKit
 import DZNEmptyDataSet
+import FirebaseDatabase
+import FirebaseAuth
 
 class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
    
+     var databaseReference = FIRDatabase.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
-//        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "nycCell")
+        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "savedCell")
      
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-        
+        getData()
     }
     
     
+    
+    
+    func getData() {
+        databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { (snapShot) in
+            for child in snapShot.children {
+                if let snap = child as? FIRDataSnapshot,
+                let valueDict = snap.value as? [String:Any] {
+                    dump(valueDict)
+                }
+            }
+        })
+    }
+    
+    //MARK: -DZNEmptyDataSet Delegates & DataSource
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No saved Jobs"
         let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
@@ -39,6 +57,8 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         return UIImage(named: "logo")
     }
     
+    
+    
 
     // MARK: - Table view data source
 
@@ -53,14 +73,14 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     }
 
     
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SavesTableViewCell
-//        
-//       
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "savedCell", for: indexPath) as! SavesTableViewCell
+        
+       
 //        cell.textLabel?.text = "Blach"
-//
-//        return cell
-//    }
+//        self.tableView.reloadEmptyDataSet()
+        return cell
+    }
     
 
     /*
