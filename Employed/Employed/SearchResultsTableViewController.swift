@@ -8,10 +8,13 @@
 
 import UIKit
 
-class SearchResultsTableViewController: UITableViewController {
+class SearchResultsTableViewController: UITableViewController, UISearchBarDelegate {
 
-     var jobs = [NYCJobs]()
-    
+    var jobs = [NYCJobs]()
+    public var oldJobs = [NYCJobs]()
+    var filteredJobs = [NYCJobs]()
+    var leftBarButton = UIBarButtonItem()
+    var rightBarButton = UIBarButtonItem()
     var sectionTitles: [String] {
         get {
             var sectionSet = Set<String>()
@@ -25,20 +28,20 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = []
-        let rightBarButton = UIBarButtonItem(customView: filterButton)
-        let leftBarButton = UIBarButtonItem(customView: searchButton)
+        setupViewHierarchy()
+        self.rightBarButton = UIBarButtonItem(customView: filterButton)
+        self.leftBarButton = UIBarButtonItem(customView: searchButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.title = "Jobs"
         
         
-        self.view.backgroundColor = UIColor.green
+        self.view.backgroundColor = Colors.backgroundColor
         getData()
         
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
-        tableView.rowHeight = 200
+        tableView.rowHeight = 150
     }
 
     
@@ -51,6 +54,7 @@ class SearchResultsTableViewController: UITableViewController {
                     let validJob = jsonData as? [[String:Any]] {
                     
                     self.jobs = NYCJobs.getJobs(from: validJob)
+                    self.oldJobs = NYCJobs.getJobs(from: validJob)
                     
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -61,7 +65,7 @@ class SearchResultsTableViewController: UITableViewController {
     }
 
     /*
-        func getData() {
+    func getData(_ searchText: String) {
             APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
     
                 if let validData = data {
@@ -79,14 +83,37 @@ class SearchResultsTableViewController: UITableViewController {
             }
         }
  */
-
+    
+    func searchJob(_ filter: String) {
+        self.jobs = jobs.filter {
+            return $0.buisnessTitle.lowercased().contains(filter.lowercased())
+        }
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchJob(searchText)
+        self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.jobs = self.oldJobs
+        self.tableView.reloadData()
+    }
+    
+    
+    
+    
+    
+ 
+    
     //MARK: - SetupViews
-
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
         
         self.view.addSubview(filterButton)
         self.view.addSubview(searchButton)
+    
     }
     
     func filterButtonPressed(sender: UIButton) {
@@ -95,6 +122,16 @@ class SearchResultsTableViewController: UITableViewController {
     
     func searchButtonPressed(sender: UIButton) {
         print("search pressed")
+        self.navigationItem.titleView = searchField
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.navigationItem.titleView = nil
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.leftBarButtonItem = leftBarButton
     }
     
 
@@ -111,21 +148,19 @@ class SearchResultsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SearchTableViewCell
         
-        
         let selectedCell = jobs[indexPath.row]
 
         cell.jobLabel.text = selectedCell.buisnessTitle
-        cell.subLabel.text = "\(selectedCell.agency) • Posted \(selectedCell.postingDate)"
-        
-
+        cell.agencyLabel.text = selectedCell.agency
+        cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
+        cell.subLabel.addImage(imageName: "marker")
+ 
         //cell.textLabel?.text = selectedCell.jobTitle
 
         return cell
     }
     
 
-    
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedRow = indexPath.row
         let searchDetailVc = SearchDetailViewController()
@@ -133,7 +168,6 @@ class SearchResultsTableViewController: UITableViewController {
         
         navigationController?.pushViewController(searchDetailVc, animated: true)
     }
-    
     
     internal lazy var filterButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
@@ -146,17 +180,21 @@ class SearchResultsTableViewController: UITableViewController {
     internal lazy var searchButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(searchButtonPressed(sender:)), for: .touchUpInside)
-        button.setTitle("Search", for: .normal)
+        button.setImage(UIImage(named: "search"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         return button
     }()
     
-//    internal lazy var searchField: UISearchBar = {
-//        let search = UISearchBar()
-//        
-//        
-//    }()
-
-
-    
+    internal lazy var searchField: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.showsCancelButton = true
+        searchBar.searchBarStyle = UISearchBarStyle.prominent
+        searchBar.placeholder = " Search..."
+        searchBar.frame = CGRect(x: 0, y: 0, width: 200, height: 20)
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.delegate = self
+        return searchBar
+    }()
 }
+
