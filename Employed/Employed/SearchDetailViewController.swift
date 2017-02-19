@@ -9,18 +9,20 @@
 import UIKit
 import SnapKit
 import FirebaseDatabase
+import FirebaseAuth
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     var jobPost: NYCJobs!
 
     //var scrollView: UIScrollView!
 
-    var databaseReference = FIRDatabase.database().reference().child("Users")
+    var databaseReference = FIRDatabase.database().reference()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        
         self.title = jobPost.buisnessTitle
         self.view.backgroundColor = Colors.lightPrimaryColor
  
@@ -124,6 +126,16 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
 
     //MARK: - Utilities
     func savePost() {
+        
+        
+        let dict = jobPost.asDictionary
+        let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
+        
+        userData.updateChildValues(dict)
+        
+        
+        
+
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)

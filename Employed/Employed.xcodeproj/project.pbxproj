@@ -15,6 +15,8 @@
 		1AA994951E591BA50050CB6E /* ResumePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */; };
 		1AA994971E594C680050CB6E /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994961E594C680050CB6E /* CameraOverlayView.swift */; };
 		1AA9949D1E5964280050CB6E /* CameraOverlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */; };
+		1AED16231E5A2D0A002989B2 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED16221E5A2D0A002989B2 /* ProfileDetailViewController.swift */; };
+		1AED16251E5A3488002989B2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED16241E5A3488002989B2 /* EditProfileViewController.swift */; };
 		944703884694D63F46F3615C /* Pods_Employed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */; };
 		A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243C91E589BD6002B40D7 /* NYCJobs.swift */; };
 		A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CB1E589C09002B40D7 /* APIRequestManager.swift */; };
@@ -23,6 +25,7 @@
 		A20243D31E58B911002B40D7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */; };
 		A20243D51E58C7A5002B40D7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */; };
 		A2D1D7041E58EF1F00C656E5 /* DiceJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */; };
+		A2D1D7061E5A32B200C656E5 /* AllJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1D7051E5A32B200C656E5 /* AllJobs.swift */; };
 		E35F6EAE1E580A9900E8F011 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EA81E580A9900E8F011 /* LoginViewController.swift */; };
 		E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */; };
 		E35F6EB01E580A9900E8F011 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */; };
@@ -43,6 +46,8 @@
 		1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumePreviewViewController.swift; sourceTree = "<group>"; };
 		1AA994961E594C680050CB6E /* CameraOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
 		1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayBar.swift; sourceTree = "<group>"; };
+		1AED16221E5A2D0A002989B2 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
+		1AED16241E5A3488002989B2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Employed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employed.release.xcconfig"; path = "Pods/Target Support Files/Pods-Employed/Pods-Employed.release.xcconfig"; sourceTree = "<group>"; };
 		A20243C91E589BD6002B40D7 /* NYCJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYCJobs.swift; sourceTree = "<group>"; };
@@ -52,6 +57,7 @@
 		A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceJob.swift; sourceTree = "<group>"; };
+		A2D1D7051E5A32B200C656E5 /* AllJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllJobs.swift; sourceTree = "<group>"; };
 		E35F6EA81E580A9900E8F011 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobSearchViewController.swift; sourceTree = "<group>"; };
 		E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +130,7 @@
 			children = (
 				A20243C91E589BD6002B40D7 /* NYCJobs.swift */,
 				A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */,
+				A2D1D7051E5A32B200C656E5 /* AllJobs.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -136,6 +143,8 @@
 				E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */,
 				E35F6EAB1E580A9900E8F011 /* SearchDetailViewController.swift */,
 				A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */,
+				1AED16241E5A3488002989B2 /* EditProfileViewController.swift */,
+				1AED16221E5A2D0A002989B2 /* ProfileDetailViewController.swift */,
 				1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */,
 				E35F6EAC1E580A9900E8F011 /* SavesTableViewController.swift */,
 			);
@@ -332,6 +341,7 @@
 				E35F6EB01E580A9900E8F011 /* SearchResultsTableViewController.swift in Sources */,
 				E35F6EB11E580A9900E8F011 /* SearchDetailViewController.swift in Sources */,
 				E35F6EB91E59543200E8F011 /* HelperExtension.swift in Sources */,
+				1AED16231E5A2D0A002989B2 /* ProfileDetailViewController.swift in Sources */,
 				E35F6EAE1E580A9900E8F011 /* LoginViewController.swift in Sources */,
 				1AA994951E591BA50050CB6E /* ResumePreviewViewController.swift in Sources */,
 				A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */,
@@ -346,6 +356,10 @@
 				E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */,
 				A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */,
 				A2D1D7041E58EF1F00C656E5 /* DiceJob.swift in Sources */,
+
+				1AED16251E5A3488002989B2 /* EditProfileViewController.swift in Sources */,
+
+				A2D1D7061E5A32B200C656E5 /* AllJobs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

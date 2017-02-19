@@ -120,7 +120,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         
         searchJobTextField.snp.remakeConstraints { (view) in
             view.centerX.equalToSuperview()
-            view.bottom.equalTo(searchButton.snp.top).offset(-10)
+            view.bottom.equalTo(searchButton.snp.top).offset(-5)
         }
         
         searchIcon.snp.remakeConstraints { (view) in
@@ -167,7 +167,13 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     private let searchJobTextField: UITextField = {
         let textField = UITextField()
         textField.textColor = .white
-        textField.placeholder = "Enter Your Job"
+        let myString = "Enter job here"
+        let myAttribute = [ NSForegroundColorAttributeName: UIColor.white ]
+        let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
+        
+//        textField.placeholder = "What would you like to do?"
+        textField.attributedPlaceholder = myAttrString
+        textField.alpha = 0.8
         return textField
     }()
     
@@ -185,7 +191,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     private let findJobButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Lets Get Started", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(Colors.darkPrimaryColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button
     }()
@@ -193,7 +199,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     private let searchButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Search", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(Colors.darkPrimaryColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button
     }()
