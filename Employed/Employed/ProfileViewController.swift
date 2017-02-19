@@ -185,7 +185,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     //MARK: - Views
     
-    lazy var profilePic: UIImageView = {
+    internal lazy var profilePic: UIImageView = {
         let imageView = UIImageView()
         
         imageView.layer.cornerRadius = 75
@@ -207,13 +207,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }()
     
     
-    lazy var infoTableView: UITableView = {
+    internal let infoTableView: UITableView = {
         let tableview: UITableView = UITableView()
         tableview.backgroundColor = .red
         return tableview
     }()
     
-    lazy var addResume: UIButton = {
+    internal let addResume: UIButton = {
         let button: UIButton = UIButton(type: UIButtonType.system)
         button.setTitle("Add Resume", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -222,7 +222,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return button
     }()
     
-    lazy var profileBackGround: UIImageView = {
+    internal let profileBackGround: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.image = UIImage(named: "onepunch")
         let blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
@@ -234,7 +234,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return imageView
     }()
     
-    lazy var nameLabel: UILabel = {
+    internal let nameLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = "One Punch"
         label.textColor = .white
@@ -242,7 +242,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return label
     }()
     
-    lazy var logOutButton: UIButton = {
+    internal lazy var logOutButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.setTitle("LogOut", for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 80, height: 20)
