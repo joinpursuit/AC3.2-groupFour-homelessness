@@ -7,29 +7,39 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Photos
+import MobileCoreServices
+
 
 class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let rightBarButton = UIBarButtonItem(customView: logOutButton)
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.hidesBackButton = true
+        
         self.view.backgroundColor = .white
         setUpViews()
         setUpTableView()
-        setImagePicker()
+        //setImagePicker()
     }
     
     func setUpViews(){
         self.view.addSubview(profileBackGround)
-        self.profileBackGround.addSubview(profilePic)
         self.profileBackGround.addSubview(addResume)
         self.profileBackGround.addSubview(nameLabel)
         self.view.addSubview(infoTableView)
         self.view.addSubview(addResume)
+        self.profileBackGround.addSubview(profilePic)
         
         self.edgesForExtendedLayout = []
         
+        logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         profileBackGround.snp.makeConstraints { (view) in
             view.top.leading.trailing.equalToSuperview()
@@ -73,6 +83,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
     
+
     func setImagePicker(){
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
@@ -83,6 +94,55 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         //View covers use photo button
         //imagePickerController.cameraOverlayView = overlay
         
+    }
+
+    func logOut() {
+        do{
+            try FIRAuth.auth()?.signOut()
+
+        }
+        catch{
+            let alertController = UIAlertController(title: "Error", message: "Trouble Logging Out", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+         let _ = self.navigationController?.popToRootViewController(animated: true)
+     }
+    
+    func handleTap() {
+        print("TAPPPPED???")
+        let imagePickerController = UIImagePickerController()
+        
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.mediaTypes = [ String(kUTTypeImage) ]
+        imagePickerController.delegate = self
+        
+        self.present(imagePickerController, animated: true, completion:  nil)
+    }
+    
+    
+    //MARK: -ImagePicker delegates 
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+         var selectedImageFromPicker: UIImage?
+        
+        if let originalImage = info["UIImagePickerControllerOriginalImage"] {
+            selectedImageFromPicker = originalImage as? UIImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            profilePic.image = selectedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+         dismiss(animated: true, completion: nil)
     }
     
     //MARK :- TableView degelgate methods
@@ -101,29 +161,28 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         return cell
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            dismiss(animated: true, completion: nil)
-            if let imageData = EmployedFileManager.shared.convertToPDf(image: image){
-                EmployedFileManager.shared.saveFile(data: imageData)
-                if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
-                    let resumeVC = ResumePreviewViewController()
-                    resumeVC.pdfUrl = URLRequest(url: pdfUrl)
-                    present(resumeVC, animated: true, completion: nil)
-                }
-            }
-        }
-    }
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        
+//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+//            dismiss(animated: true, completion: nil)
+//            if let imageData = EmployedFileManager.shared.convertToPDf(image: image){
+//                EmployedFileManager.shared.saveFile(data: imageData)
+//                if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+//                    let resumeVC = ResumePreviewViewController()
+//                    resumeVC.pdfUrl = URLRequest(url: pdfUrl)
+//                    present(resumeVC, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//    }
     
     //MARK: - Views
     
-    internal let profilePic: UIImageView = {
+    internal lazy var profilePic: UIImageView = {
         let imageView = UIImageView()
         
         imageView.layer.cornerRadius = 75
-        imageView.isUserInteractionEnabled = true
         imageView.layer.shadowColor = UIColor.black.cgColor
         imageView.layer.shadowOpacity = 0.4
         imageView.layer.shadowOffset = CGSize(width: 1, height: 5)
@@ -133,8 +192,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "onepunch")
         imageView.layer.masksToBounds = true
-        return imageView
+        imageView.isUserInteractionEnabled = true
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        imageView.addGestureRecognizer(tap)
+        
+        return imageView
     }()
     
     
@@ -161,6 +224,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         blurEffectView.frame = imageView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         imageView.addSubview(blurEffectView)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -170,6 +234,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
+    }()
+    
+    internal lazy var logOutButton: UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.setTitle("LogOut", for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 80, height: 20)
+        return button
     }()
     
     
