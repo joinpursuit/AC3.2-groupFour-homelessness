@@ -16,14 +16,17 @@ class NYCJobs {
     let postingDate: String
     let agency: String
     let workLocation: String
-    
-    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String, workLocation: String) {
+    let minReqs: String
+    let minSalary: String
+    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String, workLocation: String, minReqs: String, minSalary: String) {
         self.buisnessTitle = buisnessTitle
         self.civilTitle = civilTitle
         self.jobDescription = jobDescription
         self.postingDate = postingDate
         self.agency = agency
         self.workLocation = workLocation
+        self.minReqs = minReqs
+        self.minSalary = minSalary
         
     }
 
@@ -36,12 +39,13 @@ class NYCJobs {
         let postingDate = dict["posting_date"] as? String ?? ""
         let agency = dict["agency"] as? String ?? ""
         let workLocation = dict["work_location"] as? String ?? ""
+        let minReqs = dict["minimum_qual_requirements"] as? String ?? ""
+        let minSalary = dict["salary_range_from"] as? String ?? ""
         
-        //10/13/2016 00:00:00
         let date = Array(postingDate.components(separatedBy: " "))
         
         
-        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription, postingDate: date[0], agency: agency, workLocation: workLocation)
+        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary)
     }
     
     
