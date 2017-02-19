@@ -45,6 +45,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         
         let searchResultsVC = SearchResultsTableViewController()
         navigationController?.pushViewController(searchResultsVC, animated: true)
+        
     }
     
     

@@ -10,41 +10,57 @@ import UIKit
 
 class SearchResultsTableViewController: UITableViewController {
 
-//     var jobs = [NYCJobs]()
-    var jobs = [DiceJob]()
+     var jobs = [NYCJobs]()
+    
+    var sectionTitles: [String] {
+        get {
+            var sectionSet = Set<String>()
+            for job in jobs {
+                sectionSet.insert(job.agency)
+            }
+            return Array(sectionSet).sorted()
+        }
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = []
-        let barButton = UIBarButtonItem(customView: filterButton)
-        self.navigationItem.rightBarButtonItem = barButton
+        let rightBarButton = UIBarButtonItem(customView: filterButton)
+        let leftBarButton = UIBarButtonItem(customView: searchButton)
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.leftBarButtonItem = leftBarButton
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        self.title = "Jobs"
         
         
         self.view.backgroundColor = UIColor.green
         getData()
+        
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 200
     }
-    
 
-//    func getData() {
-//        APIRequestManager.manager.getPOD(endPoint: "https://data.cityofnewyork.us/resource/swhp-yxa4.json") { (data) in
-//            
-//            if let validData = data {
-//                if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
-//                    let validJob = jsonData as? [[String:Any]] {
-//                    
-//                    self.jobs = NYCJobs.getJobs(from: validJob)
-//                    
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-//                }
-//                
-//            }
-//        }
-//    }
     
+    //MARK: - Utilities
+    func getData() {
+        APIRequestManager.manager.getPOD(endPoint: "https://data.cityofnewyork.us/resource/swhp-yxa4.json") { (data) in
+            
+            if let validData = data {
+                if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
+                    let validJob = jsonData as? [[String:Any]] {
+                    
+                    self.jobs = NYCJobs.getJobs(from: validJob)
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+
+    /*
         func getData() {
             APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
     
@@ -62,26 +78,32 @@ class SearchResultsTableViewController: UITableViewController {
                 }
             }
         }
-    
+ */
+
+    //MARK: - SetupViews
+
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
         
         self.view.addSubview(filterButton)
+        self.view.addSubview(searchButton)
     }
     
-    func configureConstraints() {
-    
+    func filterButtonPressed(sender: UIButton) {
+        print("filter pressed")
     }
+    
+    func searchButtonPressed(sender: UIButton) {
+        print("search pressed")
+    }
+    
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return jobs.count
     }
 
@@ -89,59 +111,27 @@ class SearchResultsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SearchTableViewCell
         
+        
         let selectedCell = jobs[indexPath.row]
-        cell.textLabel?.text = selectedCell.jobTitle
+
+        cell.jobLabel.text = selectedCell.buisnessTitle
+        cell.subLabel.text = "\(selectedCell.agency) • Posted \(selectedCell.postingDate)"
+        
+
+        //cell.textLabel?.text = selectedCell.jobTitle
+
         return cell
     }
     
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
-    func filterButtonPressed(sender: UIButton) {
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRow = indexPath.row
+        let searchDetailVc = SearchDetailViewController()
+        searchDetailVc.jobPost = jobs[selectedRow]
+        
+        navigationController?.pushViewController(searchDetailVc, animated: true)
     }
     
     
@@ -152,6 +142,21 @@ class SearchResultsTableViewController: UITableViewController {
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         return button
     }()
+    
+    internal lazy var searchButton: UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.addTarget(self, action: #selector(searchButtonPressed(sender:)), for: .touchUpInside)
+        button.setTitle("Search", for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
+        return button
+    }()
+    
+//    internal lazy var searchField: UISearchBar = {
+//        let search = UISearchBar()
+//        
+//        
+//    }()
+
 
     
 }
