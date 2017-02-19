@@ -11,7 +11,9 @@ import SnapKit
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate {
     var jobPost: NYCJobs!
-    let scrollView = UIScrollView(frame: UIScreen.main.bounds)
+    var scrollView: UIScrollView!
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +21,10 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.title = jobPost.buisnessTitle
         self.view.backgroundColor = Colors.lightPrimaryColor
         
-        //self.view = self.scrollView
-        //self.scrollView.contentSize = CGSize(width:1234, height: 5678)
+        scrollView = UIScrollView(frame: view.bounds)
+        scrollView.addSubview(container)
+        scrollView.contentSize = container.bounds.size
+        view.addSubview(scrollView)
         
         let barButton = UIBarButtonItem(customView: saveButton)
         self.navigationItem.rightBarButtonItem = barButton
@@ -42,17 +46,37 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     //MARK: - SetupViews
     func setUpViews(){
-        self.view.addSubview(jobTitle)
-        self.view.addSubview(agencyLabel)
-        self.view.addSubview(addressLabel)
-        self.view.addSubview(wageCategoryLabel)
-        self.view.addSubview(wageLabel)
-        self.view.addSubview(jobPostDescription)
-        self.view.addSubview(jobReqs)
-        self.view.addSubview(mapView)
+        //self.view.addSubview(scrollView)
+        //self.scrollView.addSubview(container)
+//        self.view.addSubview(jobTitle)
+//        self.view.addSubview(agencyLabel)
+//        self.view.addSubview(addressLabel)
+//        self.view.addSubview(wageCategoryLabel)
+//        self.view.addSubview(wageLabel)
+//        self.view.addSubview(jobPostDescription)
+//        self.view.addSubview(jobReqs)
+//        self.view.addSubview(mapView)
+        self.view.addSubview(container)
+        self.container.addSubview(jobTitle)
+        self.container.addSubview(agencyLabel)
+        self.container.addSubview(addressLabel)
+        self.container.addSubview(wageCategoryLabel)
+        self.container.addSubview(wageLabel)
+        self.container.addSubview(jobPostDescription)
+        self.container.addSubview(jobReqs)
+        self.container.addSubview(mapView)
         
         self.edgesForExtendedLayout = []
-     
+        
+//        scrollView.snp.makeConstraints { (view) in
+//            view.leading.trailing.equalTo(container)
+//            view.height.width.equalTo(container)
+//        }
+        
+        container.snp.makeConstraints { (view) in
+            view.top.bottom.leading.trailing.equalToSuperview()
+        }
+        
         jobTitle.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(8.0)
             view.leading.equalToSuperview().offset(16.0)
@@ -114,9 +138,10 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         return view
     }()
     
-    private lazy var scroll: UIScrollView = {
-    
-    }()
+//    private lazy var scrollView: UIScrollView = {
+//        let scrollView = UIScrollView()
+//        return scrollView
+//    }()
     
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
