@@ -8,9 +8,11 @@
 
 import UIKit
 import SnapKit
+import FirebaseDatabase
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate {
     var jobPost: NYCJobs!
+    var databaseReference = FIRDatabase.database().reference().child("Users")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +67,9 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     //MARK: - Utilities
     func savePost() {
         
+        
+        
+        
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -74,7 +79,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(savePost), for: .touchUpInside)
-        button.setTitle("save", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         
         return button
