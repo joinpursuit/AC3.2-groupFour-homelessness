@@ -108,11 +108,15 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     }
     
     //MARK: - Views
-//    private lazy var container: UIView = {
-//        let view = UIView()
-//        view.frame = 
-//        return view
-//    }()
+    private lazy var container: UIView = {
+        let view = UIView()
+        view.frame = UIScreen.main.bounds
+        return view
+    }()
+    
+    private lazy var scroll: UIScrollView = {
+    
+    }()
     
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
