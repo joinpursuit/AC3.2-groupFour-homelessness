@@ -11,12 +11,10 @@ import SnapKit
 import FirebaseDatabase
 import FirebaseAuth
 
-class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate {
+class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     var jobPost: NYCJobs!
 
-    var scrollView: UIScrollView!
-
-
+    //var scrollView: UIScrollView!
 
     var databaseReference = FIRDatabase.database().reference()
 
@@ -27,12 +25,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         self.title = jobPost.buisnessTitle
         self.view.backgroundColor = Colors.lightPrimaryColor
-        
-        scrollView = UIScrollView(frame: view.bounds)
-        scrollView.addSubview(container)
-        scrollView.contentSize = container.bounds.size
-        view.addSubview(scrollView)
-        
+ 
         let barButton = UIBarButtonItem(customView: saveButton)
         self.navigationItem.rightBarButtonItem = barButton
         
@@ -49,21 +42,15 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.wageCategoryLabel.text = "SALARY "
     }
     
-    //testdkmfslkfm
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.scrollView.contentSize = CGSize(width: view.frame.size.width, height: view.frame.size.height)
+    }
+
     //MARK: - SetupViews
     func setUpViews(){
-        //self.view.addSubview(scrollView)
-        //self.scrollView.addSubview(container)
-//        self.view.addSubview(jobTitle)
-//        self.view.addSubview(agencyLabel)
-//        self.view.addSubview(addressLabel)
-//        self.view.addSubview(wageCategoryLabel)
-//        self.view.addSubview(wageLabel)
-//        self.view.addSubview(jobPostDescription)
-//        self.view.addSubview(jobReqs)
-//        self.view.addSubview(mapView)
-        self.view.addSubview(container)
+        self.view.addSubview(scrollView)
+        self.scrollView.addSubview(container)
         self.container.addSubview(jobTitle)
         self.container.addSubview(agencyLabel)
         self.container.addSubview(addressLabel)
@@ -75,18 +62,24 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         self.edgesForExtendedLayout = []
         
-//        scrollView.snp.makeConstraints { (view) in
-//            view.leading.trailing.equalTo(container)
-//            view.height.width.equalTo(container)
-//        }
+        scrollView.snp.makeConstraints { (view) in
+            view.top.bottom.leading.trailing.equalToSuperview()
+            view.width.equalToSuperview()
+
+        }
         
         container.snp.makeConstraints { (view) in
-            view.top.bottom.leading.trailing.equalToSuperview()
+            view.width.equalTo(self.view.snp.width)
+            view.centerX.equalTo(self.view.snp.centerX)
+            view.top.bottom.equalToSuperview()
+            view.leading.trailing.equalToSuperview()
+            
         }
         
         jobTitle.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(8.0)
             view.leading.equalToSuperview().offset(16.0)
+            
         }
         
         agencyLabel.snp.makeConstraints { (view) in
@@ -112,7 +105,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         jobPostDescription.snp.makeConstraints { (view) in
             view.top.equalTo(wageLabel.snp.bottom).offset(16.0)
             view.centerX.equalToSuperview()
-            view.height.equalToSuperview().multipliedBy(0.5)
+            //view.height.equalToSuperview().multipliedBy(0.5)
             view.leading.equalTo(jobTitle.snp.leading)
         }
         
@@ -123,9 +116,10 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         mapView.snp.makeConstraints { (view) in
             view.top.equalTo(jobReqs.snp.bottom).offset(16.0)
+            view.bottom.equalToSuperview().offset(-30)
             view.centerX.equalToSuperview()
             view.width.equalToSuperview()
-            view.height.equalToSuperview().multipliedBy(0.25)
+            view.height.equalTo(200)
         }
         
     }
@@ -141,6 +135,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         
         
+
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -149,14 +144,17 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     //MARK: - Views
     private lazy var container: UIView = {
         let view = UIView()
-        view.frame = UIScreen.main.bounds
+        view.contentMode = .scaleAspectFit
+        
         return view
     }()
     
-//    private lazy var scrollView: UIScrollView = {
-//        let scrollView = UIScrollView()
-//        return scrollView
-//    }()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.isScrollEnabled = true
+        return scrollView
+    }()
     
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
