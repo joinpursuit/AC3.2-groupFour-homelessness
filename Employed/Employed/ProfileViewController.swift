@@ -36,7 +36,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.profileBackGround.addSubview(addResume)
         self.profileBackGround.addSubview(nameLabel)
         self.view.addSubview(infoTableView)
-        self.view.addSubview(addResume)
         self.profileBackGround.addSubview(profilePic)
         
         self.edgesForExtendedLayout = []
@@ -56,14 +55,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         nameLabel.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
-            view.top.equalTo(profilePic.snp.bottom).offset(10)
+            view.top.equalTo(profilePic.snp.bottom).offset(15)
             
-        }
-        
-        addResume.snp.makeConstraints { (view) in
-            view.top.equalTo(nameLabel.snp.bottom).offset(10)
-            view.centerX.equalToSuperview()
-            view.width.equalToSuperview().multipliedBy(0.3)
         }
         
         addResume.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
@@ -75,7 +68,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func showCamera(){
-       // self.tabBarController?.present(imagePickerController, animated: true, completion: nil)
         showImagePickerfor(source: .camera)
         // present(imagePickerController, animated: true, completion: nil)
     }
@@ -88,18 +80,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
     
-    
-//    func setImagePicker(){
-//        imagePickerController.delegate = self
-//        imagePickerController.sourceType = .camera
-//        imagePickerController.modalPresentationStyle = .currentContext
-//        
-//        let overlay: CameraOverlayView = CameraOverlayView()
-//        overlay.layer.frame = UIScreen.main.bounds
-//        //View covers use photo button
-//        //imagePickerController.cameraOverlayView = overlay
-//        
-//    }
     
     //MARK:- Utilities
     func logOut() {
@@ -138,7 +118,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         }
         
         imagePickerController = imagePicker
-        present(imagePickerController, animated: true, completion: nil)
+        self.tabBarController?.present(imagePickerController, animated: true, completion: nil)
     }
     
     //MARK: -ImagePicker delegates
@@ -198,7 +178,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.layer.shadowRadius = 2
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 5
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: "onepunch")
         imageView.layer.masksToBounds = true
         imageView.isUserInteractionEnabled = true

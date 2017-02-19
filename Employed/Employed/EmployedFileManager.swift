@@ -59,7 +59,6 @@ class EmployedFileManager{
         pdfContext.endPage()
         
         return pdfFile
-        
     }
     
     func saveFile(data: NSData){
