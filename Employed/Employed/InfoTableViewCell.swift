@@ -15,6 +15,8 @@ class InfoTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.selectionStyle = .none
+        
         setUpCell()
     }
     
@@ -23,6 +25,7 @@ class InfoTableViewCell: UITableViewCell {
     }
     
     func setUpCell(){
+        
         self.addSubview(cellIcon)
         self.addSubview(cellDetail)
         self.addSubview(cellTitle)
@@ -42,7 +45,6 @@ class InfoTableViewCell: UITableViewCell {
             view.leading.equalTo(cellIcon.snp.trailing).offset(10)
             view.bottom.equalToSuperview().inset(10)
         }
-        
     }
     
     let cellIcon: UIImageView = {
@@ -56,7 +58,6 @@ class InfoTableViewCell: UITableViewCell {
         label.text = "Some description goes here..."
         label.font = UIFont.systemFont(ofSize: 15)
         return label
-        
     }()
     
     let cellTitle: UILabel = {
@@ -64,7 +65,6 @@ class InfoTableViewCell: UITableViewCell {
         label.text = "Title"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
-        
     }()
     
 }
