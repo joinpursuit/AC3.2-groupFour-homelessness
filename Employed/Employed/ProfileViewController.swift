@@ -7,11 +7,18 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Photos
+import MobileCoreServices
 
-class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
+class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let rightBarButton = UIBarButtonItem(customView: logOutButton)
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.hidesBackButton = true
         
         self.view.backgroundColor = .white
         setUpViews()
@@ -20,15 +27,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func setUpViews(){
         self.view.addSubview(profileBackGround)
-        self.profileBackGround.addSubview(profilePic)
         self.profileBackGround.addSubview(addResume)
         self.profileBackGround.addSubview(nameLabel)
         self.view.addSubview(infoTableView)
         self.view.addSubview(addResume)
+        self.profileBackGround.addSubview(profilePic)
         
         self.edgesForExtendedLayout = []
         
         addResume.addTarget(self, action: #selector(uploadResume), for: .touchUpInside)
+        logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         profileBackGround.snp.makeConstraints { (view) in
             view.top.leading.trailing.equalToSuperview()
@@ -70,6 +78,55 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
     
+    func logOut() {
+        do{
+            try FIRAuth.auth()?.signOut()
+
+        }
+        catch{
+            let alertController = UIAlertController(title: "Error", message: "Trouble Logging Out", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+         let _ = self.navigationController?.popToRootViewController(animated: true)
+     }
+    
+    func handleTap() {
+        print("TAPPPPED???")
+        let imagePickerController = UIImagePickerController()
+        
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.mediaTypes = [ String(kUTTypeImage) ]
+        imagePickerController.delegate = self
+        
+        self.present(imagePickerController, animated: true, completion:  nil)
+    }
+    
+    
+    //MARK: -ImagePicker delegates 
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+         var selectedImageFromPicker: UIImage?
+        
+        if let originalImage = info[" UIImagePickerControllerOriginalImage"] {
+            selectedImageFromPicker = originalImage as? UIImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            profilePic.image = selectedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+         dismiss(animated: true, completion: nil)
+    }
+    
     //MARK :- TableView degelgate methods
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -89,11 +146,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     //MARK: - Views
     
-    internal let profilePic: UIImageView = {
+    internal lazy var profilePic: UIImageView = {
         let imageView = UIImageView()
         
         imageView.layer.cornerRadius = 75
-        imageView.isUserInteractionEnabled = true
         imageView.layer.shadowColor = UIColor.black.cgColor
         imageView.layer.shadowOpacity = 0.4
         imageView.layer.shadowOffset = CGSize(width: 1, height: 5)
@@ -103,8 +159,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "onepunch")
         imageView.layer.masksToBounds = true
-        return imageView
+        imageView.isUserInteractionEnabled = true
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        imageView.addGestureRecognizer(tap)
+        
+        return imageView
     }()
     
     
@@ -140,6 +200,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
+    }()
+    
+    internal lazy var logOutButton: UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.setTitle("LogOut", for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 80, height: 20)
+        return button
     }()
     
     

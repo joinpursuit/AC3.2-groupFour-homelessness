@@ -9,9 +9,13 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
-
+    
+    let newViewController = ProfileViewController()
+    var databaseReference = FIRDatabase.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,7 +23,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
        self.view.backgroundColor = .white
         setUpViews()
         
-        
+        if FIRAuth.auth()?.currentUser != nil {
+            self.navigationController?.pushViewController(newViewController, animated: false)
+        }
     }
 
   
@@ -78,25 +84,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     
     func login() {
-//        if let email = emailTextField.text,
-//            let password = passwordTextField.text {
-//            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
-//                
-//                if user != nil {
-//                    let newViewController = ProfileViewController()
-//                    if let tabVC =  self.navigationController {
-//                        tabVC.show(newViewController, sender: nil)
-//                        
-//                    }
-//                } else {
-//                    
-//                    self.showAlertFailure(title: "Login Failed!", error: error!)
-//                }
-//                
-//            })
-//        }
+        if let email = emailTextField.text,
+            let password = passwordTextField.text {
+            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+                
+                if user != nil {
+                    
+                    if let tabVC =  self.navigationController {
+                        tabVC.show(self.newViewController, sender: nil)
+                        
+                    }
+                } else {
+                    
+                    self.showAlertFailure(title: "Login Failed!", error: error!)
+                }
+                
+            })
+        }
         
-        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+//        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         
     }
     
@@ -111,9 +117,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                    self.showAlertFailure(title: "Register Failed!", error: error!)
                 }
                 
-                let newViewController = ProfileViewController()
+                
                 if let tabVC =  self.navigationController {
-                    tabVC.show(newViewController, sender: nil)
+                    tabVC.show(self.newViewController, sender: nil)
                 }
             })
         }
