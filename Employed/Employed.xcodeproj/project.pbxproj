@@ -23,6 +23,7 @@
 		A20243D31E58B911002B40D7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */; };
 		A20243D51E58C7A5002B40D7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */; };
 		A2D1D7041E58EF1F00C656E5 /* DiceJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */; };
+		A2D1D7061E5A32B200C656E5 /* AllJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D1D7051E5A32B200C656E5 /* AllJobs.swift */; };
 		E35F6EAE1E580A9900E8F011 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EA81E580A9900E8F011 /* LoginViewController.swift */; };
 		E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */; };
 		E35F6EB01E580A9900E8F011 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */; };
@@ -52,6 +53,7 @@
 		A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceJob.swift; sourceTree = "<group>"; };
+		A2D1D7051E5A32B200C656E5 /* AllJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllJobs.swift; sourceTree = "<group>"; };
 		E35F6EA81E580A9900E8F011 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobSearchViewController.swift; sourceTree = "<group>"; };
 		E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				A20243C91E589BD6002B40D7 /* NYCJobs.swift */,
 				A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */,
+				A2D1D7051E5A32B200C656E5 /* AllJobs.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */,
 				A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */,
 				A2D1D7041E58EF1F00C656E5 /* DiceJob.swift in Sources */,
+				A2D1D7061E5A32B200C656E5 /* AllJobs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
