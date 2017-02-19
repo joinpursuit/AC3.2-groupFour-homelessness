@@ -24,13 +24,13 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "Welcome"
+        let str = "No saved Jobs"
         let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
         return NSAttributedString(string: str, attributes: attrs)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "Tap the button below to add your first grokkleglob."
+        let str = "Save desired Jobs here"
         let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
         return NSAttributedString(string: str, attributes: attrs)
     }
@@ -39,17 +39,6 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         return UIImage(named: "logo")
     }
     
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
-        let str = "Add Grokkleglob"
-        let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
-        let ac = UIAlertController(title: "Button tapped!", message: nil, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Hurray", style: .default))
-        present(ac, animated: true)
-    }
 
     // MARK: - Table view data source
 
