@@ -121,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				A20243C91E589BD6002B40D7 /* NYCJobs.swift */,
-				1AA994921E5900400050CB6E /* EmployedFileManager.swift */,
 				A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */,
 			);
 			name = Models;
@@ -153,6 +152,7 @@
 		1AA994661E57FA330050CB6E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				1AA994921E5900400050CB6E /* EmployedFileManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -160,12 +160,9 @@
 		1AA994671E57FA7B0050CB6E /* Controller Cells */ = {
 			isa = PBXGroup;
 			children = (
-
 				A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */,
 				A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */,
-
 				1AA9948A1E58E7700050CB6E /* InfoTableViewCell.swift */,
-
 			);
 			name = "Controller Cells";
 			sourceTree = "<group>";

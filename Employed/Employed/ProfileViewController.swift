@@ -14,7 +14,7 @@ import MobileCoreServices
 
 class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
-
+    
     //Can be used to populate profile tableview
     private let infoImageArray: [UIImage] = []
     private let infoDetails: [String:String] = [:]
@@ -25,7 +25,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         let rightBarButton = UIBarButtonItem(customView: logOutButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
-        
         self.view.backgroundColor = .white
         setUpViews()
         setUpTableView()
@@ -76,7 +75,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func showCamera(){
-        self.tabBarController?.present(imagePickerController, animated: true, completion: nil)
+       // self.tabBarController?.present(imagePickerController, animated: true, completion: nil)
+        showImagePickerfor(source: .camera)
         // present(imagePickerController, animated: true, completion: nil)
     }
     
@@ -88,23 +88,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
     
-
-    func setImagePicker(){
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .camera
-        imagePickerController.modalPresentationStyle = .currentContext
-        
-        let overlay: CameraOverlayView = CameraOverlayView()
-        overlay.layer.frame = UIScreen.main.bounds
-        //View covers use photo button
-        //imagePickerController.cameraOverlayView = overlay
-        
-    }
-
+    
+//    func setImagePicker(){
+//        imagePickerController.delegate = self
+//        imagePickerController.sourceType = .camera
+//        imagePickerController.modalPresentationStyle = .currentContext
+//        
+//        let overlay: CameraOverlayView = CameraOverlayView()
+//        overlay.layer.frame = UIScreen.main.bounds
+//        //View covers use photo button
+//        //imagePickerController.cameraOverlayView = overlay
+//        
+//    }
+    
+    //MARK:- Utilities
     func logOut() {
         do{
             try FIRAuth.auth()?.signOut()
-
+            
         }
         catch{
             let alertController = UIAlertController(title: "Error", message: "Trouble Logging Out", preferredStyle: UIAlertControllerStyle.alert)
@@ -113,42 +114,60 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             self.present(alertController, animated: true, completion: nil)
         }
         
-         let _ = self.navigationController?.popToRootViewController(animated: true)
-     }
-    
-    func handleTap() {
-        print("TAPPPPED???")
-        let imagePickerController = UIImagePickerController()
-        
-        imagePickerController.allowsEditing = true
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.mediaTypes = [ String(kUTTypeImage) ]
-        imagePickerController.delegate = self
-        
-        self.present(imagePickerController, animated: true, completion:  nil)
+        let _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
+    func handleTap() {
+        showImagePickerfor(source: .photoLibrary)
+    }
     
-    //MARK: -ImagePicker delegates 
+    private func showImagePickerfor(source: UIImagePickerControllerSourceType){
+        let imagePicker: UIImagePickerController = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        switch source{
+        case .camera:
+            imagePicker.sourceType = .camera
+            imagePicker.modalPresentationStyle = .currentContext
+        case .photoLibrary:
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.mediaTypes = [String(kUTTypeImage)]
+        default:
+            break
+        }
+        
+        imagePickerController = imagePicker
+        present(imagePickerController, animated: true, completion: nil)
+    }
     
+    //MARK: -ImagePicker delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-         var selectedImageFromPicker: UIImage?
+    
+        guard let imageFromPicker = info["UIImagePickerControllerOriginalImage"] as? UIImage else { return }
         
-        if let originalImage = info["UIImagePickerControllerOriginalImage"] {
-            selectedImageFromPicker = originalImage as? UIImage
+        switch imagePickerController.sourceType{
+        case .camera:
+            dismiss(animated: true, completion: nil)
+            if let imageData = EmployedFileManager.shared.convertToPDf(image: imageFromPicker){
+                EmployedFileManager.shared.saveFile(data: imageData)
+                if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+                    let resumeVC = ResumePreviewViewController()
+                    resumeVC.pdfUrl = URLRequest(url: pdfUrl)
+                    present(resumeVC, animated: true, completion: nil)
+                }
+            }
+        case .photoLibrary:
+            profilePic.image = imageFromPicker
+            profileBackGround.image = imageFromPicker
+            dismiss(animated: true, completion: nil)
+        default:
+            break
         }
-        
-        if let selectedImage = selectedImageFromPicker {
-            profilePic.image = selectedImage
-            profileBackGround.image = selectedImage
-        }
-        
-        dismiss(animated: true, completion: nil)
-
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-         dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     //MARK :- TableView degelgate methods
@@ -156,7 +175,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -167,21 +185,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         return cell
     }
-//    
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        
-//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-//            dismiss(animated: true, completion: nil)
-//            if let imageData = EmployedFileManager.shared.convertToPDf(image: image){
-//                EmployedFileManager.shared.saveFile(data: imageData)
-//                if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
-//                    let resumeVC = ResumePreviewViewController()
-//                    resumeVC.pdfUrl = URLRequest(url: pdfUrl)
-//                    present(resumeVC, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//    }
     
     //MARK: - Views
     
