@@ -60,6 +60,10 @@ class NYCJobs {
     
     }
 
+    var asDictionary: [String: String] {
+        return ["buisnessTitle": buisnessTitle, "civilTitle": civilTitle, "jobDescription": jobDescription, "postingDate": postingDate, "agency": agency, "workLocation":workLocation, "minReqs": minReqs, "minSalary": minSalary  ]
+    }
+
 
 
 

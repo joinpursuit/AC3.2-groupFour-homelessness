@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import FirebaseDatabase
+import FirebaseAuth
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate {
     var jobPost: NYCJobs!
@@ -17,7 +18,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
 
 
 
-    var databaseReference = FIRDatabase.database().reference().child("Users")
+    var databaseReference = FIRDatabase.database().reference()
 
     
     override func viewDidLoad() {
@@ -132,6 +133,11 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     //MARK: - Utilities
     func savePost() {
         
+        
+        let dict = jobPost.asDictionary
+        let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
+        
+        userData.updateChildValues(dict)
         
         
         
