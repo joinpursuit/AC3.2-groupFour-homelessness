@@ -22,6 +22,7 @@ class SearchResultsTableViewController: UITableViewController {
         }
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = []
@@ -39,7 +40,7 @@ class SearchResultsTableViewController: UITableViewController {
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
         tableView.rowHeight = 200
     }
-    
+
     
     //MARK: - Utilities
     func getData() {
@@ -59,8 +60,28 @@ class SearchResultsTableViewController: UITableViewController {
         }
     }
 
+    /*
+        func getData() {
+            APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
+    
+                if let validData = data {
+                    if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
+                        let validJob = jsonData as? [String:Any] {
+    
+                        self.jobs = DiceJob.getJobs(from: validJob)
+    
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+    
+                }
+            }
+        }
+ */
 
     //MARK: - SetupViews
+
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
         
@@ -92,9 +113,13 @@ class SearchResultsTableViewController: UITableViewController {
         
         
         let selectedCell = jobs[indexPath.row]
+
         cell.jobLabel.text = selectedCell.buisnessTitle
         cell.subLabel.text = "\(selectedCell.agency) • Posted \(selectedCell.postingDate)"
         
+
+        //cell.textLabel?.text = selectedCell.jobTitle
+
         return cell
     }
     

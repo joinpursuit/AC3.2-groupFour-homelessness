@@ -46,7 +46,6 @@ class NYCJobs {
             }
         }
         return jobs
-
     
     }
 
