@@ -14,7 +14,7 @@ import FirebaseAuth
 class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
    
      var databaseReference = FIRDatabase.database().reference()
-    
+    var jobs = [NYCJobs]()
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -26,17 +26,32 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         getData()
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getData()
+    }
     
     
     func getData() {
         databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { (snapShot) in
+            var newJobAdded: [NYCJobs] = []
             for child in snapShot.children {
                 if let snap = child as? FIRDataSnapshot,
                 let valueDict = snap.value as? [String:Any] {
-                    dump(valueDict)
+                    let job = NYCJobs(buisnessTitle: valueDict["buisnessTitle"] as! String? ?? " ",
+                                      civilTitle: valueDict["civilTitle"] as! String? ?? " ",
+                                      jobDescription: valueDict["jobDescription"] as! String? ?? " ",
+                                      postingDate: valueDict["postingDate"] as! String? ?? " ",
+                                      agency: valueDict["agency"] as! String? ?? " ",
+                                      workLocation: valueDict["workLocation"] as! String? ?? " ",
+                                      minReqs: valueDict["minReqs"] as! String? ?? " ",
+                                      minSalary: valueDict["minSalary"] as! String? ?? " ")
+                    newJobAdded.append(job)
                 }
             }
+            self.jobs = newJobAdded
+            
+            self.tableView.reloadData()
         })
     }
     
@@ -64,21 +79,22 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 0
+        return jobs.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "savedCell", for: indexPath) as! SavesTableViewCell
         
-       
-//        cell.textLabel?.text = "Blach"
-//        self.tableView.reloadEmptyDataSet()
+       let job = self.jobs[indexPath.row]
+        dump(job)
+        cell.textLabel?.text = job.buisnessTitle
+        self.tableView.reloadEmptyDataSet()
         return cell
     }
     
