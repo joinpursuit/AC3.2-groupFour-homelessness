@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     //Can be used to populate profile tableview
     private let infoImageArray: [UIImage] = []
-    private let infoDetails: [String:String] = [:]
+    private let infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.profileBackGround.addSubview(nameLabel)
         self.view.addSubview(infoTableView)
         self.profileBackGround.addSubview(profilePic)
+        self.view.addSubview(editProfileButton)
         
         self.edgesForExtendedLayout = []
         
@@ -52,6 +53,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             view.centerX.equalToSuperview()
             view.size.equalTo(CGSize(width: 150, height: 150))
         }
+        editProfileButton.snp.makeConstraints { (view) in
+            view.centerY.equalTo(profileBackGround.snp.bottom)
+            view.trailing.equalToSuperview().inset(30)
+            view.size.equalTo(CGSize(width: 50, height: 50))
+        }
         
         nameLabel.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
@@ -60,6 +66,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         }
         
         addResume.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
+        editProfileButton.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         
         infoTableView.snp.makeConstraints { (view) in
             view.top.equalTo(profileBackGround.snp.bottom)
@@ -82,6 +89,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     
     //MARK:- Utilities
+    
     func logOut() {
         do{
             try FIRAuth.auth()?.signOut()
@@ -99,7 +107,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func handleTap() {
         showImagePickerfor(source: .photoLibrary)
-
+    }
+    
+     func editProfile(){
+        let editVC = UINavigationController(rootViewController: EditProfileViewController())
+        //editVC.modalTransitionStyle = .coverVertical
+        self.navigationController?.present(editVC, animated: true, completion: nil)
     }
     
     private func showImagePickerfor(source: UIImagePickerControllerSourceType){
@@ -124,7 +137,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     //MARK: -ImagePicker delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-    
+        
         guard let imageFromPicker = info["UIImagePickerControllerOriginalImage"] as? UIImage else { return }
         
         switch imagePickerController.sourceType{
@@ -158,18 +171,30 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return infoDetails.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.cellIdentifier, for: indexPath) as! InfoTableViewCell
+        let info = infoDetails[indexPath.row]
         
+        cell.cellTitle.text = info.title
+        cell.cellDetail.text = info.description
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let profVC = ProfileDetailViewController()
+        let info = infoDetails[indexPath.row]
+        
+        profVC.controllerTitle.text = info.title
+        profVC.controllerDetail.text = info.description
+        self.navigationController?.pushViewController(profVC, animated: true)
     }
     
     //MARK: - Views
     
-    internal lazy var profilePic: UIImageView = {
+    private lazy var profilePic: UIImageView = {
         let imageView = UIImageView()
         
         imageView.layer.cornerRadius = 75
@@ -193,13 +218,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }()
     
     
-    internal let infoTableView: UITableView = {
+    private let infoTableView: UITableView = {
         let tableview: UITableView = UITableView()
-        tableview.backgroundColor = .red
+        tableview.backgroundColor = .white
         return tableview
     }()
     
-    internal let addResume: UIButton = {
+    private let addResume: UIButton = {
         let button: UIButton = UIButton(type: UIButtonType.system)
         button.setTitle("Add Resume", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -208,7 +233,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return button
     }()
     
-    internal let profileBackGround: UIImageView = {
+    private let profileBackGround: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.image = UIImage(named: "onepunch")
         let blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
@@ -220,7 +245,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return imageView
     }()
     
-    internal let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = "One Punch"
         label.textColor = .white
@@ -228,10 +253,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return label
     }()
     
-    internal lazy var logOutButton: UIButton = {
+    private lazy var logOutButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.setTitle("LogOut", for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 80, height: 20)
+        return button
+    }()
+    
+    private let editProfileButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setImage(UIImage(named: "pencil"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.snp.makeConstraints({ (view) in
+            view.size.equalTo(CGSize(width: 30, height: 30))
+        })
+        button.backgroundColor = Colors.lightPrimaryColor
+        button.layer.cornerRadius = 25
         return button
     }()
     
