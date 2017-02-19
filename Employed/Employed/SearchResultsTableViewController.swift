@@ -11,6 +11,8 @@ import UIKit
 class SearchResultsTableViewController: UITableViewController, UISearchBarDelegate {
 
     var jobs = [NYCJobs]()
+    public var oldJobs = [NYCJobs]()
+    var filteredJobs = [NYCJobs]()
     var leftBarButton = UIBarButtonItem()
     var rightBarButton = UIBarButtonItem()
     var sectionTitles: [String] {
@@ -52,6 +54,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
                     let validJob = jsonData as? [[String:Any]] {
                     
                     self.jobs = NYCJobs.getJobs(from: validJob)
+                    self.oldJobs = NYCJobs.getJobs(from: validJob)
                     
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -80,6 +83,28 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
             }
         }
  */
+    
+    func searchJob(_ filter: String) {
+        self.jobs = jobs.filter {
+            return $0.buisnessTitle.lowercased().contains(filter.lowercased())
+        }
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchJob(searchText)
+        self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.jobs = self.oldJobs
+        self.tableView.reloadData()
+    }
+    
+    
+    
+    
+    
  
     
     //MARK: - SetupViews
