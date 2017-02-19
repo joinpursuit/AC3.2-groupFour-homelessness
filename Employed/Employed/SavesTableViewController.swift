@@ -14,7 +14,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     override func viewDidLoad() {
         super.viewDidLoad()
     
-//        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "nycCell")
+        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "savedCell")
      
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
@@ -39,28 +39,30 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         return UIImage(named: "logo")
     }
     
+    
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 0
+        return 1
     }
 
     
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "nycCell", for: indexPath) as! SavesTableViewCell
-//        
-//       
-//        cell.textLabel?.text = "Blach"
-//
-//        return cell
-//    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "savedCell", for: indexPath) as! SavesTableViewCell
+        
+       
+        cell.textLabel?.text = "Blach"
+        self.tableView.reloadEmptyDataSet()
+        return cell
+    }
     
 
     /*
