@@ -11,7 +11,10 @@ import FirebaseAuth
 import Photos
 import MobileCoreServices
 
-class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
+    private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.view.backgroundColor = .white
         setUpViews()
         setUpTableView()
+        //setImagePicker()
     }
     
     func setUpViews(){
@@ -35,7 +39,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         self.edgesForExtendedLayout = []
         
-        addResume.addTarget(self, action: #selector(uploadResume), for: .touchUpInside)
         logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         profileBackGround.snp.makeConstraints { (view) in
@@ -61,15 +64,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             view.width.equalToSuperview().multipliedBy(0.3)
         }
         
+        addResume.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
+        
         infoTableView.snp.makeConstraints { (view) in
             view.top.equalTo(profileBackGround.snp.bottom)
             view.bottom.leading.trailing.equalToSuperview()
         }
     }
     
-    
-    func uploadResume(){
-        print("Upload resume")
+    func showCamera(){
+        self.tabBarController?.present(imagePickerController, animated: true, completion: nil)
+        // present(imagePickerController, animated: true, completion: nil)
     }
     
     func setUpTableView(){
@@ -78,6 +83,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
     
+
+    func setImagePicker(){
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .camera
+        imagePickerController.modalPresentationStyle = .currentContext
+        
+        let overlay: CameraOverlayView = CameraOverlayView()
+        overlay.layer.frame = UIScreen.main.bounds
+        //View covers use photo button
+        //imagePickerController.cameraOverlayView = overlay
+        
+    }
+
     func logOut() {
         do{
             try FIRAuth.auth()?.signOut()
@@ -111,7 +129,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
          var selectedImageFromPicker: UIImage?
         
-        if let originalImage = info[" UIImagePickerControllerOriginalImage"] {
+        if let originalImage = info["UIImagePickerControllerOriginalImage"] {
             selectedImageFromPicker = originalImage as? UIImage
         }
         
@@ -143,6 +161,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         return cell
     }
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        
+//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+//            dismiss(animated: true, completion: nil)
+//            if let imageData = EmployedFileManager.shared.convertToPDf(image: image){
+//                EmployedFileManager.shared.saveFile(data: imageData)
+//                if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+//                    let resumeVC = ResumePreviewViewController()
+//                    resumeVC.pdfUrl = URLRequest(url: pdfUrl)
+//                    present(resumeVC, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//    }
     
     //MARK: - Views
     
@@ -191,6 +224,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         blurEffectView.frame = imageView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         imageView.addSubview(blurEffectView)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     

@@ -11,6 +11,10 @@
 		1AA994581E57F9C00050CB6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA994571E57F9C00050CB6E /* Assets.xcassets */; };
 		1AA9945B1E57F9C00050CB6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA994591E57F9C00050CB6E /* LaunchScreen.storyboard */; };
 		1AA9948B1E58E7700050CB6E /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9948A1E58E7700050CB6E /* InfoTableViewCell.swift */; };
+		1AA994931E5900400050CB6E /* EmployedFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994921E5900400050CB6E /* EmployedFileManager.swift */; };
+		1AA994951E591BA50050CB6E /* ResumePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */; };
+		1AA994971E594C680050CB6E /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994961E594C680050CB6E /* CameraOverlayView.swift */; };
+		1AA9949D1E5964280050CB6E /* CameraOverlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */; };
 		944703884694D63F46F3615C /* Pods_Employed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */; };
 		A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243C91E589BD6002B40D7 /* NYCJobs.swift */; };
 		A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CB1E589C09002B40D7 /* APIRequestManager.swift */; };
@@ -34,6 +38,10 @@
 		1AA9945A1E57F9C00050CB6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AA9945C1E57F9C00050CB6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AA9948A1E58E7700050CB6E /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
+		1AA994921E5900400050CB6E /* EmployedFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployedFileManager.swift; sourceTree = "<group>"; };
+		1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumePreviewViewController.swift; sourceTree = "<group>"; };
+		1AA994961E594C680050CB6E /* CameraOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
+		1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayBar.swift; sourceTree = "<group>"; };
 		30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Employed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employed.release.xcconfig"; path = "Pods/Target Support Files/Pods-Employed/Pods-Employed.release.xcconfig"; sourceTree = "<group>"; };
 		A20243C91E589BD6002B40D7 /* NYCJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYCJobs.swift; sourceTree = "<group>"; };
@@ -113,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				A20243C91E589BD6002B40D7 /* NYCJobs.swift */,
+				1AA994921E5900400050CB6E /* EmployedFileManager.swift */,
 				A2D1D7031E58EF1F00C656E5 /* DiceJob.swift */,
 			);
 			name = Models;
@@ -126,6 +135,7 @@
 				E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */,
 				E35F6EAB1E580A9900E8F011 /* SearchDetailViewController.swift */,
 				A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */,
+				1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */,
 				E35F6EAC1E580A9900E8F011 /* SavesTableViewController.swift */,
 			);
 			name = "View Controllers";
@@ -134,6 +144,8 @@
 		1AA994651E57FA280050CB6E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1AA994961E594C680050CB6E /* CameraOverlayView.swift */,
+				1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -218,6 +230,7 @@
 				TargetAttributes = {
 					1AA9944C1E57F9C00050CB6E = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = ZSE2A75FGT;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -306,16 +319,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AA994931E5900400050CB6E /* EmployedFileManager.swift in Sources */,
 				E35F6EB51E5890AA00E8F011 /* ColorScheme.swift in Sources */,
 				E35F6EB01E580A9900E8F011 /* SearchResultsTableViewController.swift in Sources */,
 				E35F6EB11E580A9900E8F011 /* SearchDetailViewController.swift in Sources */,
 				E35F6EAE1E580A9900E8F011 /* LoginViewController.swift in Sources */,
+				1AA994951E591BA50050CB6E /* ResumePreviewViewController.swift in Sources */,
 				A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */,
 				A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */,
+				1AA994971E594C680050CB6E /* CameraOverlayView.swift in Sources */,
 				1AA994511E57F9C00050CB6E /* AppDelegate.swift in Sources */,
 				E35F6EB21E580A9900E8F011 /* SavesTableViewController.swift in Sources */,
 				A20243D31E58B911002B40D7 /* SearchTableViewCell.swift in Sources */,
 				A20243D51E58C7A5002B40D7 /* ProfileViewController.swift in Sources */,
+				1AA9949D1E5964280050CB6E /* CameraOverlayBar.swift in Sources */,
 				1AA9948B1E58E7700050CB6E /* InfoTableViewCell.swift in Sources */,
 				E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */,
 				A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */,
@@ -435,6 +452,7 @@
 			baseConfigurationReference = F2086CACE1707D821481FCB9 /* Pods-Employed.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZSE2A75FGT;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
@@ -449,6 +467,7 @@
 			baseConfigurationReference = 830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZSE2A75FGT;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;

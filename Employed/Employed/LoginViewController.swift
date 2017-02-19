@@ -13,22 +13,22 @@ import FirebaseDatabase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
+
     let newViewController = ProfileViewController()
     var databaseReference = FIRDatabase.database().reference()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "LOGIN/REGISTER"
-       self.view.backgroundColor = .white
+        self.view.backgroundColor = .white
         setUpViews()
-        
+
         if FIRAuth.auth()?.currentUser != nil {
             self.navigationController?.pushViewController(newViewController, animated: false)
         }
     }
-
-  
     
     //MARK:- SetupViews
     func setUpViews(){
@@ -80,10 +80,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
     }
     
-   
-
+    
+    
     
     func login() {
+
         if let email = emailTextField.text,
             let password = passwordTextField.text {
             FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
@@ -114,7 +115,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user:FIRUser?, error: Error?) in
                 
                 if error != nil {
-                   self.showAlertFailure(title: "Register Failed!", error: error!)
+                    self.showAlertFailure(title: "Register Failed!", error: error!)
                 }
                 
                 
@@ -133,8 +134,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-
-
+    
+    
     //MARK: - Views
     private let loginLogo: UIImageView = {
         var imageView: UIImageView = UIImageView()
@@ -181,6 +182,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
-
+    
 }
 
