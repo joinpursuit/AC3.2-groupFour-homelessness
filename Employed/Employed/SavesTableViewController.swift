@@ -18,12 +18,13 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.tableView.register(SavesTableViewCell.self, forCellReuseIdentifier: "savedCell")
+        self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "savedCell")
      
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
         getData()
+        tableView.rowHeight = 150
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,15 +90,28 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "savedCell", for: indexPath) as! SavesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "savedCell", for: indexPath) as! SearchTableViewCell
+//        SavesTableViewCell
         
-       let job = self.jobs[indexPath.row]
-        dump(job)
-        cell.textLabel?.text = job.buisnessTitle
+       let selectedCell = self.jobs[indexPath.row]
+        
+        cell.jobLabel.text = selectedCell.buisnessTitle
+        cell.agencyLabel.text = selectedCell.agency
+        cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
+        cell.subLabel.addImage(imageName: "marker")
         self.tableView.reloadEmptyDataSet()
+
         return cell
     }
     
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRow = indexPath.row
+        let searchDetailVc = SearchDetailViewController()
+        searchDetailVc.jobPost = jobs[selectedRow]
+        
+        navigationController?.pushViewController(searchDetailVc, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.
