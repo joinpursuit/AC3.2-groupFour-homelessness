@@ -126,7 +126,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showAlertFailure(title: String, error: Error) {
-        let alertController = UIAlertController(title: title, message: "\(error)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: "\(error.localizedDescription)", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
