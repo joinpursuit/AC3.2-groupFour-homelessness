@@ -247,7 +247,7 @@
 				TargetAttributes = {
 					1AA9944C1E57F9C00050CB6E = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = ZSE2A75FGT;
+						DevelopmentTeam = 2E9D85U478;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -356,9 +356,7 @@
 				E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */,
 				A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */,
 				A2D1D7041E58EF1F00C656E5 /* DiceJob.swift in Sources */,
-
 				1AED16251E5A3488002989B2 /* EditProfileViewController.swift in Sources */,
-
 				A2D1D7061E5A32B200C656E5 /* AllJobs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,7 +473,7 @@
 			baseConfigurationReference = F2086CACE1707D821481FCB9 /* Pods-Employed.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZSE2A75FGT;
+				DEVELOPMENT_TEAM = 2E9D85U478;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
@@ -490,7 +488,7 @@
 			baseConfigurationReference = 830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZSE2A75FGT;
+				DEVELOPMENT_TEAM = 2E9D85U478;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
