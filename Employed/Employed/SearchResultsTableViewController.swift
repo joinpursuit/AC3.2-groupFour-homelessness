@@ -155,7 +155,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         cell.jobLabel.text = selectedCell.buisnessTitle
         cell.agencyLabel.text = selectedCell.agency
         cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
-        cell.subLabel.addImage(imageName: "marker")
+        cell.subLabel.addImage(imageName: "marker25")
  
         //cell.textLabel?.text = selectedCell.jobTitle
 

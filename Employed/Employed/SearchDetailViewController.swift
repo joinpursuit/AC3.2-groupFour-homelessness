@@ -202,7 +202,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     func applyToJob() {
         print("applied!")
-        let editVC = UINavigationController(rootViewController: EditProfileViewController())
+        let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
         self.navigationController?.present(editVC, animated: true, completion: nil)
     }
     
@@ -271,14 +271,14 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var agencyCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = Colors.darkPrimaryColor
         return label
     }()
     
     private lazy var requirementCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = Colors.darkPrimaryColor
         label.text = "REQUIREMENTS"
         return label
@@ -287,7 +287,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var wageCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = Colors.darkPrimaryColor
         return label
     }()
@@ -316,14 +316,14 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var wageLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
     
     private lazy var jobPostDescription: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13.0, weight: 5.0)
+        label.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
          label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0
@@ -332,7 +332,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var jobReqs: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13.0, weight: 5.0)
+        label.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0

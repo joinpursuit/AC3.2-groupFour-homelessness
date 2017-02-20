@@ -43,12 +43,12 @@ class NYCJobs {
         let minSalary = dict["salary_range_from"] as? String ?? ""
         
         let date = Array(postingDate.components(separatedBy: " "))
-        
         let description = Array(jobDescription.components(separatedBy: "."))
         let shortDescript = (description[0..<description.count/4]).joined(separator: " ")
+        let jobTitle = Array(buisnessTitle.components(separatedBy: ","))
         
    
-        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: shortDescript, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary)
+        self.init(buisnessTitle: jobTitle[0], civilTitle: civilTitle, jobDescription: shortDescript, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary)
     }
     
     
