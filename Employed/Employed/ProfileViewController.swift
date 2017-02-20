@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     //Can be used to populate profile tableview
     private let infoImageArray: [UIImage] = []
-    private let infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah")]
+    private let infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah"),("R\u{E9}sum\u{E9}","Click to Add/Update R\u{E9}sum\u{E9}")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +76,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func showCamera(){
         showImagePickerfor(source: .camera)
-        // present(imagePickerController, animated: true, completion: nil)
     }
     
     func setUpTableView(){
@@ -86,7 +85,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.infoTableView.estimatedRowHeight = 200
         infoTableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.cellIdentifier)
     }
-    
     
     //MARK:- Utilities
     
@@ -110,9 +108,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
      func editProfile(){
-        let editVC = UINavigationController(rootViewController: EditProfileViewController())
+//        let editProfVC = EditProfileViewController()
+        let editProfVC = EditProfileTableViewController()
+        editProfVC.profileImage = self.profilePic.image
+        let editProfNVC = UINavigationController(rootViewController: editProfVC)
         //editVC.modalTransitionStyle = .coverVertical
-        self.navigationController?.present(editVC, animated: true, completion: nil)
+        self.navigationController?.present(editProfNVC, animated: true, completion: nil)
     }
     
     private func showImagePickerfor(source: UIImagePickerControllerSourceType){
@@ -165,7 +166,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     //MARK :- TableView degelgate methods
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -184,16 +184,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profVC = ProfileDetailViewController()
-        let info = infoDetails[indexPath.row]
+        if indexPath.row == infoDetails.count - 1{
+            showImagePickerfor(source: .camera)
+            
+        }else{
+            
+            let profVC = ProfileDetailViewController()
+            let info = infoDetails[indexPath.row]
+            
+            profVC.controllerTitle.text = info.title
+            profVC.controllerDetail.text = info.description
+            self.navigationController?.pushViewController(profVC, animated: true)
+        }
         
-        profVC.controllerTitle.text = info.title
-        profVC.controllerDetail.text = info.description
-        self.navigationController?.pushViewController(profVC, animated: true)
     }
     
     //MARK: - Views
-    
     private lazy var profilePic: UIImageView = {
         let imageView = UIImageView()
         

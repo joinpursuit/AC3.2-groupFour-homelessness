@@ -23,13 +23,16 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-        getData()
         tableView.rowHeight = 150
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        getData()
+        
+        if FIRAuth.auth()?.currentUser != nil{
+            getData()
+            
+        }
     }
     
     
@@ -74,10 +77,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     }
     
     
-    
-
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
@@ -91,8 +91,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "savedCell", for: indexPath) as! SearchTableViewCell
-//        SavesTableViewCell
-        
+
        let selectedCell = self.jobs[indexPath.row]
         
         cell.jobLabel.text = selectedCell.buisnessTitle
