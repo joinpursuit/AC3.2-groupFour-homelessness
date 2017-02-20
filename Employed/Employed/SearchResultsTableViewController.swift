@@ -36,12 +36,14 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.title = "Jobs"
         
-        
         self.view.backgroundColor = Colors.backgroundColor
         getData()
         
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
-        tableView.rowHeight = 150
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 120
+        tableView.estimatedRowHeight = 200
+        
     }
 
     
