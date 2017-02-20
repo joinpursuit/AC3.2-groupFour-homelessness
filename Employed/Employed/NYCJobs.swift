@@ -44,8 +44,11 @@ class NYCJobs {
         
         let date = Array(postingDate.components(separatedBy: " "))
         
+        let description = Array(jobDescription.components(separatedBy: "."))
+        let shortDescript = (description[0..<description.count/4]).joined(separator: " ")
         
-        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: jobDescription, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary)
+   
+        self.init(buisnessTitle: buisnessTitle, civilTitle: civilTitle, jobDescription: shortDescript, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary)
     }
     
     

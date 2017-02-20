@@ -20,9 +20,9 @@ class SearchTableViewCell: UITableViewCell {
         
         //Labels
         jobLabel.textColor = .black
-        jobLabel.font = UIFont.systemFont(ofSize: 18.0, weight: 10.0)
+        jobLabel.font = UIFont.systemFont(ofSize: 15.0, weight: 10.0)
         jobLabel.sizeToFit()
-        jobLabel.adjustsFontSizeToFitWidth = true
+        jobLabel.adjustsFontSizeToFitWidth = false
         jobLabel.numberOfLines = 2
         jobLabel.textAlignment = .center
         
@@ -47,23 +47,18 @@ class SearchTableViewCell: UITableViewCell {
         
         
         jobLabel.snp.makeConstraints { (view) in
-            view.height.equalTo(50)
-            view.trailing.leading.equalToSuperview().offset(8.0)
+            view.top.equalToSuperview().offset(8.0)
+            view.leading.equalToSuperview().offset(8.0)
         }
         
         agencyLabel.snp.makeConstraints { (view) in
-            view.width.equalTo(jobLabel.snp.width)
-            view.height.equalTo(20)
-            view.centerX.equalToSuperview()
             view.top.equalTo(jobLabel.snp.bottom).offset(8.0)
-            view.leading.equalTo(jobLabel.snp.leading).offset(16.0)
+            view.leading.equalToSuperview().offset(8.0)
         }
         
         subLabel.snp.makeConstraints { (view) in
-            view.width.equalTo(agencyLabel.snp.width)
-            view.height.equalTo(20)
-            view.top.equalTo(agencyLabel.snp.bottom).offset(16.0)
-            view.leading.equalTo(jobLabel.snp.leading).offset(16.0)
+            view.top.equalTo(agencyLabel.snp.bottom).offset(8.0)
+            view.leading.equalToSuperview().offset(8.0)
         }
     }
     
