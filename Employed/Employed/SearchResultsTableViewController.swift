@@ -40,7 +40,10 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         getData()
         
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
-        tableView.rowHeight = 150
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 120
+        tableView.estimatedRowHeight = 200
+        
     }
 
     

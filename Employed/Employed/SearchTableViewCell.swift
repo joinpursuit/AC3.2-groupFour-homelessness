@@ -47,18 +47,21 @@ class SearchTableViewCell: UITableViewCell {
         
         
         jobLabel.snp.makeConstraints { (view) in
-            view.top.equalToSuperview().offset(8.0)
+            view.top.equalToSuperview().offset(16.0)
             view.leading.equalToSuperview().offset(8.0)
+            view.centerX.equalToSuperview()
         }
         
         agencyLabel.snp.makeConstraints { (view) in
             view.top.equalTo(jobLabel.snp.bottom).offset(8.0)
             view.leading.equalToSuperview().offset(8.0)
+            view.centerX.equalToSuperview()
         }
         
         subLabel.snp.makeConstraints { (view) in
             view.top.equalTo(agencyLabel.snp.bottom).offset(8.0)
             view.leading.equalToSuperview().offset(8.0)
+            view.centerX.equalToSuperview()
         }
     }
     

@@ -92,7 +92,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         }
         
         topSeparator.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().offset(5.0)
+            view.width.equalToSuperview().multipliedBy(0.75)
             view.height.equalTo(1)
             view.top.equalTo(addressLabel.snp.bottom).offset(5.0)
         }
@@ -230,7 +230,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     private lazy var container: UIView = {
         let view = UIView()
         view.contentMode = .scaleAspectFit
-        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -245,25 +245,25 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var topSeparator: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = Colors.darkPrimaryColor
         return view
     }()
     
     private lazy var topSeparatorB: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = Colors.darkPrimaryColor
         return view
     }()
     
     private lazy var midSeparator: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = Colors.darkPrimaryColor
         return view
     }()
     
     private lazy var bottomSeparator: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = Colors.darkPrimaryColor
         return view
     }()
     
