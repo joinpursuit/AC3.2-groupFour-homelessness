@@ -25,7 +25,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         searchJobTextField.isHidden = true
         searchIcon.isHidden = true
         searchButton.isHidden = true
-        
+        searchJobTextField.delegate = self
         self.view.backgroundColor = Colors.backgroundColor
         
         setUpViews()
@@ -94,6 +94,11 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         let letsGo = UIAlertAction(title: "Lets Go", style: .default, handler: nil)
         alertController.addAction(letsGo)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    //MARK: - TextField Delegates
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        searchJobTextField.resignFirstResponder()
     }
     
     
@@ -168,10 +173,9 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.textColor = .white
         let myString = "Enter job here"
-        let myAttribute = [ NSForegroundColorAttributeName: UIColor.white ]
+        let myAttribute = [ NSForegroundColorAttributeName: Colors.dividerColor ]
         let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
         
-//        textField.placeholder = "What would you like to do?"
         textField.attributedPlaceholder = myAttrString
         textField.alpha = 0.8
         return textField
@@ -206,8 +210,8 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     private let searchIcon: UIImageView = {
         var image = UIImageView()
-        image.image = UIImage(named: "search")
-        image = UIImageView(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+         let backgroundImage = UIImage(named: "search")
+        image.image = backgroundImage
         return image
     }()
     
