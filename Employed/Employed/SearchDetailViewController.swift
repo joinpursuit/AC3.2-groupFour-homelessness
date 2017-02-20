@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import FirebaseDatabase
 import FirebaseAuth
+import MapKit
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     var jobPost: NYCJobs!
@@ -180,6 +181,8 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             view.height.equalTo(50)
         }
         
+        
+        
     }
 
     //MARK: - Utilities
@@ -199,12 +202,35 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     func applyToJob() {
         print("applied!")
+        let editVC = UINavigationController(rootViewController: EditProfileViewController())
+        self.navigationController?.present(editVC, animated: true, completion: nil)
     }
+    
+    func tappedMap() {
+        print("Tapped map")
+        let latitude: CLLocationDegrees = 37.2
+        let longitude: CLLocationDegrees = 22.9
+        
+        let regionDistance:CLLocationDistance = 10000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "Place Name"
+        mapItem.openInMaps(launchOptions: options)
+    }
+    
+    
     
     //MARK: - Views
     private lazy var container: UIView = {
         let view = UIView()
         view.contentMode = .scaleAspectFit
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -318,6 +344,12 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         let backgroundImage = UIImage(named: "map")
         image.image = backgroundImage
         image.contentMode = .scaleAspectFill
+        image.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedMap))
+        tap.delaysTouchesBegan = true
+        tap.numberOfTouchesRequired = 1
+        image.addGestureRecognizer(tap)
         return image
     }()
     

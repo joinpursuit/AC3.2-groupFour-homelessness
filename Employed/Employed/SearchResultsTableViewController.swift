@@ -36,7 +36,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.title = "Jobs"
         
-        
         self.view.backgroundColor = Colors.backgroundColor
         getData()
         
