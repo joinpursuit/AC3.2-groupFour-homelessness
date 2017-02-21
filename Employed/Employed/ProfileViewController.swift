@@ -24,12 +24,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     var pictureUpdated: Bool = true
     
     //Can be used to populate profile tableview
-    private let infoImageArray: [UIImage] = []
+    private let infoImageArray: [String] = ["user","heart","suitcase","resume"]
     private var infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah"),("R\u{E9}sum\u{E9}","Click to Add/Update R\u{E9}sum\u{E9}")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.navigationController?.navigationBar.isHidden = false
         let rightBarButton = UIBarButtonItem(customView: logOutButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
@@ -40,7 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.navigationController?.navigationBar.isHidden = false
         if infoUpdated{
             getProfileInfo()
             infoUpdated = false
@@ -198,6 +199,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         switch source{
         case .camera:
             imagePicker.sourceType = .camera
+            let overlay = CameraOverlayView()
+            overlay.frame = CGRect(x: 0, y: 0, width: 420, height: 595)
+            overlay.center = self.view.center
+            imagePicker.cameraOverlayView = overlay
             imagePicker.modalPresentationStyle = .currentContext
         case .photoLibrary:
             imagePicker.allowsEditing = true
@@ -255,18 +260,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         cell.cellTitle.text = info.title
         cell.cellDetail.text = info.description
+        cell.cellIcon.image = UIImage(named: infoImageArray[indexPath.row])
         
-        
-        switch indexPath.row {
-        case 1:
-            cell.cellIcon.image = UIImage(named: "heart")
-        case 2:
-            cell.cellIcon.image = UIImage(named: "suitcase")
-        case 3:
-            cell.cellIcon.image = UIImage(named: "resume")
-        default:
-            cell.cellIcon.image = UIImage(named: "user")
-        }
         return cell
     }
     
@@ -295,7 +290,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func changeProfileImage(to image: UIImage) {
         UIView.animate(withDuration: 1) {
-//            self.profilePic.alpha = 0
+       // self.profilePic.alpha = 0
             self.profileBackGround.alpha = 0
         }
         self.profilePic.image = image
@@ -349,7 +344,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     private let profileBackGround: UIImageView = {
         let imageView: UIImageView = UIImageView()
-        imageView.image = nil
+        imageView.backgroundColor = .lightGray
         let blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageView.bounds
@@ -381,6 +376,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         button.imageView?.snp.makeConstraints({ (view) in
             view.size.equalTo(CGSize(width: 30, height: 30))
         })
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowOffset = CGSize(width: 1, height: 5)
+        button.layer.shadowRadius = 2
         button.backgroundColor = Colors.lightPrimaryColor
         button.layer.cornerRadius = 25
         return button

@@ -35,7 +35,15 @@ class EmployedFileManager{
     static let shared: EmployedFileManager = EmployedFileManager()
     
     
-    func convertToPDf(image: UIImage,horizontalResolution: Double = 72, verticalResolution: Double = 72)-> NSData?{
+    func convertToPDf(image: UIImage)-> NSData?{
+        
+        let width = CameraOverlayView.paperSizeA5.width
+        let height = CameraOverlayView.paperSizeA5.height
+        
+        let horizontalResolution: Double = Double(width)
+        let verticalResolution: Double = Double(height)
+        
+        guard let croppedImage = cropImage(image: image, width: 1000, height: 1000) else {return nil}
         
         let defaultResolution: Int = 72
         
@@ -43,8 +51,8 @@ class EmployedFileManager{
             return nil;
         }
         
-        let pageWidth: Double = Double(image.size.width) * Double(image.scale) * Double(defaultResolution) / horizontalResolution
-        let pageHeight: Double = Double(image.size.height) * Double(image.scale) * Double(defaultResolution) / verticalResolution
+        let pageWidth: Double = Double(croppedImage.size.width) * Double(image.scale) * Double(defaultResolution) / horizontalResolution
+        let pageHeight: Double = Double(croppedImage.size.height) * Double(image.scale) * Double(defaultResolution) / verticalResolution
         
         let pdfFile: NSMutableData = NSMutableData()
         
@@ -55,7 +63,7 @@ class EmployedFileManager{
         let pdfContext: CGContext = CGContext(consumer: pdfConsumer, mediaBox: &mediaBox, nil)!
         
         pdfContext.beginPage(mediaBox: &mediaBox)
-        pdfContext.draw(image.cgImage!, in: mediaBox)
+        pdfContext.draw(croppedImage.cgImage!, in: mediaBox)
         pdfContext.endPage()
         
         return pdfFile
@@ -80,8 +88,9 @@ class EmployedFileManager{
         return fileURL.absoluteURL
     }
     
-    private func cropImage(image: UIImage, toRect: CGRect) -> UIImage? {
+    private func cropImage(image: UIImage, width: Int, height: Int) -> UIImage? {
         // Cropping is available trhough CGGraphics
+        let toRect = CGRect(x: 0, y: 0, width: width, height: height)
         let cgImage :CGImage! = image.cgImage
         let croppedCGImage: CGImage! = cgImage.cropping(to: toRect)
         
