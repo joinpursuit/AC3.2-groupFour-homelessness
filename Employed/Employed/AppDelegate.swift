@@ -13,9 +13,12 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var rollingLogo: UIImageView?
+    var customizedLaunchScreenView: UIView?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         
         //Styling
         UILabel.appearance().font = UIFont(name: "Avenir Next", size: 11.0)
@@ -62,6 +65,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootTabController
         //window?.rootViewController = jobSearchVC
         window?.makeKeyAndVisible()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        if let window = self.window {
+            self.customizedLaunchScreenView = UIView(frame: window.bounds)
+            self.customizedLaunchScreenView?.backgroundColor = Colors.backgroundColor
+            
+            self.window?.addSubview(self.customizedLaunchScreenView!)
+            self.window?.bringSubview(toFront: self.customizedLaunchScreenView!)
+            
+            self.rollingLogo = UIImageView(frame: .zero)
+            self.rollingLogo?.image = #imageLiteral(resourceName: "logo")
+            
+            self.window?.addSubview(rollingLogo!)
+            self.window?.bringSubview(toFront: rollingLogo!)
+            
+            self.rollingLogo?.snp.makeConstraints{ (view) in
+                view.centerY.equalTo(window.snp.centerY).offset(10)
+                view.centerX.equalTo(window.snp.centerX)
+            }
+    
+            
+            let duration = 3.0
+            let delay = 0.0
+            let options = UIViewKeyframeAnimationOptions.calculationModeLinear
+            
+            UIView.animateKeyframes(withDuration: duration, delay: delay, options: options, animations: {
+                // within each keyframe the relativeStartTime and relativeDuration need to be values between 0.0 and 1.0
+                
+                
+            
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration:  1/2 , animations: {
+                    self.rollingLogo?.transform = CGAffineTransform(scaleX: 2, y: 2)
+
+                })
+
+                UIView.addKeyframe(withRelativeStartTime: 1/2, relativeDuration: 1/2, animations: {
+                    self.rollingLogo?.transform = CGAffineTransform(scaleX: 1, y: 1)
+                })
+
+                
+            }, completion: { finished in
+                // any code entered here will be applied
+                // once the animation has completed
+                
+                UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseOut,
+                               animations: { () -> Void in
+                                self.rollingLogo?.transform = CGAffineTransform(translationX: 0, y: -1000)
+                                self.customizedLaunchScreenView?.alpha = 0
+                                
+                                
+                },
+                               completion: {_ in
+                                
+                                _ = [
+                                    self.customizedLaunchScreenView,
+                                    self.rollingLogo
+                                    ].map { $0?.removeFromSuperview() }
+                })
+            })
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         return true
     }
 
