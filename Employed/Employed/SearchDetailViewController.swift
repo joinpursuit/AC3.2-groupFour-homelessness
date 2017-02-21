@@ -202,7 +202,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     func applyToJob() {
         print("applied!")
-        let editVC = UINavigationController(rootViewController: EditProfileViewController())
+        let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
         self.navigationController?.present(editVC, animated: true, completion: nil)
     }
     
