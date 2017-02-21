@@ -31,7 +31,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.navigationItem.rightBarButtonItem = barButton
         
         //Job Detail profile
-        self.jobTitle.text = jobPost.buisnessTitle
+        self.jobTitle.text = "\(jobPost.buisnessTitle) - Part-time"
         
         var chars = Array((jobPost.agency).characters)
         let firstChar = String(chars[0]).uppercased()
@@ -363,7 +363,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(savePost), for: .touchUpInside)
-        button.setTitle("Save", for: .normal)
+        button.setImage(UIImage(named: "save2"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         
         return button

@@ -31,8 +31,9 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         
         if FIRAuth.auth()?.currentUser != nil{
             getData()
-            
         }
+        
+        
     }
     
     
