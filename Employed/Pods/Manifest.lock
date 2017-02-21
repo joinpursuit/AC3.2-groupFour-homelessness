@@ -35,6 +35,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.8)
+  - SCLAlertView (0.7.0)
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - Firebase/Database
   - FirebaseAuth
   - FirebaseStorage
+  - SCLAlertView
   - SnapKit
 
 SPEC CHECKSUMS:
@@ -56,8 +58,9 @@ SPEC CHECKSUMS:
   FirebaseStorage: 63628572a5fde258f8e933b5fb42697468da0158
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: e342fbc36638214dbf73b50583a7762e1c9f560e
+PODFILE CHECKSUM: fa7598cbed2ae564522b2bb70a14c592c4875b3b
 
 COCOAPODS: 1.1.1

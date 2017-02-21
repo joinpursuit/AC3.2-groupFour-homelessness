@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class JobSearchViewController: UIViewController, UITextFieldDelegate {
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
@@ -15,11 +16,8 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if launchedBefore  {
-            print("Not first launch.")
-        } else {
+        if !launchedBefore  {
             firstLaunchAlert()
-            print("First launch, setting UserDefault.")
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
         
@@ -91,10 +89,36 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     }
     
     func firstLaunchAlert() {
-        let alertController = UIAlertController(title: "Nice to have you!", message: "Welcome to Employed! The Central Job Hub center, where you can find all the latest jobs. Click Lets Go to Contiune", preferredStyle: .actionSheet)
-        let letsGo = UIAlertAction(title: "Lets Go", style: .default, handler: nil)
-        alertController.addAction(letsGo)
-        present(alertController, animated: true, completion: nil)
+        
+        
+        let appearance = SCLAlertView.SCLAppearance(
+                    kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+                    kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+                    kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+                    showCloseButton: true
+                )
+//        let appearance = SCLAlertView.SCLAppearance(
+//            showCircularIcon: true
+//        )
+        let alertView = SCLAlertView(appearance: appearance)
+        let alertViewIcon = UIImage(named: "logo") //Replace the IconImage text with the image name
+        alertView.showInfo("Welcome to Employed", subTitle: "The Central Job Hub center, where you can find the latest jobs. Click 'Lets Go' to Begin", circleIconImage: alertViewIcon)
+        
+        
+        
+       //        SCLAlertView().showTitle(
+//            "Welcome to Employed! \n\n\n\n\n",
+//            subTitle: "The Central Job Hub center, where you can find all the latest jobs. Click 'Lets Go' to Begin", // String of view
+//            style: .notice ,
+//            closeButtonTitle: "Lets Go",
+//            colorStyle: 0x6ED4CF,
+//
+//            colorTextButton: 0xFFFFFF
+//
+//        )
+        
+      
+
     }
     
     //MARK: - TextField Delegates
