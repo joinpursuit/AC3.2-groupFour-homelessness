@@ -23,16 +23,16 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-//        
-//        if FIRAuth.auth()?.currentUser != nil {
-//            getData()
-//            tableView.rowHeight = 150
-//        } else {
-//            jobs.removeAll()
-//            self.tableView.reloadData()
-//
-//        }
-//        
+        
+        if FIRAuth.auth()?.currentUser != nil {
+            getData()
+            tableView.rowHeight = 150
+        } else {
+            jobs.removeAll()
+            self.tableView.reloadData()
+
+        }
+        
         
     }
     
@@ -65,8 +65,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
                                           agency: valueDict["agency"] as! String? ?? " ",
                                           workLocation: valueDict["workLocation"] as! String? ?? " ",
                                           minReqs: valueDict["minReqs"] as! String? ?? " ",
-                                          minSalary: valueDict["minSalary"] as! String? ?? " ",
-                                          key: snap.key )
+                                          minSalary: valueDict["minSalary"] as! String? ?? " ")
                         newJobAdded.append(job)
                     }
                 }
@@ -133,18 +132,23 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         return true
     }
     
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            var deletedCell = jobs[indexPath.row]
+//            
+//            
+//        }
+//    }
+//    
     
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            print("DELETED")
             // Delete the row from the data source
-            let path = indexPath.row
-            databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).child(jobs[path].key!).removeValue()
-            
-            jobs.remove(at: path)
             tableView.deleteRows(at: [indexPath], with: .fade)
-
+//            databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).removeValue()
         }
     }
     
