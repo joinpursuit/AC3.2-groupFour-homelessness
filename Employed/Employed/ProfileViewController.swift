@@ -31,10 +31,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
         self.view.backgroundColor = .white
-        cameraAvailableCheck()
+ 
         setUpViews()
         setUpTableView()
-        //setImagePicker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,17 +117,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     //MARK:- Utilities
     
-    private func cameraAvailableCheck(){
-        if !UIImagePickerController.isSourceTypeAvailable(.camera){
-            _ = infoDetails.popLast()
-        }
-        
-    }
-    
     func logOut() {
         do{
             try FIRAuth.auth()?.signOut()
-            
         }
         catch{
             let alertController = UIAlertController(title: "Error", message: "Trouble Logging Out", preferredStyle: UIAlertControllerStyle.alert)
@@ -144,7 +135,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         showImagePickerfor(source: .photoLibrary)
     }
     
-     func editProfile(){
+    func editProfile(){
         let editProfVC = EditProfileTableViewController()
         editProfVC.profileImage = self.profilePic.image
         let editProfNVC = UINavigationController(rootViewController: editProfVC)
@@ -221,7 +212,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == infoDetails.count - 1{
-            showImagePickerfor(source: .camera)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                showImagePickerfor(source: .camera)
+            }else{
+                print("No camera available")
+            }
             
         }else{
             
@@ -232,7 +228,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             profVC.controllerDetail.text = info.description
             self.navigationController?.pushViewController(profVC, animated: true)
         }
-}
+    }
     
     //MARK: - Views
     private lazy var profilePic: UIImageView = {
@@ -311,5 +307,5 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         button.layer.cornerRadius = 25
         return button
     }()
-
+    
 }
