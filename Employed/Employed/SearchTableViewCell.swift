@@ -33,7 +33,7 @@ class SearchTableViewCell: UITableViewCell {
         agencyLabel.font = UIFont.systemFont(ofSize: 12)
         
         subLabel.textColor = UIColor.lightGray
-        subLabel.font = UIFont.systemFont(ofSize: 11)
+        subLabel.font = UIFont.systemFont(ofSize: 12)
         
         let randomIndex = Int(arc4random_uniform(4) + 1)
         companyIcon.image = UIImage(named: companyIcons[randomIndex])
