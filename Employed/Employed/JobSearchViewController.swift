@@ -223,7 +223,6 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         navigationController?.pushViewController(searchResultsVC, animated: true)
     }
     
-    
     //MARK: - Views
     private let picker: UIPickerView = {
         let picker = UIPickerView()
