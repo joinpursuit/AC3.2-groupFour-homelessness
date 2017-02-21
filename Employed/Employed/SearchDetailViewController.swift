@@ -99,10 +99,10 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         }
         
         container.snp.makeConstraints { (view) in
-            view.width.equalTo(self.view.snp.width)
+            //view.width.equalTo(self.view.snp.width)
+            view.width.equalTo(scrollView.snp.width)
             view.centerX.equalTo(self.view.snp.centerX)
             view.top.equalToSuperview()
-            
             //view.height.equalTo(300)
             //view.leading.trailing.equalToSuperview()
             
