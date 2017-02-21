@@ -341,6 +341,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = true
+        scrollView.contentInset = UIEdgeInsets(top: 8.0, left: 0, bottom: 1000, right: 0)
         return scrollView
     }()
     
