@@ -42,6 +42,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         
         if FIRAuth.auth()?.currentUser != nil {
             getData()
+            tableView.rowHeight = 150
         } else {
              jobs.removeAll()
             self.tableView.reloadData()

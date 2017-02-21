@@ -11,12 +11,13 @@ import SnapKit
 import FirebaseDatabase
 import FirebaseAuth
 import MapKit
+import SCLAlertView
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     var jobPost: NYCJobs!
-
+    var wageArray = ["$60,000","$82,000","$68,000","$100,000","$49,000","$77,000","$75,000","$87,000","$102,000","$140,000"]
     //var scrollView: UIScrollView!
-
+    var randomNumber = Int(arc4random_uniform(9))
     var databaseReference = FIRDatabase.database().reference()
 
     
@@ -40,7 +41,8 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         self.addressLabel.text = jobPost.workLocation
         self.addressLabel.addImage(imageName: "marker25")
-        self.wageLabel.text = "$40,000"
+        self.wageLabel.text = wageArray[randomNumber]
+        "$40,000"
         self.jobPostDescription.text = "\(jobPost.jobDescription)..."
         
         self.jobReqs.text = jobPost.minReqs
@@ -194,7 +196,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     //MARK: - Utilities
     func savePost() {
         
-        
+        if FIRAuth.auth()?.currentUser != nil {
         let dict = jobPost.asDictionary
         let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
         
@@ -204,12 +206,33 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+            
+        } else {
+         Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
+        }
     }
     
     func applyToJob() {
-        print("applied!")
+        if FIRAuth.auth()?.currentUser != nil {
         let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
         self.navigationController?.present(editVC, animated: true, completion: nil)
+        } else {
+            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
+            
+        }
+    }
+    
+    func switchTab() {
+    tabBarController?.selectedIndex = 2
+    
+        SCLAlertView().showTitle(
+            "Sign In to Apply",
+            subTitle: "",
+            style: .notice ,
+            closeButtonTitle: "Done",
+            colorStyle: 0xE6279,
+            colorTextButton: 0xFFFFFF
+        )
     }
     
     func tappedMap() {
