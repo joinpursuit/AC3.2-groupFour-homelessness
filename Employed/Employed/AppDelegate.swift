@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
     
             
-            let duration = 3.0
+            let duration = 2.0
             let delay = 0.0
             let options = UIViewKeyframeAnimationOptions.calculationModeLinear
             
