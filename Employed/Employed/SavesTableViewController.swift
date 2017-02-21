@@ -23,13 +23,22 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-        getData()
-        tableView.rowHeight = 150
+        if FIRAuth.auth()?.currentUser != nil {
+            getData()
+            tableView.rowHeight = 150
+        } else {
+             self.tableView.reloadEmptyDataSet()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        if FIRAuth.auth()?.currentUser != nil {
         getData()
+        } else {
+             self.tableView.reloadEmptyDataSet()
+        }
     }
     
     
