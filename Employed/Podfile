@@ -11,5 +11,6 @@ target 'Employed' do
   pod 'FirebaseAuth'
   pod 'FirebaseStorage'
   pod 'Firebase/Database'
-
-end
+  pod 'DZNEmptyDataSet'
+  pod 'SCLAlertView'
+end 
