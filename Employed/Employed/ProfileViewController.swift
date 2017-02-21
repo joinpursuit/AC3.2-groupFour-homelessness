@@ -8,16 +8,24 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
 import Photos
 import MobileCoreServices
 
 
-class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
+class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ProfileStateDelegate{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
+    private var userDic: [String:String] = [:]
+    
+    private let dataBaseReference = FIRDatabase.database().reference()
+    
+    var infoUpdated: Bool = true
+    var pictureUpdated: Bool = true
     
     //Can be used to populate profile tableview
     private let infoImageArray: [UIImage] = []
-    private let infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah"),("R\u{E9}sum\u{E9}","Click to Add/Update R\u{E9}sum\u{E9}")]
+    private var infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah"),("R\u{E9}sum\u{E9}","Click to Add/Update R\u{E9}sum\u{E9}")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,17 +34,29 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
         self.view.backgroundColor = .white
+        
         setUpViews()
         setUpTableView()
-        //setImagePicker()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if infoUpdated{
+            getProfileInfo()
+            infoUpdated = false
+        }
+        
+        if pictureUpdated{
+            getProfilePicture()
+            pictureUpdated = false
+        }
     }
     
     func setUpViews(){
         self.view.addSubview(profileBackGround)
-        self.profileBackGround.addSubview(addResume)
-        self.profileBackGround.addSubview(nameLabel)
+        self.view.addSubview(nameLabel)
         self.view.addSubview(infoTableView)
-        self.profileBackGround.addSubview(profilePic)
+        self.view.addSubview(profilePic)
         self.view.addSubview(editProfileButton)
         
         self.edgesForExtendedLayout = []
@@ -78,6 +98,63 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         showImagePickerfor(source: .camera)
     }
     
+    private func getProfileInfo(){
+        if FIRAuth.auth()?.currentUser != nil{
+            
+            let databaseRef = FIRDatabase.database().reference().child("UserInfo")
+            let childRef = databaseRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+            
+            
+            
+            childRef.observe(.value, with: { (snapshot) in
+                
+                if let userDic = snapshot.value as? [String:String]{
+                    self.userDic = userDic
+                    self.updateProfileInfo()
+                }else{
+                    self.nameLabel.text = FIRAuth.auth()?.currentUser?.email
+                }
+            })
+        }
+    }
+    
+    private func getProfilePicture(){
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://employed-42a2b.appspot.com").child("ProfileImage")
+        let imageRef = storageRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        
+        imageRef.data(withMaxSize: 1 * 1024 * 1024, completion: { (data, error) in
+            if error != nil{
+                print("\(error?.localizedDescription)")
+            }else{
+                if let image = UIImage(data: data!){
+                    self.changeProfileImage(to: image)
+                    
+                }
+            }
+        })
+    }
+    
+    private func updateProfilePic(image: UIImage){
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://employed-42a2b.appspot.com").child("ProfileImage")
+        let imageRef = storageRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        
+        guard let imageData = UIImageJPEGRepresentation(image, 0.5) else { return }
+        let metaData = FIRStorageMetadata()
+        metaData.contentType = "image/jpeg"
+        
+        imageRef.put(imageData, metadata: metaData) { (_, error) in
+            if error != nil{
+                print("\(error?.localizedDescription)")
+            }else{
+                print("Profile pic updated")
+            }
+        }
+    }
+    
+    private func updateProfileInfo(){
+        self.nameLabel.text = ("\(userDic["FirstName"] ?? "Update Profile") \(userDic["LastName"] ?? "")")
+    }
+    
     func setUpTableView(){
         self.infoTableView.delegate = self
         self.infoTableView.dataSource = self
@@ -91,7 +168,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     func logOut() {
         do{
             try FIRAuth.auth()?.signOut()
-            
         }
         catch{
             let alertController = UIAlertController(title: "Error", message: "Trouble Logging Out", preferredStyle: UIAlertControllerStyle.alert)
@@ -107,12 +183,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         showImagePickerfor(source: .photoLibrary)
     }
     
-     func editProfile(){
-//        let editProfVC = EditProfileViewController()
+    func editProfile(){
         let editProfVC = EditProfileTableViewController()
         editProfVC.profileImage = self.profilePic.image
+        editProfVC.profileUpdatedDeleate = self
         let editProfNVC = UINavigationController(rootViewController: editProfVC)
-        //editVC.modalTransitionStyle = .coverVertical
         self.navigationController?.present(editProfNVC, animated: true, completion: nil)
     }
     
@@ -153,8 +228,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
                 }
             }
         case .photoLibrary:
-            profilePic.image = imageFromPicker
-            profileBackGround.image = imageFromPicker
+            changeProfileImage(to: imageFromPicker)
+            updateProfilePic(image: imageFromPicker)
             dismiss(animated: true, completion: nil)
         default:
             break
@@ -196,8 +271,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.row == infoDetails.count - 1{
-            showImagePickerfor(source: .camera)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                showImagePickerfor(source: .camera)
+            }else{
+                print("No camera available")
+            }
             
         }else{
             
@@ -207,6 +288,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             profVC.controllerTitle.text = info.title
             profVC.controllerDetail.text = info.description
             self.navigationController?.pushViewController(profVC, animated: true)
+        }
+    }
+    
+    //MARK: Profile Change Delegate
+    
+    func changeProfileImage(to image: UIImage) {
+        UIView.animate(withDuration: 1) {
+//            self.profilePic.alpha = 0
+            self.profileBackGround.alpha = 0
+        }
+        self.profilePic.image = image
+        self.profileBackGround.image = image
+        
+        UIView.animate(withDuration: 3) {
+//            self.profilePic.alpha = 1
+            self.profileBackGround.alpha = 1
         }
         
     }
@@ -235,7 +332,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         return imageView
     }()
     
-    
     private let infoTableView: UITableView = {
         let tableview: UITableView = UITableView()
         tableview.backgroundColor = .white
@@ -253,7 +349,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     private let profileBackGround: UIImageView = {
         let imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "onepunch")
+        imageView.image = nil
         let blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageView.bounds
@@ -289,6 +385,5 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         button.layer.cornerRadius = 25
         return button
     }()
-    
     
 }
