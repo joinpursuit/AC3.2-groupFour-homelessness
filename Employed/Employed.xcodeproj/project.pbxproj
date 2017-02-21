@@ -23,7 +23,6 @@
 		944703884694D63F46F3615C /* Pods_Employed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30FBCAEA35E1C7EF2682C02E /* Pods_Employed.framework */; };
 		A20243CA1E589BD6002B40D7 /* NYCJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243C91E589BD6002B40D7 /* NYCJobs.swift */; };
 		A20243CC1E589C09002B40D7 /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CB1E589C09002B40D7 /* APIRequestManager.swift */; };
-		A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */; };
 		A20243D11E58B7AE002B40D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A20243D01E58B7AE002B40D7 /* GoogleService-Info.plist */; };
 		A20243D31E58B911002B40D7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */; };
 		A20243D51E58C7A5002B40D7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */; };
@@ -59,7 +58,6 @@
 		830CDBECA6F51D2213AC65D7 /* Pods-Employed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employed.release.xcconfig"; path = "Pods/Target Support Files/Pods-Employed/Pods-Employed.release.xcconfig"; sourceTree = "<group>"; };
 		A20243C91E589BD6002B40D7 /* NYCJobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYCJobs.swift; sourceTree = "<group>"; };
 		A20243CB1E589C09002B40D7 /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestManager.swift; sourceTree = "<group>"; };
-		A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavesTableViewCell.swift; sourceTree = "<group>"; };
 		A20243D01E58B7AE002B40D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 			children = (
 				1A9EE2981E5B7A45005756D1 /* EditInfoProfileImageTableViewCell.swift */,
 				A20243D21E58B911002B40D7 /* SearchTableViewCell.swift */,
-				A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */,
 				1AA9948A1E58E7700050CB6E /* InfoTableViewCell.swift */,
 				1AED16281E5B66A3002989B2 /* EditInfoWithTextFieldTableViewCell.swift */,
 				1A9EE29C1E5BB78E005756D1 /* EditInfoWithTextViewTableViewCell.swift */,
@@ -259,7 +256,8 @@
 				TargetAttributes = {
 					1AA9944C1E57F9C00050CB6E = {
 						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = ZSE2A75FGT;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -370,7 +368,6 @@
 				E35F6EC01E5C074100E8F011 /* FilterViewController.swift in Sources */,
 				1AA9948B1E58E7700050CB6E /* InfoTableViewCell.swift in Sources */,
 				E35F6EAF1E580A9900E8F011 /* JobSearchViewController.swift in Sources */,
-				A20243CF1E58AFA3002B40D7 /* SavesTableViewCell.swift in Sources */,
 				A2D1D7041E58EF1F00C656E5 /* DiceJob.swift in Sources */,
 				A2D1D7061E5A32B200C656E5 /* AllJobs.swift in Sources */,
 			);
@@ -489,7 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZSE2A75FGT;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
@@ -505,7 +502,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZSE2A75FGT;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;

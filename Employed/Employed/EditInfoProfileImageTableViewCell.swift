@@ -18,7 +18,7 @@ class EditInfoProfileImageTableViewCell: UITableViewCell {
         
         profileImage.snp.makeConstraints { (view) in
             view.top.bottom.leading.trailing.equalToSuperview()
-            view.height.equalTo(200)
+            view.height.equalTo(250)
         }
     }
     
