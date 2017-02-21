@@ -212,8 +212,6 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             view.height.equalTo(50)
         }
         
-        
-        
     }
     
     //MARK: - Utilities
@@ -225,6 +223,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
         
         userData.updateChildValues(dict)
+            
         
         
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)

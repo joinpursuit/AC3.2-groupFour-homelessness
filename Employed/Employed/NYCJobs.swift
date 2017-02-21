@@ -30,7 +30,6 @@ class NYCJobs {
         
     }
 
-
     convenience init?(from dict: [String:Any]) {
         
         let buisnessTitle = dict["business_title"] as? String ?? ""
