@@ -179,7 +179,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Views
     private let backgroundImage: UIImageView = {
         let image = UIImageView()
-        let backgroundImage = UIImage(named: "city")
+        let backgroundImage = UIImage(named: "backgroundPic")
         image.image = backgroundImage
         image.contentMode = .scaleAspectFill
         return image
@@ -187,7 +187,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     private let backgroundImageTopLayer: UIView = {
         let view = UIView()
-        view.backgroundColor = Colors.backgroundColor
+        view.backgroundColor = UIColor.black
         view.alpha = 0.5
         view.isUserInteractionEnabled = false
         return view
@@ -219,7 +219,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     private let findJobButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Lets Get Started", for: .normal)
-        button.setTitleColor(Colors.darkPrimaryColor, for: .normal)
+        button.setTitleColor(Colors.backgroundColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button
     }()
@@ -227,7 +227,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     private let searchButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Search", for: .normal)
-        button.setTitleColor(Colors.darkPrimaryColor, for: .normal)
+        button.setTitleColor(Colors.backgroundColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button
     }()
