@@ -10,6 +10,8 @@ import UIKit
 
 class CameraOverlayView: UIView {
     
+    static let paperSizeA5 = CGSize(width: 420, height: 595)
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -26,24 +28,26 @@ class CameraOverlayView: UIView {
         self.addSubview(bottomRight)
         self.addSubview(topLeft)
         self.addSubview(bottomLeft)
+        self.backgroundColor = .green
+        self.alpha = 0.1
         
         topLeft.snp.makeConstraints { (view) in
-            view.top.equalToSuperview().offset(150)
-            view.leading.equalToSuperview()
+            view.top.leading.equalToSuperview()
+            //view.leading.equalToSuperview()
         }
         
         topRight.snp.makeConstraints { (view) in
-            view.top.equalToSuperview().offset(150)
+            view.top.equalToSuperview()
             view.trailing.equalToSuperview()
         }
         
         bottomLeft.snp.makeConstraints { (view) in
-            view.bottom.equalToSuperview().inset(150)
+            view.bottom.equalToSuperview()
             view.leading.equalToSuperview()
         }
         
         bottomRight.snp.makeConstraints { (view) in
-            view.bottom.equalToSuperview().inset(150)
+            view.bottom.equalToSuperview()
             view.trailing.equalToSuperview()
         }
         
