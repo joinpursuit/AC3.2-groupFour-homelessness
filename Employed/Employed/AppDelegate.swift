@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        //Styling
+        UILabel.appearance().font = UIFont(name: "Avenir Next", size: 11.0)
+        
+        
+        //Setup Windows
         FIRApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         

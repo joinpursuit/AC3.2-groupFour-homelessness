@@ -14,6 +14,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if launchedBefore  {
             print("Not first launch.")
         } else {

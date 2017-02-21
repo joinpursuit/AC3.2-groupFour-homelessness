@@ -11,6 +11,8 @@ import UIKit
 
 extension UILabel
 {
+    
+    
     func addImage(imageName: String, afterLabel bolAfterLabel: Bool = false)
     {
         let attachment: NSTextAttachment = NSTextAttachment()
@@ -40,6 +42,8 @@ extension UILabel
         self.attributedText = nil
         self.text = text
     }
+    
+    
 }
 
 extension UIImage {
@@ -68,4 +72,6 @@ extension UIImage {
     }
     
 }
+
+
 
