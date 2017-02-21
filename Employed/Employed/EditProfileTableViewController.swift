@@ -10,6 +10,13 @@ import UIKit
 import FirebaseStorage
 import FirebaseAuth
 import FirebaseDatabase
+import MobileCoreServices
+
+protocol ProfileStateDelegate{
+    var infoUpdated: Bool {get set}
+    var pictureUpdated: Bool {get set}
+    func changeProfileImage(to image:UIImage)
+}
 class EditProfileTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate{
     
     private let cellInfo: [(title:String,placeholder:String)] = [("First Name", "First Name"),("Last Name","Last Name"),("Email","Email Address"),("Phone Number","555-555-5555"),("Work Experience",""),("Education",""),("Skills","")]
@@ -19,7 +26,9 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
     
     private let dataBaseReference = FIRDatabase.database().reference()
     var profileImage: UIImage?
+    private var selectedImage: UIImage?
     var textValues: [String] = []
+    var profileUpdatedDeleate: ProfileStateDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +94,16 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         }
     }
     
+    private func showImagePicker(){
+        
+        let imagePicker: UIImagePickerController = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.mediaTypes = [String(kUTTypeImage)]
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     
     private func getProfileInfo(){
         if FIRAuth.auth()?.currentUser != nil{
@@ -96,10 +115,13 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
                 
                 if let userDic = snapshot.value as? [String:String]{
                     print(userDic)
+                    self.userInfoDic = userDic
+                    self.tableView.reloadData()
                 }
             })
         }
     }
+    
     
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -121,7 +143,12 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         case _ where row == 0:
             
             let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoProfileImageTableViewCell.cellIdentifier, for: indexPath) as! EditInfoProfileImageTableViewCell
-            cell.profileImage.image = profileImage
+            if selectedImage != nil{
+                cell.profileImage.image = selectedImage
+            }else{
+                cell.profileImage.image = profileImage
+            }
+            
             return cell
         case _ where row > 4:
             
@@ -130,6 +157,10 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
             cell.cellTitle.text = info.title
             cell.cellTextView.tag = row - 1
             cell.cellTextView.delegate = self
+            
+            if let info = userInfoDic[dicFields[row - 1]]{
+                cell.cellTextView.text = info
+            }
             return cell
             
         default:
@@ -140,18 +171,44 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
             cell.cellTextField.tag = row - 1
             cell.cellTextField.placeholder = info.placeholder
             cell.cellTextField.delegate = self
+            cell.cellTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            if let info = userInfoDic[dicFields[row - 1]]{
+                cell.cellTextField.text = info
+            }
             return cell
         }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let field = dicFields[textField.tag]
-        userInfoDic[field] = textField.text
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == 0{
+            showImagePicker()
+        }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    //MARK: ImagePicker Delegate
+    //MARK: - TO DO
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            self.selectedImage = image
+            self.profileUpdatedDeleate?.changeProfileImage(to: image)
+            self.tableView.reloadData()
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    //MARK: Textfield Delegates
+    
+    func textFieldDidChange(_ textField: UITextField) {
+        let field = dicFields[textField.tag]
+        userInfoDic[field] = textField.text
+        self.profileUpdatedDeleate?.infoUpdated = true
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
         let field = dicFields[textView.tag]
         userInfoDic[field] = textView.text
+        self.profileUpdatedDeleate?.infoUpdated = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
