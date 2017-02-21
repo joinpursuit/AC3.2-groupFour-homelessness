@@ -36,7 +36,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if FIRAuth.auth()?.currentUser != nil {
-            self.navigationController?.navigationBar.isHidden = false
             self.navigationController?.pushViewController(newViewController, animated: false)
         } else {
             self.navigationController?.navigationBar.isHidden = true
