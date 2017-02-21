@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class SearchTableViewCell: UITableViewCell {
-    
+    let companyIcons = ["indeed", "monster", "dice", "glassdoor", ""]
     var jobLabel = UILabel()
     var subLabel = UILabel()
     var agencyLabel = UILabel()
@@ -21,19 +21,22 @@ class SearchTableViewCell: UITableViewCell {
         
         //Labels
         jobLabel.textColor = .black
-        jobLabel.font = UIFont.systemFont(ofSize: 15.0, weight: 10.0)
+        jobLabel.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
+        jobLabel.font = UIFont(name: "Futura", size: jobLabel.font.pointSize)
         jobLabel.sizeToFit()
         jobLabel.adjustsFontSizeToFitWidth = false
         jobLabel.numberOfLines = 2
         jobLabel.textAlignment = .center
         
         agencyLabel.textColor = .black
-        agencyLabel.font = UIFont.systemFont(ofSize: 14)
+        jobLabel.font = UIFont(name: "Futura", size: jobLabel.font.pointSize)
+        agencyLabel.font = UIFont.systemFont(ofSize: 12)
         
         subLabel.textColor = UIColor.lightGray
-        subLabel.font = UIFont.systemFont(ofSize: 13)
+        subLabel.font = UIFont.systemFont(ofSize: 11)
         
-        companyIcon.image = UIImage(named: "monster")
+        let randomIndex = Int(arc4random_uniform(4) + 1)
+        companyIcon.image = UIImage(named: companyIcons[randomIndex])
  
     }
     
@@ -51,26 +54,29 @@ class SearchTableViewCell: UITableViewCell {
         
         
         jobLabel.snp.makeConstraints { (view) in
-            view.top.equalToSuperview().offset(16.0)
+            view.top.equalToSuperview().offset(30.0)
             view.leading.equalToSuperview().offset(12.0)
-            //view.centerX.equalToSuperview()
+            
         }
         
         agencyLabel.snp.makeConstraints { (view) in
             view.top.equalTo(jobLabel.snp.bottom).offset(8.0)
             view.leading.equalToSuperview().offset(12.0)
-            //view.centerX.equalToSuperview()
+            
         }
         
         subLabel.snp.makeConstraints { (view) in
             view.top.equalTo(agencyLabel.snp.bottom).offset(8.0)
             view.leading.equalToSuperview().offset(12.0)
-            //view.centerX.equalToSuperview()
+            view.width.equalToSuperview().multipliedBy(0.80)
+            
         }
         
         companyIcon.snp.makeConstraints { (view) in
-            view.centerX.equalToSuperview()
-            view.top.equalTo(subLabel.snp.bottom).offset(10.0)
+            //view.centerX.equalToSuperview()
+            //view.top.equalTo(subLabel.snp.bottom).offset(10.0)
+            view.centerY.equalToSuperview()
+            view.leading.equalTo(subLabel.snp.trailing).offset(5.0)
         }
     }
     

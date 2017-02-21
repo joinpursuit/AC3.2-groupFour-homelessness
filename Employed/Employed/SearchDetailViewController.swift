@@ -25,14 +25,19 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         setUpViews()
         
         self.title = jobPost.buisnessTitle
-        self.view.backgroundColor = Colors.lightPrimaryColor
+        self.view.backgroundColor = .white
  
         let barButton = UIBarButtonItem(customView: saveButton)
         self.navigationItem.rightBarButtonItem = barButton
         
         //Job Detail profile
         self.jobTitle.text = jobPost.buisnessTitle
-        self.agencyLabel.text = jobPost.agency.lowercased()
+        
+        var chars = Array((jobPost.agency).characters)
+        let firstChar = String(chars[0]).uppercased()
+        let rest = String(chars[1..<chars.count]).lowercased()
+        self.agencyLabel.text = "\(firstChar)\(rest)"
+        
         self.addressLabel.text = jobPost.workLocation
         self.addressLabel.addImage(imageName: "marker")
         self.wageLabel.text = "$40,000"
@@ -92,7 +97,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         }
         
         topSeparator.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().multipliedBy(0.75)
+            view.width.equalToSuperview().offset(24.0)
             view.height.equalTo(1)
             view.top.equalTo(addressLabel.snp.bottom).offset(5.0)
         }
@@ -145,6 +150,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         agencyCategoryLabel.snp.makeConstraints { (view) in
             view.top.equalTo(topSeparatorB.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+            view.width.equalToSuperview()
         }
         
         jobPostDescription.snp.makeConstraints { (view) in
@@ -287,7 +293,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var wageCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 12, weight: 5.0)
         label.textColor = Colors.darkPrimaryColor
         return label
     }()
@@ -326,6 +332,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         label.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
          label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.backgroundColor = Colors.lightPrimaryColor
         label.numberOfLines = 0
         return label
     }()

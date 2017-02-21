@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "rsz_dicere.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "rsz_dicere.png",
       "scale" : "2x"
     },
     {

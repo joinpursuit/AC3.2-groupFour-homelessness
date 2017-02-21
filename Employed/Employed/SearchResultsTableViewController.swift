@@ -103,11 +103,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.tableView.reloadData()
     }
     
-    
-    
-    
-    
- 
+
     
     //MARK: - SetupViews
     func setupViewHierarchy() {
@@ -153,7 +149,14 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         let selectedCell = jobs[indexPath.row]
 
         cell.jobLabel.text = selectedCell.buisnessTitle
-        cell.agencyLabel.text = selectedCell.agency
+        
+            
+        var chars = Array((selectedCell.agency).characters)
+        let firstChar = String(chars[0]).uppercased()
+        let rest = String(chars[1..<chars.count]).lowercased()
+        cell.agencyLabel.text = "\(firstChar)\(rest)"
+        
+        
         cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
         cell.subLabel.addImage(imageName: "marker25")
  
