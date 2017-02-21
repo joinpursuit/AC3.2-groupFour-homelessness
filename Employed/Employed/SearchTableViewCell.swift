@@ -48,7 +48,7 @@ class SearchTableViewCell: UITableViewCell {
         companyIcon.image = UIImage(named: companyIcons[randomIndex])
         
         if FIRAuth.auth()?.currentUser != nil {
-            
+             
             databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapShot) in
                 
                 self.databaseReference.child("Applied Jobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapSecond) in

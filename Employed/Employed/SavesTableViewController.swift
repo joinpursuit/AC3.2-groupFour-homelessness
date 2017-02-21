@@ -127,6 +127,17 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
             
             navigationController?.pushViewController(searchDetailVc, animated: true)
         }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            
+        }
+    }
         
         /*
          // Override to support conditional editing of the table view.

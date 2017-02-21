@@ -29,7 +29,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let rightBarButton = UIBarButtonItem(customView: logOutButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
