@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let window = self.window {
             self.customizedLaunchScreenView = UIView(frame: window.bounds)
-            self.customizedLaunchScreenView?.backgroundColor = Colors.backgroundColor
+            self.customizedLaunchScreenView?.backgroundColor = UIColor(red: 110/255, green: 211/255, blue: 207/255, alpha: 1.0)
             
             self.window?.addSubview(self.customizedLaunchScreenView!)
             self.window?.bringSubview(toFront: self.customizedLaunchScreenView!)
