@@ -42,7 +42,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.addressLabel.text = jobPost.workLocation
         self.addressLabel.addImage(imageName: "marker25")
         self.wageLabel.text = wageArray[randomNumber]
-        "$40,000"
+//        "$40,000"
         self.jobPostDescription.text = "\(jobPost.jobDescription)..."
         
         self.jobReqs.text = jobPost.minReqs
@@ -216,6 +216,11 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         if FIRAuth.auth()?.currentUser != nil {
         let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
         self.navigationController?.present(editVC, animated: true, completion: nil)
+            
+            let dict = jobPost.asDictionary
+           let userData =  databaseReference.child("Applied Jobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
+            userData.updateChildValues(dict)
+            
         } else {
             Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
             
