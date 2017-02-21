@@ -7,10 +7,17 @@
 //
 
 import UIKit
-
+import FirebaseStorage
+import FirebaseAuth
+import FirebaseDatabase
 class EditProfileTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate{
+    
     private let cellInfo: [(title:String,placeholder:String)] = [("First Name", "First Name"),("Last Name","Last Name"),("Email","Email Address"),("Phone Number","555-555-5555"),("Work Experience",""),("Education",""),("Skills","")]
+    private var userInfoDic = ["FirstName":"","LastName":"","Email":"","Phone":"","Experience":"","Education":"","Skills":""]
+    private var dicFields: [String] = ["FirstName","LastName","Email","Phone","Experience","Education","Skills"]
     private let tableView: UITableView = UITableView()
+    
+    private let dataBaseReference = FIRDatabase.database().reference()
     var profileImage: UIImage?
     var textValues: [String] = []
     
@@ -23,6 +30,10 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         
         setUpViews()
         setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getProfileInfo()
     }
     
     //MARK: Utilties
@@ -39,6 +50,8 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
             view.centerX.bottom.equalToSuperview()
             view.width.equalToSuperview().multipliedBy(0.7)
         }
+        
+        applyChangesButton.addTarget(self, action: #selector(upDateProfile), for: .touchUpInside)
     }
     
     func setupTableView(){
@@ -58,8 +71,37 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Table view data source
+    func upDateProfile(){
+        let databaseRef = FIRDatabase.database().reference().child("UserInfo")
+        let childRef = databaseRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        
+        childRef.updateChildValues(userInfoDic) { (error, ref) in
+            if error != nil{
+                print("\(error?.localizedDescription)")
+            }else{
+                print("Profile Updated")
+                self.dismissme()
+            }
+        }
+    }
     
+    
+    private func getProfileInfo(){
+        if FIRAuth.auth()?.currentUser != nil{
+            
+            let databaseRef = FIRDatabase.database().reference().child("UserInfo")
+            let childRef = databaseRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+            
+            childRef.observe(.value, with: { (snapshot) in
+                
+                if let userDic = snapshot.value as? [String:String]{
+                    print(userDic)
+                }
+            })
+        }
+    }
+    
+    // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
@@ -86,25 +128,30 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
             let info = cellInfo[row - 1]
             let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoWithTextViewTableViewCell.cellIdentifier, for: indexPath) as! EditInfoWithTextViewTableViewCell
             cell.cellTitle.text = info.title
+            cell.cellTextView.tag = row - 1
             cell.cellTextView.delegate = self
             return cell
             
         default:
-            
             let info = cellInfo[row - 1]
             let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoWithTextFieldTableViewCell.cellIdentifier, for: indexPath) as! EditInfoWithTextFieldTableViewCell
             
             cell.cellTitle.text = info.title
-            cell.cellTextField.tag = indexPath.row
+            cell.cellTextField.tag = row - 1
             cell.cellTextField.placeholder = info.placeholder
             cell.cellTextField.delegate = self
             return cell
         }
     }
     
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print("Textfield\(textField.tag) finished with \(textField.text ?? "Nothing")")
+        let field = dicFields[textField.tag]
+        userInfoDic[field] = textField.text
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        let field = dicFields[textView.tag]
+        userInfoDic[field] = textView.text
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

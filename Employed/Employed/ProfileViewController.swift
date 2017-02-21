@@ -8,16 +8,21 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
 import Photos
 import MobileCoreServices
 
 
 class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
+    private var userDic: [String:String] = [:]
+    
+    private let dataBaseReference = FIRDatabase.database().reference()
     
     //Can be used to populate profile tableview
     private let infoImageArray: [UIImage] = []
-    private let infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah"),("R\u{E9}sum\u{E9}","Click to Add/Update R\u{E9}sum\u{E9}")]
+    private var infoDetails: [(title:String,description:String)] = [("About Me","I love food"),("Some stuff","I like that too"), ("Blah blah", "Blah di blah blah"),("R\u{E9}sum\u{E9}","Click to Add/Update R\u{E9}sum\u{E9}")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +31,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
         self.view.backgroundColor = .white
+        cameraAvailableCheck()
         setUpViews()
         setUpTableView()
         //setImagePicker()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getProfileInfo()
     }
     
     func setUpViews(){
@@ -78,6 +88,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         showImagePickerfor(source: .camera)
     }
     
+    private func getProfileInfo(){
+        if FIRAuth.auth()?.currentUser != nil{
+            
+            let databaseRef = FIRDatabase.database().reference().child("UserInfo")
+            let childRef = databaseRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+            
+            childRef.observe(.value, with: { (snapshot) in
+                
+                if let userDic = snapshot.value as? [String:String]{
+                    self.userDic = userDic
+                    self.updateProfilePage()
+                }
+            })
+        }
+    }
+    
+    private func updateProfilePage(){
+        self.nameLabel.text = ("\(userDic["FirstName"] ?? "Update Profile") \(userDic["LastName"] ?? "")")
+    }
+    
     func setUpTableView(){
         self.infoTableView.delegate = self
         self.infoTableView.dataSource = self
@@ -87,6 +117,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     //MARK:- Utilities
+    
+    private func cameraAvailableCheck(){
+        if !UIImagePickerController.isSourceTypeAvailable(.camera){
+            _ = infoDetails.popLast()
+        }
+        
+    }
     
     func logOut() {
         do{
@@ -108,11 +145,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
      func editProfile(){
-//        let editProfVC = EditProfileViewController()
         let editProfVC = EditProfileTableViewController()
         editProfVC.profileImage = self.profilePic.image
         let editProfNVC = UINavigationController(rootViewController: editProfVC)
-        //editVC.modalTransitionStyle = .coverVertical
         self.navigationController?.present(editProfNVC, animated: true, completion: nil)
     }
     
@@ -184,6 +219,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.row == infoDetails.count - 1{
             showImagePickerfor(source: .camera)
             
@@ -196,8 +232,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             profVC.controllerDetail.text = info.description
             self.navigationController?.pushViewController(profVC, animated: true)
         }
-        
-    }
+}
     
     //MARK: - Views
     private lazy var profilePic: UIImageView = {
@@ -222,7 +257,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         return imageView
     }()
-    
     
     private let infoTableView: UITableView = {
         let tableview: UITableView = UITableView()
@@ -277,6 +311,5 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         button.layer.cornerRadius = 25
         return button
     }()
-    
-    
+
 }
