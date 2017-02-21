@@ -25,16 +25,21 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         setUpViews()
         
         self.title = jobPost.buisnessTitle
-        self.view.backgroundColor = Colors.lightPrimaryColor
+        self.view.backgroundColor = .white
  
         let barButton = UIBarButtonItem(customView: saveButton)
         self.navigationItem.rightBarButtonItem = barButton
         
         //Job Detail profile
         self.jobTitle.text = jobPost.buisnessTitle
-        self.agencyLabel.text = jobPost.agency.lowercased()
+        
+        var chars = Array((jobPost.agency).characters)
+        let firstChar = String(chars[0]).uppercased()
+        let rest = String(chars[1..<chars.count]).lowercased()
+        self.agencyLabel.text = "\(firstChar)\(rest)"
+        
         self.addressLabel.text = jobPost.workLocation
-        self.addressLabel.addImage(imageName: "marker")
+        self.addressLabel.addImage(imageName: "marker25")
         self.wageLabel.text = "$40,000"
         self.jobPostDescription.text = "\(jobPost.jobDescription)..."
         
@@ -43,7 +48,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         //"Category" labels
         self.wageCategoryLabel.text = "SALARY"
-        self.agencyCategoryLabel.text = "About \(jobPost.agency)"
+        self.agencyCategoryLabel.text = "ABOUT \(jobPost.agency)"
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,7 +97,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         }
         
         topSeparator.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().multipliedBy(0.75)
+            view.width.equalToSuperview().offset(24.0)
             view.height.equalTo(1)
             view.top.equalTo(addressLabel.snp.bottom).offset(5.0)
         }
@@ -105,13 +110,13 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         midSeparator.snp.makeConstraints { (view) in
             view.width.equalToSuperview().offset(5.0)
-            view.height.equalTo(1)
+            view.height.equalTo(3)
             view.top.equalTo(jobPostDescription.snp.bottom).offset(8.0)
         }
         
         bottomSeparator.snp.makeConstraints { (view) in
             view.width.equalToSuperview().offset(5.0)
-            view.height.equalTo(1)
+            view.height.equalTo(3)
             view.top.equalTo(jobReqs.snp.bottom).offset(8.0)
         }
         
@@ -145,6 +150,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         agencyCategoryLabel.snp.makeConstraints { (view) in
             view.top.equalTo(topSeparatorB.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+            view.width.equalToSuperview()
         }
         
         jobPostDescription.snp.makeConstraints { (view) in
@@ -271,14 +277,14 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var agencyCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = Colors.darkPrimaryColor
         return label
     }()
     
     private lazy var requirementCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = Colors.darkPrimaryColor
         label.text = "REQUIREMENTS"
         return label
@@ -287,7 +293,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var wageCategoryLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12, weight: 5.0)
         label.textColor = Colors.darkPrimaryColor
         return label
     }()
@@ -295,7 +301,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var jobTitle: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20.0, weight: 5.0)
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: 6.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         return label
     }()
@@ -316,14 +322,14 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var wageLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
     
     private lazy var jobPostDescription: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13.0, weight: 5.0)
+        label.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
          label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0
@@ -332,7 +338,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     private lazy var jobReqs: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13.0, weight: 5.0)
+        label.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0
@@ -367,7 +373,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(applyToJob), for: .touchUpInside)
         button.setTitle("APPLY NOW", for: .normal)
-        button.backgroundColor = UIColor.red
+        button.backgroundColor = Colors.accentColor
         return button
     }()
     

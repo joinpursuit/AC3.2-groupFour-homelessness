@@ -45,6 +45,10 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         tableView.estimatedRowHeight = 200
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
 
     
     //MARK: - Utilities
@@ -103,11 +107,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.tableView.reloadData()
     }
     
-    
-    
-    
-    
- 
+
     
     //MARK: - SetupViews
     func setupViewHierarchy() {
@@ -153,9 +153,16 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         let selectedCell = jobs[indexPath.row]
 
         cell.jobLabel.text = selectedCell.buisnessTitle
-        cell.agencyLabel.text = selectedCell.agency
+        
+            
+        var chars = Array((selectedCell.agency).characters)
+        let firstChar = String(chars[0]).uppercased()
+        let rest = String(chars[1..<chars.count]).lowercased()
+        cell.agencyLabel.text = "\(firstChar)\(rest)"
+        
+        
         cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
-        cell.subLabel.addImage(imageName: "marker")
+        cell.subLabel.addImage(imageName: "marker25")
  
         //cell.textLabel?.text = selectedCell.jobTitle
 
@@ -174,7 +181,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     internal lazy var filterButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(filterButtonPressed(sender:)), for: .touchUpInside)
-        button.setTitle("Filter", for: .normal)
+        button.setImage(UIImage(named: "filter"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         return button
     }()
@@ -182,7 +189,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     internal lazy var searchButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.addTarget(self, action: #selector(searchButtonPressed(sender:)), for: .touchUpInside)
-        button.setImage(UIImage(named: "search"), for: .normal)
+        button.setImage(UIImage(named: "search25"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 50, height: 20)
         return button
     }()

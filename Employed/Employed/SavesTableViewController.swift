@@ -17,7 +17,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     var jobs = [NYCJobs]()
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        self.title = "My Favorites"
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "savedCell")
      
         tableView.emptyDataSetSource = self
@@ -73,7 +73,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
     }
 
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
-        return UIImage(named: "logo")
+        return UIImage(named: "folder")
     }
     
     
