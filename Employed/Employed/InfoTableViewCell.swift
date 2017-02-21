@@ -56,14 +56,16 @@ class InfoTableViewCell: UITableViewCell {
     let cellDetail: UILabel = {
         let label: UILabel = UILabel()
         label.text = "Some description goes here..."
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
     let cellTitle: UILabel = {
         let label: UILabel = UILabel()
         label.text = "Title"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        //label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: 16.0)
+        label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         return label
     }()
     
