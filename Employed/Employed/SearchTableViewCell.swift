@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class SearchTableViewCell: UITableViewCell {
     let companyIcons = ["indeed", "monster", "dice", "glassdoor", ""]
@@ -15,6 +17,9 @@ class SearchTableViewCell: UITableViewCell {
     var subLabel = UILabel()
     var agencyLabel = UILabel()
     var companyIcon = UIImageView()
+    var appliedIndicator = UIView()
+    var databaseReference = FIRDatabase.database().reference()
+    
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,10 +40,34 @@ class SearchTableViewCell: UITableViewCell {
         subLabel.textColor = UIColor.lightGray
         subLabel.font = UIFont.systemFont(ofSize: 12)
         
+        appliedIndicator.isHidden = true
+        appliedIndicator.backgroundColor = .green
+        appliedIndicator.layer.cornerRadius = 5.0
+        
         let randomIndex = Int(arc4random_uniform(4) + 1)
         companyIcon.image = UIImage(named: companyIcons[randomIndex])
- 
+        
+        if FIRAuth.auth()?.currentUser != nil {
+            
+            databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapShot) in
+                
+                self.databaseReference.child("Applied Jobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapSecond) in
+                    if snapShot.value as? String != nil && snapSecond.value as? String != nil {
+                        if snapShot.value as? String == snapSecond.value as? String {
+                            dump(snapShot.value)
+                            print("\n *******second Snap *******")
+                            dump(snapSecond.value)
+                            //                        self.appliedIndicator.isHidden = false
+                        }
+                    }
+                })
+                
+                
+            })
+        }
     }
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -51,7 +80,7 @@ class SearchTableViewCell: UITableViewCell {
         self.contentView.addSubview(subLabel)
         self.contentView.addSubview(agencyLabel)
         self.contentView.addSubview(companyIcon)
-        
+        self.contentView.addSubview(appliedIndicator)
         
         jobLabel.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(25.0)
@@ -78,6 +107,15 @@ class SearchTableViewCell: UITableViewCell {
             view.centerY.equalToSuperview()
             view.leading.equalTo(subLabel.snp.trailing).offset(5.0)
         }
+        
+        appliedIndicator.snp.makeConstraints { (view) in
+            view.leading.equalTo(jobLabel.snp.trailing).offset(5)
+            view.top.equalToSuperview().offset(30.0)
+            view.height.equalTo(8.0)
+            view.width.equalTo(8.0)
+        }
+        
+        
     }
     
     
