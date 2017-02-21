@@ -27,7 +27,7 @@ class CameraOverlayBar: UIView {
         
         let width: CGFloat = 5
         let length: CGFloat = 30
-        
+      
         self.snp.makeConstraints { (view) in
             view.size.equalTo(CGSize(width: 30, height: 30))
         }
