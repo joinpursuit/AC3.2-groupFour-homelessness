@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A9EE2991E5B7A45005756D1 /* EditInfoProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9EE2981E5B7A45005756D1 /* EditInfoProfileImageTableViewCell.swift */; };
+		1A9EE29D1E5BB78E005756D1 /* EditInfoWithTextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9EE29C1E5BB78E005756D1 /* EditInfoWithTextViewTableViewCell.swift */; };
 		1AA994511E57F9C00050CB6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994501E57F9C00050CB6E /* AppDelegate.swift */; };
 		1AA994581E57F9C00050CB6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA994571E57F9C00050CB6E /* Assets.xcassets */; };
 		1AA9945B1E57F9C00050CB6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA994591E57F9C00050CB6E /* LaunchScreen.storyboard */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		1A9EE2981E5B7A45005756D1 /* EditInfoProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInfoProfileImageTableViewCell.swift; sourceTree = "<group>"; };
+		1A9EE29C1E5BB78E005756D1 /* EditInfoWithTextViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInfoWithTextViewTableViewCell.swift; sourceTree = "<group>"; };
 		1AA9944D1E57F9C00050CB6E /* Employed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Employed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA994501E57F9C00050CB6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AA994571E57F9C00050CB6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				A20243CE1E58AFA3002B40D7 /* SavesTableViewCell.swift */,
 				1AA9948A1E58E7700050CB6E /* InfoTableViewCell.swift */,
 				1AED16281E5B66A3002989B2 /* EditInfoWithTextFieldTableViewCell.swift */,
+				1A9EE29C1E5BB78E005756D1 /* EditInfoWithTextViewTableViewCell.swift */,
 			);
 			name = "Controller Cells";
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				1AED16271E5B660D002989B2 /* EditProfileTableViewController.swift in Sources */,
 				E35F6EB51E5890AA00E8F011 /* ColorScheme.swift in Sources */,
 				E35F6EB01E580A9900E8F011 /* SearchResultsTableViewController.swift in Sources */,
+				1A9EE29D1E5BB78E005756D1 /* EditInfoWithTextViewTableViewCell.swift in Sources */,
 				E35F6EB11E580A9900E8F011 /* SearchDetailViewController.swift in Sources */,
 				1AED16291E5B66A3002989B2 /* EditInfoWithTextFieldTableViewCell.swift in Sources */,
 				E35F6EB91E59543200E8F011 /* HelperExtension.swift in Sources */,
