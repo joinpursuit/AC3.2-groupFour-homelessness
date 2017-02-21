@@ -42,12 +42,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.view.addSubview(backgroundImage)
         self.backgroundImage.addSubview(backgroundImageTopLayer)
-        self.view.addSubview(loginLogo)
         self.view.addSubview(emailTextField)
         self.view.addSubview(passwordTextField)
         self.view.addSubview(loginButton)
         //self.view.addSubview(registerLabel)
         self.view.addSubview(registerButton)
+        //self.view.addSubview(loginLogo)
+        self.view.addSubview(appLabel)
         
         backgroundImage.snp.makeConstraints { (view) in
             view.top.equalToSuperview()
@@ -63,13 +64,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             view.height.width.equalToSuperview()
         }
         
-        loginLogo.snp.makeConstraints { (view) in
+        
+//        loginLogo.snp.makeConstraints { (view) in
+//            view.top.equalToSuperview().offset(24)
+//            view.centerX.equalToSuperview()
+//        }
+        
+        appLabel.snp.makeConstraints { (view) in
+            view.top.equalToSuperview().offset(24)
+            view.bottom.equalTo(emailTextField.snp.top).offset(8)
             view.centerX.equalToSuperview()
-            view.top.equalTo(self.view.snp.bottom).multipliedBy(0.10)
         }
         
         emailTextField.snp.makeConstraints { (view) in
-            view.top.equalTo(loginLogo.snp.bottom).offset(8.0)
+            view.top.equalTo(appLabel.snp.bottom).offset(8.0)
             view.center.equalToSuperview()
             view.width.equalToSuperview().multipliedBy(0.9)
             view.height.equalToSuperview().multipliedBy(0.1)
@@ -178,10 +186,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     
     //MARK: - Views
+    private let appLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.font = UIFont.systemFont(ofSize: 40.0, weight: 16.0)
+        label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
+        label.textColor = .white
+        label.text = "Employed"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+    
     private let backgroundImage: UIImageView = {
         let image = UIImageView()
-        let backgroundImage = UIImage(named: "backgroundPic2")
+        let backgroundImage = UIImage(named: "office")
         image.image = backgroundImage
+        
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -189,17 +209,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private let backgroundImageTopLayer: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black
-        view.alpha = 0.5
+        view.alpha = 0.8
         view.isUserInteractionEnabled = false
         return view
     }()
     
-    private let loginLogo: UIImageView = {
-        var imageView: UIImageView = UIImageView()
-        imageView.image = UIImage(named: "logo")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+//    private let loginLogo: UIImageView = {
+//        var imageView: UIImageView = UIImageView()
+//        imageView.image = UIImage(named: "hr")
+//        imageView.contentMode = .scaleAspectFit
+//        return imageView
+//    }()
     private let emailTextField: LeftPaddedText = {
         let textfield = LeftPaddedText()
         textfield.backgroundColor = .black

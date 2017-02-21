@@ -47,7 +47,14 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        refilter()
+        self.tableView.reloadData()
+    }
+    
+    func refilter() {
+        jobs.sort { (job, job1) -> Bool in
+            return job.postingDate > job1.postingDate
+        }
     }
 
     
@@ -112,7 +119,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     //MARK: - SetupViews
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
-        
         self.view.addSubview(filterButton)
         self.view.addSubview(searchButton)
     
@@ -122,6 +128,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         print("filter pressed")
         let filterVC = UINavigationController(rootViewController: FilterViewController())
         self.navigationController?.present(filterVC, animated: true, completion: nil)
+        
     }
     
     func searchButtonPressed(sender: UIButton) {
@@ -137,6 +144,8 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.leftBarButtonItem = leftBarButton
     }
+   
+   
     
 
     // MARK: - Table view data source
