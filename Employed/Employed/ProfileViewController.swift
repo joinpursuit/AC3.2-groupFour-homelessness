@@ -54,10 +54,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func setUpViews(){
         self.view.addSubview(profileBackGround)
-        self.profileBackGround.addSubview(addResume)
-        self.profileBackGround.addSubview(nameLabel)
+        self.view.addSubview(nameLabel)
         self.view.addSubview(infoTableView)
-        self.profileBackGround.addSubview(profilePic)
+        self.view.addSubview(profilePic)
         self.view.addSubview(editProfileButton)
         
         self.edgesForExtendedLayout = []
@@ -295,15 +294,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     //MARK: Profile Change Delegate
     
     func changeProfileImage(to image: UIImage) {
-        self.profilePic.alpha = 0
-        self.profileBackGround.alpha = 0
         UIView.animate(withDuration: 1) {
-            self.profilePic.alpha = 1
+//            self.profilePic.alpha = 0
+            self.profileBackGround.alpha = 0
+        }
+        self.profilePic.image = image
+        self.profileBackGround.image = image
+        
+        UIView.animate(withDuration: 3) {
+//            self.profilePic.alpha = 1
             self.profileBackGround.alpha = 1
         }
         
-        self.profilePic.image = image
-        self.profileBackGround.image = image
     }
     
     //MARK: - Views

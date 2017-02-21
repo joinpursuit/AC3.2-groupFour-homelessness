@@ -92,6 +92,10 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
                 self.dismissme()
             }
         }
+        
+        if let image = selectedImage{
+            self.profileUpdatedDeleate?.changeProfileImage(to: image)
+        }
     }
     
     private func showImagePicker(){
@@ -143,6 +147,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         case _ where row == 0:
             
             let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoProfileImageTableViewCell.cellIdentifier, for: indexPath) as! EditInfoProfileImageTableViewCell
+        
             if selectedImage != nil{
                 cell.profileImage.image = selectedImage
             }else{
@@ -191,7 +196,6 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
             self.selectedImage = image
-            self.profileUpdatedDeleate?.changeProfileImage(to: image)
             self.tableView.reloadData()
             dismiss(animated: true, completion: nil)
         }
