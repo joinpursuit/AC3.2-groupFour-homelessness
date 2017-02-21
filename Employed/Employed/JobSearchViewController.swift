@@ -15,7 +15,6 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if !launchedBefore  {
             firstLaunchAlert()
             UserDefaults.standard.set(true, forKey: "launchedBefore")

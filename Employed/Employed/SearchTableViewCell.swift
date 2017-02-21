@@ -54,9 +54,7 @@ class SearchTableViewCell: UITableViewCell {
                 self.databaseReference.child("Applied Jobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapSecond) in
 //                    if snapShot.value as? String != nil && snapSecond.value as? String != nil {
                         if snapShot.value as? String == snapSecond.value as? String {
-                            dump(snapShot.value)
-                            print("\n *******second Snap *******")
-                            dump(snapSecond.value)
+                       
                             //                        self.appliedIndicator.isHidden = false
                         }
 //                    }

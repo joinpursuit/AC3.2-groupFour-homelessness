@@ -18,7 +18,9 @@ class NYCJobs {
     let workLocation: String
     let minReqs: String
     let minSalary: String
-    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String, workLocation: String, minReqs: String, minSalary: String) {
+    let key: String?
+    
+    init(buisnessTitle: String, civilTitle: String, jobDescription: String, postingDate: String, agency: String, workLocation: String, minReqs: String, minSalary: String, key: String?) {
         self.buisnessTitle = buisnessTitle
         self.civilTitle = civilTitle
         self.jobDescription = jobDescription
@@ -27,6 +29,7 @@ class NYCJobs {
         self.workLocation = workLocation
         self.minReqs = minReqs
         self.minSalary = minSalary
+        self.key = key
         
     }
 
@@ -48,7 +51,7 @@ class NYCJobs {
         let jobTitle = Array(buisnessTitle.components(separatedBy: ","))
         
    
-        self.init(buisnessTitle: jobTitle[0], civilTitle: civilTitle, jobDescription: shortDescript, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary)
+        self.init(buisnessTitle: jobTitle[0], civilTitle: civilTitle, jobDescription: shortDescript, postingDate: date[0], agency: agency, workLocation: workLocation, minReqs: minReqs, minSalary: minSalary, key: nil)
     }
     
     

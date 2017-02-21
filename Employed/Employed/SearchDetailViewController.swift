@@ -17,7 +17,7 @@ import SCLAlertView
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate,MFMailComposeViewControllerDelegate {
     var jobPost: NYCJobs!
-
+    var savedJobs = [[String:String]]()
     
     //var scrollView: UIScrollView!
     
@@ -221,18 +221,20 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
 
         if FIRAuth.auth()?.currentUser != nil {
 
-        let dict = jobPost.asDictionary
         let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
-        
+            
+        let jobPost = NYCJobs(buisnessTitle: self.jobPost.buisnessTitle, civilTitle: self.jobPost.civilTitle , jobDescription: self.jobPost.jobDescription, postingDate: self.jobPost.postingDate, agency: self.jobPost.agency, workLocation: self.jobPost.workLocation, minReqs: self.jobPost.minReqs, minSalary: self.jobPost.minSalary, key: userData.key)
+            let dict = jobPost.asDictionary
+            
         userData.updateChildValues(dict)
-        
+        savedJobs.append(dict)
         
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
             
         } else {
-         Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
+         Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTabSave), userInfo: nil, repeats: false)
         }
     }
     
@@ -258,14 +260,22 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
                 
                 present(mailVC, animated: true, completion: nil)
             }
-
+            
+            let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
+            
+            let postOfJob = NYCJobs(buisnessTitle: self.jobPost.buisnessTitle, civilTitle: self.jobPost.civilTitle , jobDescription: self.jobPost.jobDescription, postingDate: self.jobPost.postingDate, agency: self.jobPost.agency, workLocation: self.jobPost.workLocation, minReqs: self.jobPost.minReqs, minSalary: self.jobPost.minSalary, key: userData.key)
+            let dict = postOfJob.asDictionary
+            for jobs in savedJobs {
+                dump(jobs)
+            }
+            
 
         } else {
-            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTabSignIn), userInfo: nil, repeats: false)
         }
     }
     
-    func switchTab() {
+    func switchTabSignIn() {
     tabBarController?.selectedIndex = 2
     
         SCLAlertView().showTitle(
@@ -277,6 +287,20 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             colorTextButton: 0xFFFFFF
         )
     }
+    
+    func switchTabSave() {
+        tabBarController?.selectedIndex = 2
+        
+        SCLAlertView().showTitle(
+            "Sign In to Save",
+            subTitle: "",
+            style: .notice ,
+            closeButtonTitle: "Done",
+            colorStyle: 0xE6279,
+            colorTextButton: 0xFFFFFF
+        )
+    }
+
     
     func tappedMap() {
         print("Tapped map")
