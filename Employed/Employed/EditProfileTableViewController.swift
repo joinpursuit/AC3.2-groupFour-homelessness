@@ -8,8 +8,8 @@
 
 import UIKit
 
-class EditProfileTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    private let cellInfo: [(title:String,placeholder:String)] = [("First Name", "First Name"),("Last Name","Last Name")]
+class EditProfileTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate{
+    private let cellInfo: [(title:String,placeholder:String)] = [("First Name", "First Name"),("Last Name","Last Name"),("Email","Email Address"),("Phone Number","555-555-5555"),("Work Experience",""),("Education",""),("Skills","")]
     private let tableView: UITableView = UITableView()
     var profileImage: UIImage?
     var textValues: [String] = []
@@ -24,7 +24,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         setUpViews()
         setupTableView()
     }
-
+    
     //MARK: Utilties
     func setUpViews(){
         
@@ -46,10 +46,12 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         tableView.dataSource = self
         tableView.register(EditInfoWithTextFieldTableViewCell.self, forCellReuseIdentifier: EditInfoWithTextFieldTableViewCell.cellIdentifier)
         tableView.register(EditInfoProfileImageTableViewCell.self, forCellReuseIdentifier: EditInfoProfileImageTableViewCell.cellIdentifier)
+        tableView.register(EditInfoWithTextViewTableViewCell.self, forCellReuseIdentifier: EditInfoWithTextViewTableViewCell.cellIdentifier)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
         tableView.estimatedSectionFooterHeight = 50
+        tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
     }
     
     func dismissme(){
@@ -59,36 +61,47 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-    
+        
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     
+        
         return cellInfo.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row == 0 {
+        let row = indexPath.row
+        
+        switch row{
+            
+        case _ where row == 0:
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoProfileImageTableViewCell.cellIdentifier, for: indexPath) as! EditInfoProfileImageTableViewCell
             cell.profileImage.image = profileImage
+            return cell
+        case _ where row > 4:
             
+            let info = cellInfo[row - 1]
+            let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoWithTextViewTableViewCell.cellIdentifier, for: indexPath) as! EditInfoWithTextViewTableViewCell
+            cell.cellTitle.text = info.title
+            cell.cellTextView.delegate = self
             return cell
             
-        }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoWithTextFieldTableViewCell.cellIdentifier, for: indexPath) as! EditInfoWithTextFieldTableViewCell
+        default:
             
-            let info = cellInfo[indexPath.row - 1]
+            let info = cellInfo[row - 1]
+            let cell = tableView.dequeueReusableCell(withIdentifier: EditInfoWithTextFieldTableViewCell.cellIdentifier, for: indexPath) as! EditInfoWithTextFieldTableViewCell
             
             cell.cellTitle.text = info.title
             cell.cellTextField.tag = indexPath.row
             cell.cellTextField.placeholder = info.placeholder
             cell.cellTextField.delegate = self
-            
             return cell
         }
     }
+    
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("Textfield\(textField.tag) finished with \(textField.text ?? "Nothing")")
