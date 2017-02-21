@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseStorage
+import FirebaseAuth
 
 class ResumePreviewViewController: UIViewController {
     var pdfUrl: URLRequest?
@@ -43,12 +45,25 @@ class ResumePreviewViewController: UIViewController {
             view.bottom.equalToSuperview().inset(20)
             view.leading.equalTo(self.view.snp.centerX).inset(20)
         }
-        
+        acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
         retakeButton.addTarget(self, action: #selector(retake), for: .touchUpInside)
     }
     
     func accept(){
-        print("Accept")
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://employed-42a2b.appspot.com").child("ResumePDF")
+        let pdfRef = storageRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        
+        if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+            
+            pdfRef.putFile(pdfUrl, metadata: nil, completion: { (_, error) in
+                if error != nil{
+                    print("\(error?.localizedDescription)")
+                }else{
+                    print("PDF SAVED")
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+        }
     }
     
     func retake(){

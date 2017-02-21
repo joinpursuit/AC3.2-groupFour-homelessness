@@ -253,7 +253,9 @@
 				TargetAttributes = {
 					1AA9944C1E57F9C00050CB6E = {
 						CreatedOnToolsVersion = 8.2.1;
+
 						DevelopmentTeam = 2E9D85U478;
+
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -482,7 +484,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+
 				DEVELOPMENT_TEAM = 2E9D85U478;
+
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
@@ -498,7 +502,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+
 				DEVELOPMENT_TEAM = 2E9D85U478;
+
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;

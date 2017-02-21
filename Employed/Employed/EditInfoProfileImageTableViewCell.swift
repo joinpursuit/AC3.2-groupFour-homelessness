@@ -28,7 +28,8 @@ class EditInfoProfileImageTableViewCell: UITableViewCell {
     
     let profileImage: UIImageView = {
         let imageview: UIImageView = UIImageView()
-        imageview.contentMode = .scaleToFill
+        imageview.contentMode = .scaleAspectFill
+        imageview.layer.masksToBounds = true
         imageview.isUserInteractionEnabled = true
         return imageview
     }()

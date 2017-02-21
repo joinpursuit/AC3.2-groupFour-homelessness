@@ -56,8 +56,9 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         }
         
         applyChangesButton.snp.makeConstraints { (view) in
-            view.centerX.bottom.equalToSuperview()
-            view.width.equalToSuperview().multipliedBy(0.7)
+            view.trailing.leading.bottom.equalToSuperview()
+            view.height.equalTo(50)
+            
         }
         
         applyChangesButton.addTarget(self, action: #selector(upDateProfile), for: .touchUpInside)
@@ -72,7 +73,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
-        tableView.estimatedSectionFooterHeight = 50
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
     }
     
@@ -102,6 +103,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         
         let imagePicker: UIImagePickerController = UIImagePickerController()
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         imagePicker.mediaTypes = [String(kUTTypeImage)]
         
@@ -224,7 +226,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         let button: UIButton = UIButton(type: .roundedRect)
         button.setTitle("Apply Changes", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = Colors.darkPrimaryColor
+        button.backgroundColor = Colors.accentColor
         return button
     }()
     
