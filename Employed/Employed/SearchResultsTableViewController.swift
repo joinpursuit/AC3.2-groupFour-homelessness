@@ -120,6 +120,8 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     
     func filterButtonPressed(sender: UIButton) {
         print("filter pressed")
+        let filterVC = UINavigationController(rootViewController: FilterViewController())
+        self.navigationController?.present(filterVC, animated: true, completion: nil)
     }
     
     func searchButtonPressed(sender: UIButton) {
