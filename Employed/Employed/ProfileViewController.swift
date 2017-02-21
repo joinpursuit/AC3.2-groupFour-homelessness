@@ -248,7 +248,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
                 if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
                     let resumeVC = ResumePreviewViewController()
                     resumeVC.pdfUrl = URLRequest(url: pdfUrl)
-                    present(resumeVC, animated: true, completion: nil)
+                    let rnav = UINavigationController(rootViewController: resumeVC)
+                    present(rnav, animated: true, completion: nil)
                 }
             }
         case .photoLibrary:

@@ -80,7 +80,7 @@ class ResumePreviewViewController: UIViewController {
         }
     }
     
-    
+
     func dismissme(){
         dismiss(animated: true, completion: nil)
     }

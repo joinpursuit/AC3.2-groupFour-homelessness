@@ -188,6 +188,12 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         searchJobTextField.resignFirstResponder()
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchJobs()
+        textField.resignFirstResponder()
+        return true
+    }
+    
     
     func letsGetStartedClicked(){
         findJobButton.isHidden = true
@@ -213,7 +219,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         
         searchJobTextField.snp.remakeConstraints { (view) in
             view.centerX.equalToSuperview()
-            view.centerY.equalToSuperview().multipliedBy(1.2)
+            view.centerY.equalToSuperview().multipliedBy(0.9)
             view.bottom.equalTo(searchButton.snp.top).offset(-5)
         }
         
