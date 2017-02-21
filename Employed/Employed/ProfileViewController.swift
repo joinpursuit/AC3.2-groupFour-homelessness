@@ -29,7 +29,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.navigationController?.navigationBar.isHidden = false
         let rightBarButton = UIBarButtonItem(customView: logOutButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.hidesBackButton = true
@@ -40,7 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.navigationController?.navigationBar.isHidden = false
         if infoUpdated{
             getProfileInfo()
             infoUpdated = false

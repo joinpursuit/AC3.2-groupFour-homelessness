@@ -50,7 +50,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.addressLabel.text = jobPost.workLocation
         self.addressLabel.addImage(imageName: "marker25")
         self.wageLabel.text = wageArray[randomNumber]
-        "$40,000"
+//        "$40,000"
         self.jobPostDescription.text = "\(jobPost.jobDescription)..."
         
         self.jobReqs.text = jobPost.minReqs
@@ -258,6 +258,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
                 
                 present(mailVC, animated: true, completion: nil)
             }
+
 
         } else {
             Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
