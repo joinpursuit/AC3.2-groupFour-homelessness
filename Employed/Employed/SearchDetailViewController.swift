@@ -11,14 +11,15 @@ import SnapKit
 import FirebaseDatabase
 import FirebaseAuth
 import MapKit
+import MessageUI
 
-class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
+class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate,MFMailComposeViewControllerDelegate {
     var jobPost: NYCJobs!
-
+    
     //var scrollView: UIScrollView!
-
+    
     var databaseReference = FIRDatabase.database().reference()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         self.title = jobPost.buisnessTitle
         self.view.backgroundColor = .white
- 
+        
         let barButton = UIBarButtonItem(customView: saveButton)
         self.navigationItem.rightBarButtonItem = barButton
         
@@ -57,7 +58,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     }
     
     
-
+    
     //MARK: - SetupViews
     func setUpViews(){
         self.view.addSubview(scrollView)
@@ -85,7 +86,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             view.top.leading.trailing.equalToSuperview()
             view.bottom.equalTo(applyNowButton.snp.top)
             view.width.equalToSuperview()
-
+            
         }
         
         container.snp.makeConstraints { (view) in
@@ -162,7 +163,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         requirementCategoryLabel.snp.makeConstraints { (view) in
             view.top.equalTo(midSeparator.snp.bottom).offset(8.0)
-                view.leading.equalTo(jobTitle.snp.leading)
+            view.leading.equalTo(jobTitle.snp.leading)
         }
         
         jobReqs.snp.makeConstraints { (view) in
@@ -190,17 +191,16 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         
     }
-
+    
     //MARK: - Utilities
     func savePost() {
-        
         
         let dict = jobPost.asDictionary
         let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
         
         userData.updateChildValues(dict)
         
-    
+        
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -208,8 +208,29 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     func applyToJob() {
         print("applied!")
-        let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
-        self.navigationController?.present(editVC, animated: true, completion: nil)
+        //        let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
+        //        self.navigationController?.present(editVC, animated: true, completion: nil)
+        
+        if MFMailComposeViewController.canSendMail(){
+            let mailVC = MFMailComposeViewController()
+            mailVC.mailComposeDelegate = self
+            mailVC.setToRecipients(["jerjunkel@gmail.com"])
+            mailVC.setSubject(jobPost.buisnessTitle)
+            mailVC.setMessageBody("Email message string", isHTML: false)
+            
+            if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+                
+                do{
+                    let pdfData = try Data(contentsOf: pdfUrl)
+                    mailVC.addAttachmentData(pdfData, mimeType: "application/pdf", fileName: "JermaineResume")
+                }catch{
+                    print(error.localizedDescription)
+                }
+            }
+            
+            present(mailVC, animated: true, completion: nil)
+            
+        }
     }
     
     func tappedMap() {
@@ -231,6 +252,12 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     }
     
     
+    //MARK- Mail Delegate
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        print("Result:\(result)")
+        print("Error: \(error?.localizedDescription)")
+        dismiss(animated: true, completion: nil)
+    }
     
     //MARK: - Views
     private lazy var container: UIView = {
@@ -331,7 +358,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         let label: UILabel = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0, weight: 5.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
-         label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0
         return label
     }()

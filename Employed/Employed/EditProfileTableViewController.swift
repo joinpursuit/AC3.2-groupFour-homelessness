@@ -102,6 +102,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         
         let imagePicker: UIImagePickerController = UIImagePickerController()
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         imagePicker.mediaTypes = [String(kUTTypeImage)]
         

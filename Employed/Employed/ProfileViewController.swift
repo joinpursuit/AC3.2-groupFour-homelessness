@@ -375,6 +375,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         button.imageView?.snp.makeConstraints({ (view) in
             view.size.equalTo(CGSize(width: 30, height: 30))
         })
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowOffset = CGSize(width: 1, height: 5)
+        button.layer.shadowRadius = 2
         button.backgroundColor = Colors.lightPrimaryColor
         button.layer.cornerRadius = 25
         return button
