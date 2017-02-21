@@ -179,9 +179,8 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Views
     private let backgroundImage: UIImageView = {
         let image = UIImageView()
-        let backgroundImage = UIImage(named: "backgroundPic")
+        let backgroundImage = UIImage(named: "city")
         image.image = backgroundImage
-        image.tintColor = .orange
         image.contentMode = .scaleAspectFill
         return image
     }()
