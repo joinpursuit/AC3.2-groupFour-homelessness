@@ -187,7 +187,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         label.font = UIFont.systemFont(ofSize: 20.0, weight: 16.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         label.textColor = .white
-        label.text = "What kind of Job are you looking for?"
+        label.text = "What Job are you looking for?"
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
