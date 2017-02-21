@@ -8,15 +8,17 @@
 
 import UIKit
 
-class LoadingScreenViewController: UIViewController {
+protocol LoadingScreen {
+    func hideScreen()
+}
+
+class LoadingScreenViewController: UIViewController,LoadingScreen {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = .clear
-        
-        
-        
+
         setUpView()
     }
 
@@ -48,6 +50,9 @@ class LoadingScreenViewController: UIViewController {
     
     }
     
+    func hideScreen() {
+        dismiss(animated: true, completion: nil)
+    }
     
     private let tintBackground: UIView = {
         let view: UIView = UIView()
