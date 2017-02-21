@@ -180,6 +180,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         cell.cellTitle.text = info.title
         cell.cellDetail.text = info.description
+        
+        
+        switch indexPath.row {
+        case 1:
+            cell.cellIcon.image = UIImage(named: "heart")
+        case 2:
+            cell.cellIcon.image = UIImage(named: "suitcase")
+        case 3:
+            cell.cellIcon.image = UIImage(named: "resume")
+        default:
+            cell.cellIcon.image = UIImage(named: "user")
+        }
         return cell
     }
     
@@ -261,7 +273,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     private lazy var logOutButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
-        button.setTitle("LogOut", for: .normal)
+        button.setImage(UIImage(named: "logout"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 80, height: 20)
         return button
     }()
