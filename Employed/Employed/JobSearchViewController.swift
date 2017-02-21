@@ -64,7 +64,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
 //    {
 //        let pickerLabel = UILabel()
 //        pickerLabel.textColor = UIColor.black
-//        pickerLabel.text = array[0][picker.selectedRow(inComponent: <#T##Int#>)]
+//        pickerLabel.text = array[0][picker.selectedRow(inComponent: 0)]
 //        // pickerLabel.font = UIFont(name: pickerLabel.font.fontName, size: 15)
 //        pickerLabel.font = UIFont(name: "Arial-BoldMT", size: 12) // In this use your custom font
 //        pickerLabel.textAlignment = NSTextAlignment.center
@@ -227,7 +227,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     private let picker: UIPickerView = {
         let picker = UIPickerView()
         picker.backgroundColor = .white
-        picker.alpha = 0.4
+        picker.alpha = 0.2
         
         return picker
     }()
@@ -265,7 +265,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         label.font = UIFont.systemFont(ofSize: 20.0, weight: 16.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         label.textColor = .white
-        label.text = "What Job are you looking for?"
+        label.text = "What job are you looking for?"
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -273,7 +273,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     private let findJobButton: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("Lets Get Started", for: .normal)
+        button.setTitle("Let's Get Started", for: .normal)
         button.setTitleColor(Colors.backgroundColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button
