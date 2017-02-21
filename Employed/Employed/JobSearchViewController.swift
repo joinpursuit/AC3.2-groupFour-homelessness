@@ -273,7 +273,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     private let findJobButton: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("Let's Get Started", for: .normal)
+        button.setTitle("Let's get started", for: .normal)
         button.setTitleColor(Colors.backgroundColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button

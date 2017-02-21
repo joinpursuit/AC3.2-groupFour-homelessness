@@ -315,7 +315,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 5
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "onepunch")
+        imageView.image = UIImage(named: "default")
         imageView.layer.masksToBounds = true
         imageView.isUserInteractionEnabled = true
         
@@ -356,7 +356,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     private let nameLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.text = "One Punch"
+        label.text = "Beyonce"
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label

@@ -93,18 +93,18 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         scrollView.snp.makeConstraints { (view) in
             //view.top.leading.trailing.bottom.equalToSuperview()
             view.top.leading.trailing.equalToSuperview()
-            view.bottom.equalTo(applyNowButton.snp.top)
+            view.bottom.equalTo(applyNowButton.snp.top).offset(16)
             //view.width.equalToSuperview()
             
         }
         
         container.snp.makeConstraints { (view) in
             //view.width.equalTo(self.view.snp.width)
-            view.width.equalTo(scrollView.snp.width)
+            //view.width.equalTo(scrollView.snp.width)
             view.centerX.equalTo(self.view.snp.centerX)
-            view.top.equalToSuperview()
+            view.top.bottom.equalToSuperview()
             //view.height.equalTo(300)
-            //view.leading.trailing.equalToSuperview()
+            view.leading.trailing.equalToSuperview()
             
         }
         
@@ -208,7 +208,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         applyNowButton.snp.makeConstraints { (view) in
             view.bottom.trailing.leading.equalToSuperview()
-           // view.top.equalTo(container.snp.bottom)
+           view.top.equalTo(scrollView.snp.bottom)
             view.height.equalTo(50)
         }
         
@@ -317,6 +317,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = true
+        scrollView.contentInset = UIEdgeInsets(top: 8.0, left: 0, bottom: 1000, right: 0)
         return scrollView
     }()
     
