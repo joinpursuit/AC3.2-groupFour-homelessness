@@ -58,7 +58,7 @@ class FilterViewController: UIViewController {
         segmentLabel.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(24)
             view.width.equalToSuperview()
-            view.leading.equalToSuperview().offset(24)
+            view.centerX.equalToSuperview()
         }
         
         mySegmentedControl.snp.makeConstraints { (view) in

@@ -9,13 +9,15 @@
 import UIKit
 import SCLAlertView
 
-class JobSearchViewController: UIViewController, UITextFieldDelegate {
+class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-     var animator = UIViewPropertyAnimator(duration: 1.0, dampingRatio: 0.5, animations: nil)
+    var animator = UIViewPropertyAnimator(duration: 1.0, dampingRatio: 0.5, animations: nil)
+    let array = [["Technology","Healthcare","Informational","Hospitality"]]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if !launchedBefore  {
             firstLaunchAlert()
             UserDefaults.standard.set(true, forKey: "launchedBefore")
@@ -30,6 +32,43 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         setUpViews()
     }
     
+    //MARK: - Picker Delegate
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return array.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return array[component].count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return array[component][row]
+    }
+    
+    func pickerView(
+        _ pickerView: UIPickerView,
+        didSelectRow row: Int,
+        inComponent component: Int)
+    {
+        updateLabel()
+    }
+    
+    func updateLabel(){
+        //let size = array[0][picker.selectedRow(inComponent: 0)]
+        _ = array[0][picker.selectedRow(inComponent: 0)]
+        //pickerLabel?.text = topping
+    }
+
+//    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+//    {
+//        let pickerLabel = UILabel()
+//        pickerLabel.textColor = UIColor.black
+//        pickerLabel.text = array[0][picker.selectedRow(inComponent: 0)]
+//        // pickerLabel.font = UIFont(name: pickerLabel.font.fontName, size: 15)
+//        pickerLabel.font = UIFont(name: "Arial-BoldMT", size: 12) // In this use your custom font
+//        pickerLabel.textAlignment = NSTextAlignment.center
+//        return pickerLabel
+//    }
     
     //MARK:- SetupViews
     func setUpViews(){
@@ -43,6 +82,15 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(searchJobTextField)
         self.view.addSubview(searchIcon)
         self.view.addSubview(searchButton)
+        self.view.addSubview(picker)
+        picker.delegate = self
+
+        
+        picker.snp.makeConstraints { (view) in
+            view.centerX.equalToSuperview()
+            view.width.equalToSuperview().multipliedBy(0.5)
+            view.height.lessThanOrEqualToSuperview().multipliedBy(0.25)
+        }
         
         backgroundImage.snp.makeConstraints { (view) in
             view.top.equalToSuperview()
@@ -161,7 +209,6 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
             self.view.layoutIfNeeded()
         }
         animator.startAnimation()
-        
     
     }
     
@@ -175,8 +222,15 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         navigationController?.pushViewController(searchResultsVC, animated: true)
     }
     
-    
     //MARK: - Views
+    private let picker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.backgroundColor = .white
+        picker.alpha = 0.2
+        
+        return picker
+    }()
+    
     private let backgroundImage: UIImageView = {
         let image = UIImageView()
         let backgroundImage = UIImage(named: "backgroundPic")
@@ -210,7 +264,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
         label.font = UIFont.systemFont(ofSize: 20.0, weight: 16.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         label.textColor = .white
-        label.text = "What Job are you looking for?"
+        label.text = "What job are you looking for?"
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -218,7 +272,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     
     private let findJobButton: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("Lets Get Started", for: .normal)
+        button.setTitle("Let's Get Started", for: .normal)
         button.setTitleColor(Colors.backgroundColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: 5.0)
         return button
@@ -240,3 +294,4 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate {
     }()
     
 }
+
