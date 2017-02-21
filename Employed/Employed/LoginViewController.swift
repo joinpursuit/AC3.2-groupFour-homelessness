@@ -20,7 +20,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.navigationItem.title = "LOGIN/REGISTER"
+        observeKeyboardNotifications()
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
 
         setUpViews()
 
@@ -36,7 +38,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.edgesForExtendedLayout = []
         
-        let padding: CGFloat = 30
+        let padding: CGFloat = 10
         
         self.view.addSubview(backgroundImage)
         self.backgroundImage.addSubview(backgroundImageTopLayer)
@@ -63,13 +65,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         loginLogo.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
-            view.top.equalToSuperview().offset(padding)
+            view.top.equalTo(self.view.snp.bottom).multipliedBy(0.10)
         }
         
         emailTextField.snp.makeConstraints { (view) in
+            view.top.equalTo(loginLogo.snp.bottom).offset(8.0)
             view.center.equalToSuperview()
-            view.width.equalToSuperview().multipliedBy(0.7)
-            view.height.equalTo(30)
+            view.width.equalToSuperview().multipliedBy(0.9)
+            view.height.equalToSuperview().multipliedBy(0.1)
         }
         
         passwordTextField.snp.makeConstraints { (view) in
@@ -79,7 +82,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         loginButton.snp.makeConstraints { (view) in
-            view.top.equalTo(self.passwordTextField.snp.bottom).offset(padding)
+            view.top.equalTo(passwordTextField.snp.bottom).offset(padding)
             view.centerX.equalToSuperview()
             view.size.equalTo(emailTextField)
         }
@@ -90,7 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //        }
         
         registerButton.snp.makeConstraints { (view) in
-            view.top.equalTo(loginButton.snp.bottom).offset(8.0)
+            view.top.equalTo(loginButton.snp.bottom).offset(10.0)
             view.centerX.equalToSuperview()
             view.size.equalTo(emailTextField)
         }
@@ -100,7 +103,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    //MARK: - Utilities
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
+    fileprivate func observeKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard), name: .UIKeyboardDidShow, object: nil)
+        
+         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: .UIKeyboardDidHide, object: nil)
+    }
+    
+    func showKeyboard() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.frame = CGRect(x: 0, y: -50, width: self.view.frame.width, height: self.view.frame.height)
+        }, completion: nil)
+    }
+    
+    func hideKeyboard() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        }, completion: nil)
+    }
     
     func login() {
 
@@ -176,14 +200,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    private let emailTextField: UITextField = {
-        let textfield: UITextField = UITextField()
+    private let emailTextField: LeftPaddedText = {
+        let textfield = LeftPaddedText()
         textfield.backgroundColor = .black
         textfield.attributedPlaceholder = NSAttributedString(string: "Email..", attributes: [NSForegroundColorAttributeName: Colors.lightPrimaryColor])
         textfield.leftViewMode = UITextFieldViewMode.always
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        var paddingView = UIView(frame:CGRect(x: 10, y: 0, width: 30, height: 30))
-        textfield.leftView = paddingView
         let image = UIImage(named: "user2")
         imageView.image = image
         textfield.leftView = imageView
@@ -196,14 +218,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return textfield
     }()
     
-    private let passwordTextField: UITextField = {
-        let textfield: UITextField = UITextField()
+    private let passwordTextField: LeftPaddedText = {
+        let textfield = LeftPaddedText()
         textfield.backgroundColor = .black
         textfield.attributedPlaceholder = NSAttributedString(string: "Password..", attributes: [NSForegroundColorAttributeName: Colors.lightPrimaryColor])
         textfield.leftViewMode = UITextFieldViewMode.always
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        var paddingView = UIView(frame:CGRect(x: 10, y: 0, width: 30, height: 30))
-        textfield.leftView = paddingView
         let image = UIImage(named: "password")
         imageView.image = image
         textfield.leftView = imageView
@@ -219,7 +239,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.setTitle("LOGIN", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor =  Colors.brightText
-        button.titleLabel?.font = UIFont(name: "Avenir Next", size: 14)
+        button.titleLabel?.font = UIFont(name: "Avenir Next", size: 20)
         
         return button
     }()
@@ -229,7 +249,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.setTitle("REGISTER", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = Colors.lightPrimaryColor
-        button.titleLabel?.font = UIFont(name: "Avenir Next", size: 14)
+        button.titleLabel?.font = UIFont(name: "Avenir Next", size: 20)
         return button
         
     }()
@@ -240,6 +260,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //        label.font = UIFont.systemFont(ofSize: 10)
 //        return label
 //    }()
+    
+}
+
+class LeftPaddedText: UITextField {
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 22, y: bounds.origin.y, width: bounds.width + 10, height: bounds.height)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 22, y: bounds.origin.y, width: bounds.width + 10, height: bounds.height)
+    }
     
 }
 

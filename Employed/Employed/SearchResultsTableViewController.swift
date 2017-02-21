@@ -41,7 +41,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         
         self.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "nycCell")
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.rowHeight = 120
+        tableView.rowHeight = 100
         tableView.estimatedRowHeight = 200
         
     }
