@@ -14,7 +14,7 @@ import Photos
 import MobileCoreServices
 
 
-class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ProfileStateDelegate{
+class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ProfileStateDelegate,ResumeShowCamera{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
     private var userDic: [String:String] = [:]
     
@@ -44,6 +44,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         self.navigationController?.navigationBar.isHidden = false
         if infoUpdated{
             getProfileInfo()
+            savePDF()
             infoUpdated = false
         }
         
@@ -135,6 +136,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         })
     }
     
+    private func savePDF(){
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://employed-42a2b.appspot.com").child("ResumePDF")
+        let pdfRef = storageRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        
+        pdfRef.data(withMaxSize: 50 * 1024 * 1024) { (data, error) in
+            if error != nil{
+                print("\(error?.localizedDescription)")
+            }else{
+                 EmployedFileManager.shared.saveFile(data: NSData(data: data!))
+            }
+        }
+    }
+    
     private func updateProfilePic(image: UIImage){
         let storageRef = FIRStorage.storage().reference(forURL: "gs://employed-42a2b.appspot.com").child("ProfileImage")
         let imageRef = storageRef.child((FIRAuth.auth()?.currentUser?.uid)!)
@@ -202,7 +216,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             let overlay = CameraOverlayView()
             overlay.frame = CGRect(x: 0, y: 0, width: 420, height: 595)
             overlay.center = self.view.center
-            imagePicker.cameraOverlayView = overlay
+            //imagePicker.cameraOverlayView = overlay
             imagePicker.modalPresentationStyle = .currentContext
         case .photoLibrary:
             imagePicker.allowsEditing = true
@@ -224,7 +238,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         switch imagePickerController.sourceType{
         case .camera:
             dismiss(animated: true, completion: nil)
-            if let imageData = EmployedFileManager.shared.convertToPDf(image: imageFromPicker){
+            let resized = UIImage(cgImage: imageFromPicker.cgImage!, scale: 1, orientation: .upMirrored)
+            
+            if let imageData = EmployedFileManager.shared.convertToPDf(image: resized){
                 EmployedFileManager.shared.saveFile(data: imageData)
                 if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
                     let resumeVC = ResumePreviewViewController()
@@ -269,10 +285,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         if indexPath.row == infoDetails.count - 1{
             
-            if UIImagePickerController.isSourceTypeAvailable(.camera){
-                showImagePickerfor(source: .camera)
+            let resumeViewController = ResumePreviewViewController()
+            if let url = EmployedFileManager.shared.retreivePDF(){
+                resumeViewController.pdfUrl = URLRequest(url: url)
+                resumeViewController.delegate = self
+                let resumeNav = UINavigationController(rootViewController: resumeViewController)
+                present(resumeNav, animated: true, completion: nil)
             }else{
-                print("No camera available")
+                showImagePickerfor(source: .camera)
             }
             
         }else{
@@ -300,7 +320,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
 //            self.profilePic.alpha = 1
             self.profileBackGround.alpha = 1
         }
+    }
+    
+    //MARK: Resume Delegate
+    func showCameraPicker() {
         
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            showImagePickerfor(source: .camera)
+        }else{
+            print("No camera available")
+        }
     }
     
     //MARK: - Views
