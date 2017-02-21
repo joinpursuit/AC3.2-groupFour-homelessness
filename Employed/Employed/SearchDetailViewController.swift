@@ -12,12 +12,20 @@ import FirebaseDatabase
 import FirebaseAuth
 import MapKit
 import MessageUI
+import SCLAlertView
+
 
 class SearchDetailViewController: UIViewController, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate,MFMailComposeViewControllerDelegate {
     var jobPost: NYCJobs!
+
     
     //var scrollView: UIScrollView!
     
+
+    var wageArray = ["$60,000","$82,000","$68,000","$100,000","$49,000","$77,000","$75,000","$87,000","$102,000","$140,000"]
+    //var scrollView: UIScrollView!
+    var randomNumber = Int(arc4random_uniform(9))
+
     var databaseReference = FIRDatabase.database().reference()
     
     
@@ -41,7 +49,8 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         
         self.addressLabel.text = jobPost.workLocation
         self.addressLabel.addImage(imageName: "marker25")
-        self.wageLabel.text = "$40,000"
+        self.wageLabel.text = wageArray[randomNumber]
+        "$40,000"
         self.jobPostDescription.text = "\(jobPost.jobDescription)..."
         
         self.jobReqs.text = jobPost.minReqs
@@ -85,38 +94,44 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             //view.top.leading.trailing.bottom.equalToSuperview()
             view.top.leading.trailing.equalToSuperview()
             view.bottom.equalTo(applyNowButton.snp.top)
-            view.width.equalToSuperview()
+            //view.width.equalToSuperview()
             
         }
         
         container.snp.makeConstraints { (view) in
             view.width.equalTo(self.view.snp.width)
             view.centerX.equalTo(self.view.snp.centerX)
-            view.top.bottom.equalToSuperview()
-            view.leading.trailing.equalToSuperview()
+            view.top.equalToSuperview()
+            
+            //view.height.equalTo(300)
+            //view.leading.trailing.equalToSuperview()
             
         }
         
         topSeparator.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().offset(24.0)
+          //  view.width.equalToSuperview().offset(24.0)
+            view.centerX.width.equalToSuperview() //View was ambigious
             view.height.equalTo(1)
             view.top.equalTo(addressLabel.snp.bottom).offset(5.0)
         }
         
         topSeparatorB.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().offset(5.0)
+            //view.width.equalToSuperview().offset(5.0)
+            view.centerX.width.equalToSuperview() //View was ambigious
             view.height.equalTo(1)
             view.top.equalTo(wageCategoryLabel.snp.bottom).offset(5.0)
         }
         
         midSeparator.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().offset(5.0)
+           // view.width.equalToSuperview().offset(5.0)
+            view.centerX.width.equalToSuperview() //View was ambigious
             view.height.equalTo(3)
             view.top.equalTo(jobPostDescription.snp.bottom).offset(8.0)
         }
         
         bottomSeparator.snp.makeConstraints { (view) in
-            view.width.equalToSuperview().offset(5.0)
+           // view.width.equalToSuperview().offset(5.0)
+            view.centerX.width.equalToSuperview() //View was ambigious
             view.height.equalTo(3)
             view.top.equalTo(jobReqs.snp.bottom).offset(8.0)
         }
@@ -124,33 +139,39 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         addressLabel.snp.makeConstraints { (view) in
             view.top.equalTo(agencyLabel.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+              view.height.equalTo(100)
         }
         
         jobTitle.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(8.0)
             view.leading.equalToSuperview().offset(16.0)
+     
             
         }
         
         agencyLabel.snp.makeConstraints { (view) in
             view.top.equalTo(jobTitle.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+       
         }
         
         
         wageCategoryLabel.snp.makeConstraints { (view) in
             view.top.equalTo(addressLabel.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+         
         }
         
         wageLabel.snp.makeConstraints { (view) in
             view.top.equalTo(addressLabel.snp.bottom).offset(8.0)
             view.trailing.equalTo(jobPostDescription.snp.trailing)
+       
         }
         
         agencyCategoryLabel.snp.makeConstraints { (view) in
             view.top.equalTo(topSeparatorB.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+    
             view.width.equalToSuperview()
         }
         
@@ -164,6 +185,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         requirementCategoryLabel.snp.makeConstraints { (view) in
             view.top.equalTo(midSeparator.snp.bottom).offset(8.0)
             view.leading.equalTo(jobTitle.snp.leading)
+         
         }
         
         jobReqs.snp.makeConstraints { (view) in
@@ -172,19 +194,21 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             view.trailing.equalTo(jobTitle.snp.trailing)
             view.width.equalTo(jobTitle.snp.width)
             view.centerX.equalToSuperview()
+     
         }
         
         mapView.snp.makeConstraints { (view) in
             view.top.equalTo(bottomSeparator.snp.bottom).offset(100.0)
             view.centerX.equalToSuperview()
             view.leading.trailing.equalToSuperview()
-            view.width.equalToSuperview()
+            view.bottom.equalToSuperview()
+            //view.width.equalToSuperview()
             view.height.equalTo(100)
         }
         
         applyNowButton.snp.makeConstraints { (view) in
             view.bottom.trailing.leading.equalToSuperview()
-            view.top.equalTo(container.snp.bottom)
+           // view.top.equalTo(container.snp.bottom)
             view.height.equalTo(50)
         }
         
@@ -194,7 +218,9 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
     
     //MARK: - Utilities
     func savePost() {
-        
+
+        if FIRAuth.auth()?.currentUser != nil {
+
         let dict = jobPost.asDictionary
         let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
         
@@ -204,33 +230,51 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+            
+        } else {
+         Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
+        }
     }
     
     func applyToJob() {
-        print("applied!")
-        //        let editVC = UINavigationController(rootViewController: EditProfileTableViewController())
-        //        self.navigationController?.present(editVC, animated: true, completion: nil)
-        
-        if MFMailComposeViewController.canSendMail(){
-            let mailVC = MFMailComposeViewController()
-            mailVC.mailComposeDelegate = self
-            mailVC.setToRecipients(["jerjunkel@gmail.com"])
-            mailVC.setSubject(jobPost.buisnessTitle)
-            mailVC.setMessageBody("Email message string", isHTML: false)
+        if FIRAuth.auth()?.currentUser != nil {
             
-            if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+            if MFMailComposeViewController.canSendMail(){
+                let mailVC = MFMailComposeViewController()
+                mailVC.mailComposeDelegate = self
+                mailVC.setToRecipients(["jerjunkel@gmail.com"])
+                mailVC.setSubject(jobPost.buisnessTitle)
+                mailVC.setMessageBody("Email message string", isHTML: false)
                 
-                do{
-                    let pdfData = try Data(contentsOf: pdfUrl)
-                    mailVC.addAttachmentData(pdfData, mimeType: "application/pdf", fileName: "JermaineResume")
-                }catch{
-                    print(error.localizedDescription)
+                if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
+                    
+                    do{
+                        let pdfData = try Data(contentsOf: pdfUrl)
+                        mailVC.addAttachmentData(pdfData, mimeType: "application/pdf", fileName: "JermaineResume")
+                    }catch{
+                        print(error.localizedDescription)
+                    }
                 }
+                
+                present(mailVC, animated: true, completion: nil)
             }
-            
-            present(mailVC, animated: true, completion: nil)
-            
+
+        } else {
+            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchTab), userInfo: nil, repeats: false)
         }
+    }
+    
+    func switchTab() {
+    tabBarController?.selectedIndex = 2
+    
+        SCLAlertView().showTitle(
+            "Sign In to Apply",
+            subTitle: "",
+            style: .notice ,
+            closeButtonTitle: "Done",
+            colorStyle: 0xE6279,
+            colorTextButton: 0xFFFFFF
+        )
     }
     
     func tappedMap() {

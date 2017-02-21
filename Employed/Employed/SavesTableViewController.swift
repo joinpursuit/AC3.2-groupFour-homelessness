@@ -42,6 +42,7 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         
         if FIRAuth.auth()?.currentUser != nil {
             getData()
+            tableView.rowHeight = 150
         } else {
              jobs.removeAll()
             self.tableView.reloadData()
@@ -76,13 +77,13 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         
         //MARK: -DZNEmptyDataSet Delegates & DataSource
         func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-            let str = "No saved Jobs"
+            let str = "Looks like you have no saved jobs yet."
             let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
             return NSAttributedString(string: str, attributes: attrs)
         }
         
         func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-            let str = "Save desired Jobs here"
+            let str = "Start your search!"
             let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
             return NSAttributedString(string: str, attributes: attrs)
         }
