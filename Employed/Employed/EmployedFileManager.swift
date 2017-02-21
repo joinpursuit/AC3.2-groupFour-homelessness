@@ -45,7 +45,7 @@ class EmployedFileManager{
         
         guard let croppedImage = cropImage(image: image, width: 1000, height: 1000) else {return nil}
         
-        let defaultResolution: Int = 72
+        //let defaultResolution: Int = 72
         
         if horizontalResolution <= 0 || verticalResolution <= 0 {
             return nil;

@@ -31,8 +31,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = false
-        let rightBarButton = UIBarButtonItem(customView: logOutButton)
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(named: "logout"), style: .done, target: self, action: #selector(logOut))
         self.navigationItem.hidesBackButton = true
         self.view.backgroundColor = .white
         
@@ -204,6 +203,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         editProfVC.profileUpdatedDeleate = self
         let editProfNVC = UINavigationController(rootViewController: editProfVC)
         self.navigationController?.present(editProfNVC, animated: true, completion: nil)
+//        let loading = LoadingScreenViewController()
+//        loading.modalPresentationStyle = .overCurrentContext
+//        loading.modalTransitionStyle = .crossDissolve
+//        present(loading, animated: true, completion: nil)
     }
     
     private func showImagePickerfor(source: UIImagePickerControllerSourceType){
@@ -344,10 +347,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 5
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "onepunch")
         imageView.layer.masksToBounds = true
         imageView.isUserInteractionEnabled = true
-        
+         imageView.image = UIImage(named: "userPictureDefault")
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tap.delaysTouchesBegan = true
         tap.numberOfTouchesRequired = 1
@@ -374,6 +376,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     private let profileBackGround: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.backgroundColor = .lightGray
+        imageView.image = UIImage(named: "userPictureDefault")
         let blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageView.bounds

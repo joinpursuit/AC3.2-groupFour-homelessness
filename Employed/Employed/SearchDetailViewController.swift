@@ -36,8 +36,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.title = jobPost.buisnessTitle
         self.view.backgroundColor = .white
         
-        let barButton = UIBarButtonItem(customView: saveButton)
-        self.navigationItem.rightBarButtonItem = barButton
+         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(named: "save2"), style: .done, target: self, action: #selector(savePost))
         
         //Job Detail profile
         self.jobTitle.text = "\(jobPost.buisnessTitle) - Part-time"

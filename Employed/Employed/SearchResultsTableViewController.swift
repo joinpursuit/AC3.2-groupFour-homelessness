@@ -29,10 +29,12 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewHierarchy()
-        self.rightBarButton = UIBarButtonItem(customView: filterButton)
-        self.leftBarButton = UIBarButtonItem(customView: searchButton)
-        self.navigationItem.rightBarButtonItem = rightBarButton
-        self.navigationItem.leftBarButtonItem = leftBarButton
+        
+        
+        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(named: "filter"), style: .done, target: self, action: #selector(filterButtonPressed(sender:)))
+        self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(named: "search25"), style: .done, target: self, action: #selector(searchButtonPressed(sender:)))
+        
+        
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.title = "Jobs"
         
@@ -119,8 +121,8 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     //MARK: - SetupViews
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
-        self.view.addSubview(filterButton)
-        self.view.addSubview(searchButton)
+//        self.view.addSubview(filterButton)
+//        self.view.addSubview(searchButton)
     
     }
     
@@ -144,9 +146,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         self.navigationItem.rightBarButtonItem = rightBarButton
         self.navigationItem.leftBarButtonItem = leftBarButton
     }
-   
-   
-    
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
