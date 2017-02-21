@@ -47,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(loginButton)
         //self.view.addSubview(registerLabel)
         self.view.addSubview(registerButton)
-        //self.view.addSubview(loginLogo)
+        self.view.addSubview(loginLogo)
         self.view.addSubview(appLabel)
         
         backgroundImage.snp.makeConstraints { (view) in
@@ -64,15 +64,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             view.height.width.equalToSuperview()
         }
         
-        
-//        loginLogo.snp.makeConstraints { (view) in
-//            view.top.equalToSuperview().offset(24)
-//            view.centerX.equalToSuperview()
-//        }
-        
         appLabel.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(24)
             view.bottom.equalTo(emailTextField.snp.top).offset(8)
+            view.centerX.equalToSuperview()
+        }
+        
+        loginLogo.snp.makeConstraints { (view) in
+            view.top.equalTo(appLabel.snp.bottom).offset(8)
             view.centerX.equalToSuperview()
         }
         
@@ -214,12 +213,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-//    private let loginLogo: UIImageView = {
-//        var imageView: UIImageView = UIImageView()
-//        imageView.image = UIImage(named: "hr")
-//        imageView.contentMode = .scaleAspectFit
-//        return imageView
-//    }()
+    private let loginLogo: UIImageView = {
+        var imageView: UIImageView = UIImageView()
+        imageView.image = UIImage(named: "logoYello")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     private let emailTextField: LeftPaddedText = {
         let textfield = LeftPaddedText()
         textfield.backgroundColor = .black
@@ -258,7 +258,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let button: UIButton = UIButton()
         button.setTitle("LOGIN", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor =  Colors.brightText
+        button.backgroundColor =  Colors.darkPrimaryColor
         button.titleLabel?.font = UIFont(name: "Avenir Next", size: 20)
         
         return button
