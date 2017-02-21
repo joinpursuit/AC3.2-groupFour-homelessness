@@ -99,10 +99,10 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         }
         
         container.snp.makeConstraints { (view) in
-            view.width.equalTo(self.view.snp.width)
+            //view.width.equalTo(self.view.snp.width)
+            view.width.equalTo(scrollView.snp.width)
             view.centerX.equalTo(self.view.snp.centerX)
             view.top.equalToSuperview()
-            
             //view.height.equalTo(300)
             //view.leading.trailing.equalToSuperview()
             
@@ -212,8 +212,6 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             view.height.equalTo(50)
         }
         
-        
-        
     }
     
     //MARK: - Utilities
@@ -227,7 +225,9 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             let dict = jobPost.asDictionary
             
         userData.updateChildValues(dict)
+
         savedJobs.append(dict)
+
         
         let alert = UIAlertController(title: "Saved job post!", message: "This is now in your saved list.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
