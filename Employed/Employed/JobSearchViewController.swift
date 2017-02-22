@@ -13,7 +13,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     var animator = UIViewPropertyAnimator(duration: 1.0, dampingRatio: 0.5, animations: nil)
-    let array = [["Technology","Healthcare","Informational","Hospitality"]]
+    let array = [["", "Technology","Healthcare","Informational","Hospitality"]]
 
     
     override func viewDidLoad() {
@@ -25,8 +25,10 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         }
         
         searchJobTextField.isHidden = true
+        picker.isHidden = true
         searchIcon.isHidden = true
         searchButton.isHidden = true
+//        orChooseJobLabel.isHidden = true
         searchJobTextField.delegate = self
         self.view.backgroundColor = Colors.backgroundColor
         
@@ -84,14 +86,15 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         self.view.addSubview(searchIcon)
         self.view.addSubview(searchButton)
         self.view.addSubview(picker)
+//        self.view.addSubview(orChooseJobLabel)
         picker.delegate = self
 
         
-        picker.snp.makeConstraints { (view) in
-            view.centerX.equalToSuperview()
-            view.width.equalToSuperview().multipliedBy(0.5)
-            view.height.lessThanOrEqualToSuperview().multipliedBy(0.25)
-        }
+//        picker.snp.makeConstraints { (view) in
+//            view.centerX.equalToSuperview()
+//            view.width.equalToSuperview().multipliedBy(0.5)
+//            view.height.lessThanOrEqualToSuperview().multipliedBy(0.25)
+//        }
         
         backgroundImage.snp.makeConstraints { (view) in
             view.top.equalToSuperview()
@@ -127,14 +130,25 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         }
         
         
-        findJobButton.addTarget(self, action: #selector(letsGetStartedClicked), for: .touchUpInside)
-        
         searchButton.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
             view.center.equalToSuperview().offset(40.0)
         }
         
+        picker.snp.makeConstraints { (view) in
+            view.top.equalTo(greetingLabel.snp.bottom).offset(8)
+            view.centerX.equalToSuperview()
+            view.width.equalToSuperview()
+            view.height.lessThanOrEqualToSuperview().multipliedBy(0.25)
+        }
         
+//        orChooseJobLabel.snp.makeConstraints { (view) in
+//            view.bottom.equalTo(searchJobTextField)
+//        }
+        
+        
+        
+        findJobButton.addTarget(self, action: #selector(letsGetStartedClicked), for: .touchUpInside)
     }
     
     func firstLaunchAlert() {
@@ -180,6 +194,8 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         findJobButton.isHidden = true
         searchJobTextField.isHidden = false
         searchButton.isHidden = false
+        picker.isHidden = false
+//        orChooseJobLabel.isHidden = false
         
         searchButton.addTarget(self, action: #selector(searchJobs), for: .touchUpInside)
 //        findJobButton.snp.remakeConstraints { (view) in
@@ -187,24 +203,41 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
 //            view.center.equalToSuperview().offset(40.0)
 //        }
         
-        searchButton.snp.remakeConstraints { (view) in
-            view.centerX.equalToSuperview()
-            view.center.equalToSuperview().offset(40.0)
-        }
+        findJobButton.removeFromSuperview()
+        
         
         greetingLabel.snp.remakeConstraints { (view) in
             view.trailing.leading.equalToSuperview()
-            view.center.equalToSuperview().offset(-20)
+            view.centerX.equalToSuperview()
+            view.bottom.equalTo(picker.snp.top).offset(-5)
         }
         
         searchJobTextField.snp.remakeConstraints { (view) in
             view.centerX.equalToSuperview()
+            view.centerY.equalToSuperview().multipliedBy(1.2)
             view.bottom.equalTo(searchButton.snp.top).offset(-5)
+        }
+        
+        searchButton.snp.remakeConstraints { (view) in
+            view.centerX.equalToSuperview()
+            view.top.equalTo(searchJobTextField.snp.bottom)
         }
         
         searchIcon.snp.remakeConstraints { (view) in
             view.trailing.equalTo(searchJobTextField.snp.leading).offset(-10)
         }
+        
+        picker.snp.remakeConstraints { (view) in
+            view.centerX.equalToSuperview()
+            view.width.equalToSuperview().multipliedBy(0.9)
+            view.height.lessThanOrEqualToSuperview().multipliedBy(0.25)
+            view.bottom.equalTo(searchJobTextField.snp.top).offset(-10)
+        }
+        
+//        orChooseJobLabel.snp.remakeConstraints { (view) in
+//            view.centerX.equalToSuperview()
+//            view.bottom.equalTo(searchJobTextField.snp.top).offset(-5)
+//        }
         
         animator.addAnimations {
             self.view.layoutIfNeeded()
@@ -227,7 +260,7 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     private let picker: UIPickerView = {
         let picker = UIPickerView()
         picker.backgroundColor = .white
-        picker.alpha = 0.2
+        picker.alpha = 0.6
         
         return picker
     }()
@@ -262,11 +295,12 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
     
     private let greetingLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20.0, weight: 16.0)
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: 30.0)
         label.font = UIFont(name: "Avenir Next", size: label.font.pointSize)
         label.textColor = .white
-        label.text = "What job are you looking for?"
+        label.text = "What Job are you looking for?"
         label.numberOfLines = 0
+
         label.textAlignment = .center
         return label
     }()
@@ -294,5 +328,13 @@ class JobSearchViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         return image
     }()
     
+//    private let orChooseJobLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Choose a field or Enter Job Below"
+//        label.textAlignment = .center
+//        label.numberOfLines = 0
+//        label.textColor = Colors.lightPrimaryColor
+//        return label
+//    }()
 }
 
