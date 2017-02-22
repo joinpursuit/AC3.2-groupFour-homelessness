@@ -19,4 +19,4 @@ A central hub that aggregates job postings around NYC and a simpler, quicker way
 
 # Acknowledgements
 - Mentors who helped streamline our code and presentations
-- C4Q
+- [C4Q](http://www.c4q.nyc/)
