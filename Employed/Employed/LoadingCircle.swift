@@ -24,10 +24,10 @@ class LoadingCircle: UIView {
 
     
     func setUpview(){
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.snp.makeConstraints { (view) in
-            view.size.equalTo(CGSize(width: 10, height: 10))
+            view.size.equalTo(CGSize(width: 20, height: 20))
         }
         
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(changeColor), userInfo: nil, repeats: true)

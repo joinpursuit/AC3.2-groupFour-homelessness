@@ -185,6 +185,9 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         let searchDetailVc = SearchDetailViewController()
         searchDetailVc.jobPost = jobs[selectedRow]
         
+        let backItem = UIBarButtonItem()
+        backItem.title = " "
+        navigationItem.backBarButtonItem = backItem
         navigationController?.pushViewController(searchDetailVc, animated: true)
     }
     

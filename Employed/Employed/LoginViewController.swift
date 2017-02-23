@@ -14,7 +14,7 @@ import FirebaseDatabase
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
 
-    let newViewController = ProfileViewController()
+    //let newViewController = ProfileViewController()
     var databaseReference = FIRDatabase.database().reference()
 
     override func viewDidLoad() {
@@ -25,18 +25,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tap)
 
         setUpViews()
-
-        if FIRAuth.auth()?.currentUser != nil {
-            self.navigationController?.pushViewController(newViewController, animated: false)
-        } else {
-                self.navigationController?.navigationBar.isHidden = true
-        }
-    }
+//
+//        if FIRAuth.auth()?.currentUser != nil {
+//            self.navigationController?.pushViewController(ProfileViewController(), animated: false)
+//        } else {
+//                self.navigationController?.navigationBar.isHidden = true
+//        }
+   }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if FIRAuth.auth()?.currentUser != nil {
-            self.navigationController?.pushViewController(newViewController, animated: false)
+            self.navigationController?.pushViewController(ProfileViewController(), animated: false)
         } else {
             self.navigationController?.navigationBar.isHidden = true
         }
@@ -152,7 +152,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if user != nil {
                     
                     if let tabVC =  self.navigationController {
-                        tabVC.show(self.newViewController, sender: nil)
+                        tabVC.show(ProfileViewController(), sender: nil)
                         
                     }
                 } else {
@@ -180,7 +180,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 if let tabVC =  self.navigationController {
-                    tabVC.show(self.newViewController, sender: nil)
+                    tabVC.show(ProfileViewController(), sender: nil)
                 }
             })
         }
