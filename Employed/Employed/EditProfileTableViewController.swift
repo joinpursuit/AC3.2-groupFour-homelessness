@@ -36,7 +36,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(named: "close"), style: .done, target: self, action: #selector(dismissme))
         
         self.title = "Edit Profile"
-        
+        self.view.backgroundColor = .white
         setUpViews()
         setupTableView()
     }

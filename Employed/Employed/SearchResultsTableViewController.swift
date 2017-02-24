@@ -25,11 +25,9 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         }
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewHierarchy()
-        
         
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(named: "filter"), style: .done, target: self, action: #selector(filterButtonPressed(sender:)))
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(named: "search25"), style: .done, target: self, action: #selector(searchButtonPressed(sender:)))

@@ -54,7 +54,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         }
     }
     
-    
     deinit {
         print("Died")
     }
