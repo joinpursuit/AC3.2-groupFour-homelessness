@@ -17,6 +17,8 @@
 		1AA994951E591BA50050CB6E /* ResumePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */; };
 		1AA994971E594C680050CB6E /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA994961E594C680050CB6E /* CameraOverlayView.swift */; };
 		1AA9949D1E5964280050CB6E /* CameraOverlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */; };
+		1AB18B691E5CEA8B00931408 /* LoadingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB18B681E5CEA8B00931408 /* LoadingScreenViewController.swift */; };
+		1AB18B6B1E5CEAD400931408 /* LoadingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB18B6A1E5CEAD400931408 /* LoadingCircle.swift */; };
 		1AED16231E5A2D0A002989B2 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED16221E5A2D0A002989B2 /* ProfileDetailViewController.swift */; };
 		1AED16271E5B660D002989B2 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED16261E5B660D002989B2 /* EditProfileTableViewController.swift */; };
 		1AED16291E5B66A3002989B2 /* EditInfoWithTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED16281E5B66A3002989B2 /* EditInfoWithTextFieldTableViewCell.swift */; };
@@ -50,6 +52,8 @@
 		1AA994941E591BA50050CB6E /* ResumePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumePreviewViewController.swift; sourceTree = "<group>"; };
 		1AA994961E594C680050CB6E /* CameraOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
 		1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayBar.swift; sourceTree = "<group>"; };
+		1AB18B681E5CEA8B00931408 /* LoadingScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingScreenViewController.swift; sourceTree = "<group>"; };
+		1AB18B6A1E5CEAD400931408 /* LoadingCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCircle.swift; sourceTree = "<group>"; };
 		1AED16221E5A2D0A002989B2 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		1AED16261E5B660D002989B2 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
 		1AED16281E5B66A3002989B2 /* EditInfoWithTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInfoWithTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 				E35F6EA81E580A9900E8F011 /* LoginViewController.swift */,
 				E35F6EA91E580A9900E8F011 /* JobSearchViewController.swift */,
 				E35F6EAA1E580A9900E8F011 /* SearchResultsTableViewController.swift */,
+				1AB18B681E5CEA8B00931408 /* LoadingScreenViewController.swift */,
 				E35F6EAB1E580A9900E8F011 /* SearchDetailViewController.swift */,
 				A20243D41E58C7A5002B40D7 /* ProfileViewController.swift */,
 				1AED16221E5A2D0A002989B2 /* ProfileDetailViewController.swift */,
@@ -160,6 +165,7 @@
 			children = (
 				1AA994961E594C680050CB6E /* CameraOverlayView.swift */,
 				1AA9949C1E5964280050CB6E /* CameraOverlayBar.swift */,
+				1AB18B6A1E5CEAD400931408 /* LoadingCircle.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -253,15 +259,8 @@
 				TargetAttributes = {
 					1AA9944C1E57F9C00050CB6E = {
 						CreatedOnToolsVersion = 8.2.1;
-
-
-						ProvisioningStyle = Manual;
-
-
-						DevelopmentTeam = 2E9D85U478;
-
+						DevelopmentTeam = ZSE2A75FGT;
 						ProvisioningStyle = Automatic;
-
 					};
 				};
 			};
@@ -366,6 +365,8 @@
 				1AA994511E57F9C00050CB6E /* AppDelegate.swift in Sources */,
 				E35F6EB21E580A9900E8F011 /* SavesTableViewController.swift in Sources */,
 				A20243D31E58B911002B40D7 /* SearchTableViewCell.swift in Sources */,
+				1AB18B691E5CEA8B00931408 /* LoadingScreenViewController.swift in Sources */,
+				1AB18B6B1E5CEAD400931408 /* LoadingCircle.swift in Sources */,
 				A20243D51E58C7A5002B40D7 /* ProfileViewController.swift in Sources */,
 				1AA9949D1E5964280050CB6E /* CameraOverlayBar.swift in Sources */,
 				1A9EE2991E5B7A45005756D1 /* EditInfoProfileImageTableViewCell.swift in Sources */,
@@ -489,22 +490,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZSE2A75FGT;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed.;
-
-
-				DEVELOPMENT_TEAM = "";
-
-
-				DEVELOPMENT_TEAM = 2E9D85U478;
-
-
-				INFOPLIST_FILE = Employed/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = c4q.Employed;
+				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
@@ -517,23 +506,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZSE2A75FGT;
 				INFOPLIST_FILE = Employed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed.;
-
-
-				DEVELOPMENT_TEAM = "";
-
-
-				DEVELOPMENT_TEAM = 2E9D85U478;
-
-
-				INFOPLIST_FILE = Employed/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = c4q.Employed;
-
+				PRODUCT_BUNDLE_IDENTIFIER = nyc.c4q.Employed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
