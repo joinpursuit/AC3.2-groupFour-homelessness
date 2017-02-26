@@ -14,7 +14,7 @@ import Photos
 import MobileCoreServices
 
 
-class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ProfileStateDelegate{
+class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ProfileStateDelegate,ResumeShowCamera{
     private lazy var imagePickerController: UIImagePickerController = UIImagePickerController()
     private var userDic: [String:String] = [:]
     
@@ -31,8 +31,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = false
-        let rightBarButton = UIBarButtonItem(customView: logOutButton)
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(named: "logout"), style: .done, target: self, action: #selector(logOut))
         self.navigationItem.hidesBackButton = true
         self.view.backgroundColor = .white
         
@@ -42,8 +41,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
+        
         if infoUpdated{
             getProfileInfo()
+            savePDF()
             infoUpdated = false
         }
         
@@ -51,6 +52,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             getProfilePicture()
             pictureUpdated = false
         }
+    }
+    
+    deinit {
+        print("Died")
     }
     
     func setUpViews(){
@@ -83,7 +88,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         nameLabel.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
             view.top.equalTo(profilePic.snp.bottom).offset(15)
-            
         }
         
         addResume.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
@@ -104,7 +108,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             
             let databaseRef = FIRDatabase.database().reference().child("UserInfo")
             let childRef = databaseRef.child((FIRAuth.auth()?.currentUser?.uid)!)
-            
             
             
             childRef.observe(.value, with: { (snapshot) in
@@ -133,6 +136,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
                 }
             }
         })
+    }
+    
+    private func savePDF(){
+        let storageRef = FIRStorage.storage().reference(forURL: "gs://employed-42a2b.appspot.com").child("ResumePDF")
+        let pdfRef = storageRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        
+        pdfRef.data(withMaxSize: 50 * 1024 * 1024) { (data, error) in
+            if error != nil{
+                print("\(error?.localizedDescription)")
+            }else{
+                 EmployedFileManager.shared.saveFile(data: NSData(data: data!))
+            }
+        }
     }
     
     private func updateProfilePic(image: UIImage){
@@ -177,7 +193,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             self.present(alertController, animated: true, completion: nil)
         }
         
-        let _ = self.navigationController?.popToRootViewController(animated: true)
+       // let _ = self.navigationController?.popToRootViewController(animated: true)
+   self.navigationController?.popViewController(animated: true)
     }
     
     func handleTap() {
@@ -190,6 +207,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         editProfVC.profileUpdatedDeleate = self
         let editProfNVC = UINavigationController(rootViewController: editProfVC)
         self.navigationController?.present(editProfNVC, animated: true, completion: nil)
+//        let loading = LoadingScreenViewController()
+//        loading.modalPresentationStyle = .overCurrentContext
+//        loading.modalTransitionStyle = .crossDissolve
+//        present(loading, animated: true, completion: nil)
     }
     
     private func showImagePickerfor(source: UIImagePickerControllerSourceType){
@@ -202,7 +223,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             let overlay = CameraOverlayView()
             overlay.frame = CGRect(x: 0, y: 0, width: 420, height: 595)
             overlay.center = self.view.center
-            imagePicker.cameraOverlayView = overlay
+            //imagePicker.cameraOverlayView = overlay
             imagePicker.modalPresentationStyle = .currentContext
         case .photoLibrary:
             imagePicker.allowsEditing = true
@@ -223,13 +244,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         switch imagePickerController.sourceType{
         case .camera:
-            dismiss(animated: true, completion: nil)
-            if let imageData = EmployedFileManager.shared.convertToPDf(image: imageFromPicker){
+            self.tabBarController?.dismiss(animated: true, completion: nil) //dismiss(animated: true, completion: nil)
+            let resized = UIImage(cgImage: imageFromPicker.cgImage!, scale: 1, orientation: .upMirrored)
+            
+            if let imageData = EmployedFileManager.shared.convertToPDf(image: resized){
                 EmployedFileManager.shared.saveFile(data: imageData)
                 if let pdfUrl = EmployedFileManager.shared.retreivePDF(){
                     let resumeVC = ResumePreviewViewController()
                     resumeVC.pdfUrl = URLRequest(url: pdfUrl)
-                    present(resumeVC, animated: true, completion: nil)
+                    let rnav = UINavigationController(rootViewController: resumeVC)
+                    present(rnav, animated: true, completion: nil)
                 }
             }
         case .photoLibrary:
@@ -269,10 +293,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         if indexPath.row == infoDetails.count - 1{
             
-            if UIImagePickerController.isSourceTypeAvailable(.camera){
-                showImagePickerfor(source: .camera)
+            let resumeViewController = ResumePreviewViewController()
+            if let url = EmployedFileManager.shared.retreivePDF(){
+                resumeViewController.pdfUrl = URLRequest(url: url)
+                resumeViewController.delegate = self
+                let resumeNav = UINavigationController(rootViewController: resumeViewController)
+                present(resumeNav, animated: true, completion: nil)
             }else{
-                print("No camera available")
+                showImagePickerfor(source: .camera)
             }
             
         }else{
@@ -300,7 +328,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
 //            self.profilePic.alpha = 1
             self.profileBackGround.alpha = 1
         }
+    }
+    
+    //MARK: Resume Delegate
+    func showCameraPicker() {
         
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            showImagePickerfor(source: .camera)
+        }else{
+            print("No camera available")
+        }
     }
     
     //MARK: - Views
@@ -315,10 +352,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 5
         imageView.contentMode = .scaleAspectFill
+<<<<<<< HEAD
         imageView.image = UIImage(named: "default")
+=======
+>>>>>>> 6e74074ccc7ff734f80b6ba72a645cb9887cc7cf
         imageView.layer.masksToBounds = true
         imageView.isUserInteractionEnabled = true
-        
+         imageView.image = UIImage(named: "userPictureDefault")
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tap.delaysTouchesBegan = true
         tap.numberOfTouchesRequired = 1
@@ -345,6 +385,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     private let profileBackGround: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.backgroundColor = .lightGray
+        imageView.image = UIImage(named: "userPictureDefault")
         let blurEffect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageView.bounds

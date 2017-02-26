@@ -13,34 +13,32 @@ import FirebaseDatabase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-
-    let newViewController = ProfileViewController()
     var databaseReference = FIRDatabase.database().reference()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         observeKeyboardNotifications()
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
-
+        
         setUpViews()
-
-        if FIRAuth.auth()?.currentUser != nil {
-            self.navigationController?.pushViewController(newViewController, animated: false)
-        } else {
-                self.navigationController?.navigationBar.isHidden = true
-        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
         if FIRAuth.auth()?.currentUser != nil {
-            self.navigationController?.pushViewController(newViewController, animated: false)
+            self.navigationController?.pushViewController(ProfileViewController(), animated: false)
         } else {
             self.navigationController?.navigationBar.isHidden = true
         }
-
     }
     
     //MARK:- SetupViews
@@ -61,22 +59,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(appLabel)
         
         backgroundImage.snp.makeConstraints { (view) in
-            view.top.equalToSuperview()
-            view.bottom.equalToSuperview()
-            view.leading.equalToSuperview()
-            view.trailing.equalToSuperview()
-            view.height.equalToSuperview()
-            view.width.equalToSuperview()
+            
+            view.top.leading.trailing.bottom.equalToSuperview()
+            
         }
         
         backgroundImageTopLayer.snp.makeConstraints { (view) in
             view.top.leading.trailing.bottom.equalToSuperview()
-            view.height.width.equalToSuperview()
+            
         }
         
         appLabel.snp.makeConstraints { (view) in
             view.top.equalToSuperview().offset(24)
-            view.bottom.equalTo(emailTextField.snp.top).offset(8)
             view.centerX.equalToSuperview()
         }
         
@@ -104,10 +98,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             view.size.equalTo(emailTextField)
         }
         
-//        registerLabel.snp.makeConstraints { (view) in
-//            view.top.equalTo(loginButton.snp.bottom)
-//            view.centerX.equalToSuperview()
-//        }
+        //        registerLabel.snp.makeConstraints { (view) in
+        //            view.top.equalTo(loginButton.snp.bottom)
+        //            view.centerX.equalToSuperview()
+        //        }
         
         registerButton.snp.makeConstraints { (view) in
             view.top.equalTo(loginButton.snp.bottom).offset(10.0)
@@ -128,7 +122,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     fileprivate func observeKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard), name: .UIKeyboardDidShow, object: nil)
         
-         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: .UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: .UIKeyboardDidHide, object: nil)
     }
     
     func showKeyboard() {
@@ -144,7 +138,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func login() {
-
+        
         if let email = emailTextField.text,
             let password = passwordTextField.text {
             FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
@@ -152,7 +146,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if user != nil {
                     
                     if let tabVC =  self.navigationController {
-                        tabVC.show(self.newViewController, sender: nil)
+                        tabVC.show(ProfileViewController(), sender: nil)
                         
                     }
                 } else {
@@ -163,7 +157,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             })
         }
         
-//        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+        //        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         
     }
     
@@ -180,7 +174,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 if let tabVC =  self.navigationController {
-                    tabVC.show(self.newViewController, sender: nil)
+                    tabVC.show(ProfileViewController(), sender: nil)
                 }
             })
         }
@@ -192,7 +186,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
-
+    
     
     //MARK: - Views
     private let appLabel: UILabel = {
@@ -284,14 +278,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }()
     
-   
     
-//    private let registerLabel: UILabel = {
-//        let label: UILabel = UILabel()
-//        label.text = "Don't have an account?"
-//        label.font = UIFont.systemFont(ofSize: 10)
-//        return label
-//    }()
+    
+    //    private let registerLabel: UILabel = {
+    //        let label: UILabel = UILabel()
+    //        label.text = "Don't have an account?"
+    //        label.font = UIFont.systemFont(ofSize: 10)
+    //        return label
+    //    }()
     
 }
 

@@ -12,7 +12,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import MobileCoreServices
 
-protocol ProfileStateDelegate{
+protocol ProfileStateDelegate: class{
     var infoUpdated: Bool {get set}
     var pictureUpdated: Bool {get set}
     func changeProfileImage(to image:UIImage)
@@ -28,7 +28,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
     var profileImage: UIImage?
     private var selectedImage: UIImage?
     var textValues: [String] = []
-    var profileUpdatedDeleate: ProfileStateDelegate?
+    weak var profileUpdatedDeleate: ProfileStateDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class EditProfileTableViewController: UIViewController,UITableViewDataSource,UIT
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(named: "close"), style: .done, target: self, action: #selector(dismissme))
         
         self.title = "Edit Profile"
-        
+        self.view.backgroundColor = .white
         setUpViews()
         setupTableView()
     }
