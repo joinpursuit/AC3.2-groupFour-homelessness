@@ -17,7 +17,7 @@ A central hub that aggregates job postings around NYC and a simpler, quicker way
 - [Jermaine Kelly](https://github.com/jerjunkel) - Tech Lead
 - [Ilmira Estil](https://github.com/MiraEs) - UI Lead
 
-![Alt text](AC3.2-groupFour-homelessness/Screen Shot 2017-03-22 at 6.06.48 PM.png)
+![alt tag](AC3.2-groupFour-homelessness/Screen Shot 2017-03-22 at 6.06.48 PM.png)
 
 # Acknowledgements
 - Mentors who helped streamline our code and presentations
