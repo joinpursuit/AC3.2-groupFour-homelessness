@@ -39,12 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearnce.barTintColor = UIColor.white
         tabBarAppearnce.tintColor = UIColor.red
         //
-        let loginVC = LoginViewController()
+        _ = LoginViewController()
         
         let rootTabController = UITabBarController()
         let jobSearchVC = JobSearchViewController()
-        let searchResultsTVC = SearchResultsTableViewController()
-        let searchDetailVC = SearchDetailViewController()
+        _ = SearchResultsTableViewController()
+        _ = SearchDetailViewController()
         let savesTVC = SavesTableViewController()
         let profileTVC = LoginViewController()
         

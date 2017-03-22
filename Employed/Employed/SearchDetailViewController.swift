@@ -264,7 +264,7 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             let userData = databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId()
             
             let postOfJob = NYCJobs(buisnessTitle: self.jobPost.buisnessTitle, civilTitle: self.jobPost.civilTitle , jobDescription: self.jobPost.jobDescription, postingDate: self.jobPost.postingDate, agency: self.jobPost.agency, workLocation: self.jobPost.workLocation, minReqs: self.jobPost.minReqs, minSalary: self.jobPost.minSalary, key: userData.key)
-            let dict = postOfJob.asDictionary
+            _ = postOfJob.asDictionary
             for jobs in savedJobs {
                 dump(jobs)
             }
