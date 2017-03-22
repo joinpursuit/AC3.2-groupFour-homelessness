@@ -17,6 +17,9 @@ A central hub that aggregates job postings around NYC and a simpler, quicker way
 - [Jermaine Kelly](https://github.com/jerjunkel) - Tech Lead
 - [Ilmira Estil](https://github.com/MiraEs) - UI Lead
 
+![Alt text]()
+
 # Acknowledgements
 - Mentors who helped streamline our code and presentations
 - [C4Q](http://www.c4q.nyc/)
+
