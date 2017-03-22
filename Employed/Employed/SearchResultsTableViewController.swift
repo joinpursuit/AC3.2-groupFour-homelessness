@@ -77,25 +77,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         }
     }
 
-    /*
-    func getData(_ searchText: String) {
-            APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
-    
-                if let validData = data {
-                    if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
-                        let validJob = jsonData as? [String:Any] {
-    
-                        self.jobs = DiceJob.getJobs(from: validJob)
-    
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-    
-                }
-            }
-        }
- */
     
     func searchJob(_ filter: String) {
         self.jobs = jobs.filter {
@@ -172,8 +153,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
         cell.subLabel.addImage(imageName: "marker25")
  
-        //cell.textLabel?.text = selectedCell.jobTitle
-
         return cell
     }
     

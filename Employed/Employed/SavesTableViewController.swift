@@ -23,16 +23,6 @@ class SavesTableViewController: UITableViewController, DZNEmptyDataSetSource, DZ
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-//        
-//        if FIRAuth.auth()?.currentUser != nil {
-//            getData()
-//            tableView.rowHeight = 150
-//        } else {
-//            jobs.removeAll()
-//            self.tableView.reloadData()
-//
-//        }
-//        
         
     }
     

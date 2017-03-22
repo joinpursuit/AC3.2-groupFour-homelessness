@@ -19,7 +19,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         observeKeyboardNotifications()
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         setUpViews()
@@ -53,7 +53,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(emailTextField)
         self.view.addSubview(passwordTextField)
         self.view.addSubview(loginButton)
-        //self.view.addSubview(registerLabel)
         self.view.addSubview(registerButton)
         self.view.addSubview(loginLogo)
         self.view.addSubview(appLabel)
@@ -97,11 +96,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             view.centerX.equalToSuperview()
             view.size.equalTo(emailTextField)
         }
-        
-        //        registerLabel.snp.makeConstraints { (view) in
-        //            view.top.equalTo(loginButton.snp.bottom)
-        //            view.centerX.equalToSuperview()
-        //        }
         
         registerButton.snp.makeConstraints { (view) in
             view.top.equalTo(loginButton.snp.bottom).offset(10.0)
@@ -156,8 +150,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
             })
         }
-        
-        //        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         
     }
     
@@ -277,15 +269,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
         
     }()
-    
-    
-    
-    //    private let registerLabel: UILabel = {
-    //        let label: UILabel = UILabel()
-    //        label.text = "Don't have an account?"
-    //        label.font = UIFont.systemFont(ofSize: 10)
-    //        return label
-    //    }()
     
 }
 
