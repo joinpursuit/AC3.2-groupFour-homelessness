@@ -100,9 +100,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     //MARK: - SetupViews
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
-//        self.view.addSubview(filterButton)
-//        self.view.addSubview(searchButton)
-    
     }
     
     func filterButtonPressed(sender: UIButton) {
