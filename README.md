@@ -19,7 +19,7 @@ A central hub that aggregates job postings around NYC and a simpler, quicker way
 
 # Interface
 ![](./Images/Screen%Shot%2017-03-22%at%6.06.48%PM.png)
-<img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/Images/Screen%Shot%2017-03-22%at%6.06.48%PM.png?raw=true" width="320" />
+
 
 # Acknowledgements
 - Mentors who helped streamline our code and presentations
