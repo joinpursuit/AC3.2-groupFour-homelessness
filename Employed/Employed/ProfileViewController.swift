@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
+        
         if infoUpdated{
             getProfileInfo()
             savePDF()
@@ -51,6 +52,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             getProfilePicture()
             pictureUpdated = false
         }
+    }
+    
+    deinit {
+        print("Died")
     }
     
     func setUpViews(){
@@ -83,7 +88,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         nameLabel.snp.makeConstraints { (view) in
             view.centerX.equalToSuperview()
             view.top.equalTo(profilePic.snp.bottom).offset(15)
-            
         }
         
         addResume.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
@@ -104,7 +108,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             
             let databaseRef = FIRDatabase.database().reference().child("UserInfo")
             let childRef = databaseRef.child((FIRAuth.auth()?.currentUser?.uid)!)
-            
             
             
             childRef.observe(.value, with: { (snapshot) in
@@ -190,7 +193,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
             self.present(alertController, animated: true, completion: nil)
         }
         
-        let _ = self.navigationController?.popToRootViewController(animated: true)
+       // let _ = self.navigationController?.popToRootViewController(animated: true)
+   self.navigationController?.popViewController(animated: true)
     }
     
     func handleTap() {
@@ -240,7 +244,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
         
         switch imagePickerController.sourceType{
         case .camera:
-            dismiss(animated: true, completion: nil)
+            self.tabBarController?.dismiss(animated: true, completion: nil) //dismiss(animated: true, completion: nil)
             let resized = UIImage(cgImage: imageFromPicker.cgImage!, scale: 1, orientation: .upMirrored)
             
             if let imageData = EmployedFileManager.shared.convertToPDf(image: resized){
@@ -314,14 +318,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func changeProfileImage(to image: UIImage) {
         UIView.animate(withDuration: 1) {
-       // self.profilePic.alpha = 0
             self.profileBackGround.alpha = 0
         }
         self.profilePic.image = image
         self.profileBackGround.image = image
         
         UIView.animate(withDuration: 3) {
-//            self.profilePic.alpha = 1
             self.profileBackGround.alpha = 1
         }
     }

@@ -25,11 +25,9 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         }
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewHierarchy()
-        
         
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(named: "filter"), style: .done, target: self, action: #selector(filterButtonPressed(sender:)))
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(named: "search25"), style: .done, target: self, action: #selector(searchButtonPressed(sender:)))
@@ -79,25 +77,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         }
     }
 
-    /*
-    func getData(_ searchText: String) {
-            APIRequestManager.manager.getPOD(endPoint: "http://service.dice.com/api/rest/jobsearch/v1/simple.json?&city=New+York,+NY") { (data) in
-    
-                if let validData = data {
-                    if let jsonData = try? JSONSerialization.jsonObject(with: validData, options: []),
-                        let validJob = jsonData as? [String:Any] {
-    
-                        self.jobs = DiceJob.getJobs(from: validJob)
-    
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-    
-                }
-            }
-        }
- */
     
     func searchJob(_ filter: String) {
         self.jobs = jobs.filter {
@@ -121,9 +100,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     //MARK: - SetupViews
     func setupViewHierarchy() {
         self.edgesForExtendedLayout = []
-//        self.view.addSubview(filterButton)
-//        self.view.addSubview(searchButton)
-    
     }
     
     func filterButtonPressed(sender: UIButton) {
@@ -174,8 +150,6 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         cell.subLabel.text = "\(selectedCell.workLocation) • Posted \(selectedCell.postingDate)"
         cell.subLabel.addImage(imageName: "marker25")
  
-        //cell.textLabel?.text = selectedCell.jobTitle
-
         return cell
     }
     
@@ -185,6 +159,9 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         let searchDetailVc = SearchDetailViewController()
         searchDetailVc.jobPost = jobs[selectedRow]
         
+        let backItem = UIBarButtonItem()
+        backItem.title = " "
+        navigationItem.backBarButtonItem = backItem
         navigationController?.pushViewController(searchDetailVc, animated: true)
     }
     

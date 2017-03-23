@@ -33,7 +33,6 @@ class CameraOverlayView: UIView {
         
         topLeft.snp.makeConstraints { (view) in
             view.top.leading.equalToSuperview()
-            //view.leading.equalToSuperview()
         }
         
         topRight.snp.makeConstraints { (view) in

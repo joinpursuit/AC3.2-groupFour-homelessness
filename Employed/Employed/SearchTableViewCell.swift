@@ -52,12 +52,9 @@ class SearchTableViewCell: UITableViewCell {
             databaseReference.child("SavedJobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapShot) in
                 
                 self.databaseReference.child("Applied Jobs").child((FIRAuth.auth()?.currentUser?.uid)!).childByAutoId().observeSingleEvent(of: .value, with: { (snapSecond) in
-//                    if snapShot.value as? String != nil && snapSecond.value as? String != nil {
                         if snapShot.value as? String == snapSecond.value as? String {
                        
-                            //                        self.appliedIndicator.isHidden = false
                         }
-//                    }
                 })
                 
                 
@@ -100,8 +97,6 @@ class SearchTableViewCell: UITableViewCell {
         }
         
         companyIcon.snp.makeConstraints { (view) in
-            //view.centerX.equalToSuperview()
-            //view.top.equalTo(subLabel.snp.bottom).offset(10.0)
             view.centerY.equalToSuperview()
             view.leading.equalTo(subLabel.snp.trailing).offset(5.0)
         }
