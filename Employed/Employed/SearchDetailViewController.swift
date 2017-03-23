@@ -91,47 +91,37 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         self.edgesForExtendedLayout = []
         
         scrollView.snp.makeConstraints { (view) in
-            //view.top.leading.trailing.bottom.equalToSuperview()
             view.top.leading.trailing.equalToSuperview()
             view.bottom.equalTo(applyNowButton.snp.top)
-            //view.width.equalToSuperview()
-            
         }
         
         container.snp.makeConstraints { (view) in
-            //view.width.equalTo(self.view.snp.width)
             view.width.equalTo(scrollView.snp.width)
             view.centerX.equalTo(self.view.snp.centerX)
             view.top.equalToSuperview()
-            //view.height.equalTo(300)
-            //view.leading.trailing.equalToSuperview()
             
         }
         
         topSeparator.snp.makeConstraints { (view) in
-          //  view.width.equalToSuperview().offset(24.0)
-            view.centerX.width.equalToSuperview() //View was ambigious
+            view.centerX.width.equalToSuperview()
             view.height.equalTo(1)
             view.top.equalTo(addressLabel.snp.bottom).offset(5.0)
         }
         
         topSeparatorB.snp.makeConstraints { (view) in
-            //view.width.equalToSuperview().offset(5.0)
-            view.centerX.width.equalToSuperview() //View was ambigious
+            view.centerX.width.equalToSuperview()
             view.height.equalTo(1)
             view.top.equalTo(wageCategoryLabel.snp.bottom).offset(5.0)
         }
         
         midSeparator.snp.makeConstraints { (view) in
-           // view.width.equalToSuperview().offset(5.0)
-            view.centerX.width.equalToSuperview() //View was ambigious
+            view.centerX.width.equalToSuperview()
             view.height.equalTo(3)
             view.top.equalTo(jobPostDescription.snp.bottom).offset(8.0)
         }
         
         bottomSeparator.snp.makeConstraints { (view) in
-           // view.width.equalToSuperview().offset(5.0)
-            view.centerX.width.equalToSuperview() //View was ambigious
+            view.centerX.width.equalToSuperview()
             view.height.equalTo(3)
             view.top.equalTo(jobReqs.snp.bottom).offset(8.0)
         }
@@ -178,7 +168,6 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
         jobPostDescription.snp.makeConstraints { (view) in
             view.top.equalTo(agencyCategoryLabel.snp.bottom).offset(16.0)
             view.centerX.equalToSuperview()
-            //view.height.equalToSuperview().multipliedBy(0.5)
             view.leading.equalTo(jobTitle.snp.leading)
         }
         
@@ -202,13 +191,11 @@ class SearchDetailViewController: UIViewController, UINavigationControllerDelega
             view.centerX.equalToSuperview()
             view.leading.trailing.equalToSuperview()
             view.bottom.equalToSuperview()
-            //view.width.equalToSuperview()
             view.height.equalTo(100)
         }
         
         applyNowButton.snp.makeConstraints { (view) in
             view.bottom.trailing.leading.equalToSuperview()
-           // view.top.equalTo(container.snp.bottom)
             view.height.equalTo(50)
         }
         

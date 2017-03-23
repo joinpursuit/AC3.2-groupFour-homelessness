@@ -290,14 +290,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate,UITableViewDa
     
     func changeProfileImage(to image: UIImage) {
         UIView.animate(withDuration: 1) {
-       // self.profilePic.alpha = 0
             self.profileBackGround.alpha = 0
         }
         self.profilePic.image = image
         self.profileBackGround.image = image
         
         UIView.animate(withDuration: 3) {
-//            self.profilePic.alpha = 1
             self.profileBackGround.alpha = 1
         }
         
