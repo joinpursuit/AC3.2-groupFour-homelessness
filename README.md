@@ -18,7 +18,7 @@ A central hub that aggregates job postings around NYC and a simpler, quicker way
 - [Ilmira Estil](https://github.com/MiraEs) - UI Lead
 
 # Interface
-![](./Images/Screen%Shot&%2017-03-22%at%6.06.48%PM.png)
+![](AC3.2-groupFour-homelessness/Images/Screen%Shot%2017-03-22%at%6.06.48%PM.png)
 
 
 # Acknowledgements
