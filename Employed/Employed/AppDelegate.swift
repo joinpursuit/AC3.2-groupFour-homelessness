@@ -48,15 +48,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let savesTVC = SavesTableViewController()
         let profileTVC = LoginViewController()
         
-        let jobSearchTabItem = UITabBarItem(title: "search", image: #imageLiteral(resourceName: "search"), tag: 0)
-        let savesTabItem = UITabBarItem(title: "saves", image: #imageLiteral(resourceName: "save"), tag: 1)
-        let profileTabItem = UITabBarItem(title: "profile", image: #imageLiteral(resourceName: "user"), tag: 2)
+        let jobSearchTabItem = UITabBarItem(title: "Search", image: #imageLiteral(resourceName: "search"), tag: 0)
+        let savesTabItem = UITabBarItem(title: "My Favorites", image: #imageLiteral(resourceName: "save"), tag: 1)
+        let profileTabItem = UITabBarItem(title: "Profile", image: #imageLiteral(resourceName: "user"), tag: 2)
         
         jobSearchVC.tabBarItem = jobSearchTabItem
         savesTVC.tabBarItem = savesTabItem
         profileTVC.tabBarItem = profileTabItem
-        
-        
+      
         
         let jobSearchNavController = UINavigationController(rootViewController: jobSearchVC)
         let savesNavController = UINavigationController(rootViewController: savesTVC)

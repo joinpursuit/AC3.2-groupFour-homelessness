@@ -45,15 +45,17 @@ class EmployedFileManager{
         
         guard let croppedImage = cropImage(image: image, width: 1000, height: 1000) else {return nil}
         
-        let defaultResolution: Int = 72
+        //let defaultResolution: Int = 72
         
         if horizontalResolution <= 0 || verticalResolution <= 0 {
             return nil;
         }
         
-        let pageWidth: Double = Double(croppedImage.size.width) * Double(image.scale) * Double(defaultResolution) / horizontalResolution
-        let pageHeight: Double = Double(croppedImage.size.height) * Double(image.scale) * Double(defaultResolution) / verticalResolution
+//        let pageWidth: Double = Double(croppedImage.size.width) * Double(image.scale) * Double(defaultResolution) / horizontalResolution
+//        let pageHeight: Double = Double(croppedImage.size.height) * Double(image.scale) * Double(defaultResolution) / verticalResolution
         
+        let pageWidth = width * 3
+        let pageHeight = height * 3
         let pdfFile: NSMutableData = NSMutableData()
         
         let pdfConsumer: CGDataConsumer = CGDataConsumer(data: pdfFile as CFMutableData)!
@@ -90,9 +92,10 @@ class EmployedFileManager{
     
     private func cropImage(image: UIImage, width: Int, height: Int) -> UIImage? {
         // Cropping is available trhough CGGraphics
-        let toRect = CGRect(x: 0, y: 0, width: width, height: height)
+        let toRect = CGRect(x: 0, y: 0, width: width * 3, height: height * 3)
         let cgImage :CGImage! = image.cgImage
         let croppedCGImage: CGImage! = cgImage.cropping(to: toRect)
+        
         
         return UIImage(cgImage: croppedCGImage)
     }
