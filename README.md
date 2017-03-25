@@ -21,6 +21,15 @@ A central hub that aggregates job postings around NYC and a simpler, quicker way
 
 <img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/blob/master/Images/Screen%20Shot%202017-03-22%20at%206.06.48%20PM.png?raw=true" width="320" />
 
+<img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/blob/master/Images/Login%20Page.png?raw=true" width="320" />
+
+<img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/blob/master/Images/LogIn%20to%20save.png?raw=true" width="320" />
+
+<img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/blob/master/Images/Job%20details.png?raw=true" width="320" />
+
+<img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/blob/master/Images/Job%20TableView.png?raw=true" width="320"/>
+
+<img src="https://github.com/C4Q/AC3.2-groupFour-homelessness/blob/master/Images/Empty%20Save%20Jobs.png?raw=true" width="320"/>
 
 
 # Acknowledgements
